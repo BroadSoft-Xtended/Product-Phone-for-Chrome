@@ -15,7 +15,7 @@
 
         //TODO REMOVE
         $scope.email = 'jodonnell@broadsoft.com';
-        $scope.password = '';
+        $scope.password = window.password;
         $scope.xsp = 'https://xsp1.ihs.broadsoft.com';
 
         if($state.params.message){
