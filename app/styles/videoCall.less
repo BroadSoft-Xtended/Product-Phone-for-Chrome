@@ -1,0 +1,243 @@
+@layer0: -1;
+@layer1: 1;
+@layer2: 10;
+
+.video-calls{
+  .legacy-buttons{
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+  }
+
+  .myTestButton{
+    background-color: #003bb3;
+    color: white;
+  }
+
+  .localVideo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 20%;
+  }
+
+  .remoteVideo{
+    top: 0;
+    z-index: @layer0;
+    background-color: #262626;
+    width: 100%;
+    position: absolute;
+    height: 100%;
+  }
+
+  .phone-number{
+    position: absolute;
+    top: 36%;
+    left: 45%;
+    margin-top: 100px;
+    display: block;
+    z-index: 9999;
+    color: white;
+    font-size: 17px;
+    font-weight: 100;
+  }
+
+  .audio-only-call-background{
+    width: 100%;
+    height: 100vh;
+    background-color: gray;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+  }
+
+  .video-call-actions{
+    z-index: 100;
+    cursor: pointer;
+    background-color: #191919;
+    height: 59px;
+    border-radius: 40px;
+    width: 442px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+
+    a{
+      display: inline-block;
+      width: 20px;
+      height: 19px;
+      color: white;
+      vertical-align: middle;
+      padding: 20px;
+      border-left: 1px solid black;
+      margin-right: -4px;
+
+      &.first{
+        border: none;
+        padding-left: 28px;
+        border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
+      }
+
+      &.last{
+        padding-right: 29px;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+      }
+
+      &:hover{
+        background-color: #0d0d0d;
+      }
+    }
+
+    .pause{
+      font-size: 17px;
+      margin-left: 4px;
+      margin-top: 1px;
+    }
+
+    .mute{
+      height: 24px;
+    }
+
+    .video-camera{
+      font-size: 19px;
+
+      &.red{
+        color: #7F0000;
+      }
+    }
+
+    .hold{
+      &.red{
+        color: #7F0000;
+      }
+    }
+
+    .call-forward{
+      width: 25px;
+    }
+
+    .add-call{
+      width: 26px;
+      margin-left: -3px;
+    }
+
+    .hangup{
+      width: 28px;
+      margin-top: 0;
+      margin-left: -4px;
+    }
+  }
+
+  .user-details{
+    font-size: 25px;
+    font-weight: 100;
+    color: white;
+  }
+
+  .dialpad-container{
+    z-index: @layer2;
+    position: absolute;
+    width: 242px;
+    height: 220px;
+    left: 101px;
+    bottom: 71px;
+
+    .key{
+      display: inline-block;
+      background-color: #1a1a1a;
+      border: 1px solid #0d0d0d;
+      width: 76px;
+      height: 51px;
+      margin-right: -4px;
+
+      &:hover{
+        background-color: #15ab4f;
+      }
+    }
+
+    .number-text{
+      font-size: 28px;
+      margin-left: 17px;
+      margin-top: 9px;
+      display: inline-block;
+      color: white;
+    }
+
+    .sub-text{
+      font-size: 9px;
+      color: white;
+    }
+  }
+
+  .search-results{
+    width: 320px;
+    height: 230px;
+    border-radius: 3px;
+    top: -310px;
+    z-index: 100;
+    left: 119px;
+  }
+
+  .search-add{
+    left: 176px;
+  }
+
+  .search-container{
+    height: 40px;
+
+    .search-icon{
+      position: absolute;
+      font-size: 18px;
+      top: 11px;
+      left: 12px;
+      color: #ababab;
+    }
+
+    input[type=text]{
+      line-height: 40px;
+      padding: 0 10px 0 40px;
+      width: 270px;
+      border: 0;
+      font-size: 14px;
+      border-radius: 30px 30px 0 0;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    .search-results-container{
+      background-color: transparent;
+      z-index: 10;
+      position: absolute;
+      width: 320px;
+      height: 189px;
+      border: none;
+      box-shadow: none;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+  }
+
+  .arrow-box {
+    position: relative;
+    background: #ffffff;
+  }
+  .arrow-box:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: #ffffff;
+    border-width: 13px;
+    margin-left: -13px;
+  }
+}

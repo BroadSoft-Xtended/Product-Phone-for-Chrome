@@ -1,0 +1,26 @@
+<div class="directory-separator google-separator">Google Contacts</div>
+
+<div ng-repeat="contact in googleContacts track by $index" class="favs-container" ng-mouseenter="showContactActions = true" ng-mouseleave="showContactActions = false">
+  <contact-circle data-contact="contact"></contact-circle>
+  <div class="user-name">{{contact.firstName + ' ' + contact.lastName}}</div>
+  <div class="contact-actions" ng-show="showContactActions">
+    <img src="/assets/images/icons/icon_pickup.svg" />
+    <img src="/assets/images/icons/icon_video.svg"  ng-click="media.startVideoCall(contact);"/>
+    <img src="/assets/images/icons/icon_contact_more.svg" />
+  </div>
+</div>
+
+<div class="directory-separator">Telephone Directory</div>
+
+<div ng-repeat="contact in telephoneContacts track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
+  <contact-circle data-contact="contact"></contact-circle>
+  <div class="user-name">{{(contact.firstName + ' ' + contact.lastName) | truncate:25:40:showContactActions}}</div>
+  <div class="contact-actions" ng-show="showContactActions">
+    <img src="/assets/images/icons/icon_pickup.svg" />
+    <img src="/assets/images/icons/icon_video.svg"  ng-click="media.startVideoCall(contact);"/>
+    <img src="/assets/images/icons/icon_contact_more.svg" />
+  </div>
+</div>
+
+<img src="/assets/images/spinner.gif" class="more-contacts-loader"/>
+

@@ -1,0 +1,141 @@
+body{
+  margin: 0 !important;
+}
+
+a{
+  cursor: pointer;
+}
+
+textarea, input, button, select { outline: none; }
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0px;
+}
+
+.pseudo-button{
+  cursor: pointer;
+}
+
+.background{
+  background-color: #FFFFFF !important;
+}
+
+.centered-content{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-medium{
+  font-size: 15px;
+  line-height: 15px;
+}
+
+.button-pill{
+  width: 279px;
+  height: 50px;
+  display: block;
+  background-color: #b3b3b3;
+  .border-radius(30px);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 200;
+  line-height: 50px;
+  text-transform: uppercase;
+
+  &.login-button{
+    background-color: #5cad5f;
+
+    &:hover{
+      opacity: 0.7;
+    }
+  }
+}
+
+.button-google{
+  background: #d95232;
+  position: relative;
+
+  .button-icon-left{
+    position: absolute;
+    left: 18px;
+    top: 17px;
+    font-weight: 700;
+  }
+}
+
+.menu-full{
+  width: 100%;
+}
+
+.contact-actions{
+  display: inline-block;
+  float: right;
+  padding: 16px;
+
+  img{
+    opacity: 0.3;
+    width: 24px;
+    height: 24px;
+
+    &:hover{
+      opacity: 1;
+    }
+  }
+}
+
+.user-name {
+  font-size: 15px;
+  color: #4c4c4c;
+}
+
+input[type=date]{
+  font-family: 'RobotoDraft', sans-serif;
+  font-size: 16px;
+}
+
+.hyperlink-override{
+  color: #828487 !important;
+}
+
+.cog-green{
+  color: #33cc66 !important;
+}
+
+.direct-call-button{
+  border: 0;
+  background-color: #33cc66;
+  color: white;
+  border-radius: 37px;
+  padding: 5px;
+  font-size: 11px;
+  width: 64px;
+  text-transform: uppercase;
+  position: absolute;
+  z-index: 99;
+  top: 18px;
+  right: 25px;
+}
+
+.inline-block{
+  display: inline-block;
+}
+
+.error-text{
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  font-size: 15px;
+  color: red;
+}

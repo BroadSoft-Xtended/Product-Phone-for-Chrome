@@ -1,0 +1,40 @@
+{
+  "manifest_version": 2,
+  "name": "chrome phone",
+  "short_name": "chrome phone",
+  "description": "",
+  "version": "0.0.1",
+  "minimum_chrome_version": "38",
+
+  "icons": {
+    "16": "assets/icon_16.png",
+    "128": "assets/icon_128.png"
+  },
+  "app": {
+    "background": {
+      "scripts": [
+        "background.js"
+      ]
+    }
+  },
+  "permissions": [
+    "videoCapture",
+    "audioCapture",
+    "app.window",
+    "storage",
+    "identity",
+    "https://ssl.gstatic.com/",
+    "https://www.googleapis.com/",
+    "https://accounts.google.com/",
+    "https://www.google.com/",
+    "https://xsp.ihs.broadsoft.com/",
+    "https://xsp1.ihs.broadsoft.com/",
+    "https://xsp2.ihs.broadsoft.com/"
+  ],
+  "oauth2": {
+    "client_id": "946586810118-u5hlb6ur1rqaspoba6i2cmn9638pf6aa.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.google.com/m8/feeds"
+    ]
+  }
+}

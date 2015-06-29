@@ -1,0 +1,72 @@
+http://developer.broadsoft.com/php/xtended/sites/default/files/BW-XSIInterfaceSpec-R210.pdf
+
+
+//Get all the contacts in the directory
+http://xsp.ihs.broadsoft.com/com.broadsoft.xsi-actions/v2.0/user/jodonnell@broadsoft.com/directories/Enterprise?start=1000
+//Params
+format=json
+start=1000
+results=100 - 100/page
+firstName=*Jam*
+firstName=jam*/i - Case insensitive
+
+Features
+- Search Google Dir and Broadworks Dir and Google contacts and group them
+
+//Get the call logs
+http://xsp.ihs.broadsoft.com/com.broadsoft.xsi-actions/v2.0/user/jodonnell@broadsoft.com/directories/CallLogs
+
+
+//Status dropdown
+can be verified here https://xsp1.ihs.broadsoft.com/Common/folder_contents.jsp?folder=U2&menuId=0
+Call forward always
+do not disturb
+personal assistant
+
+//FFMPEG
+//Or webrtc with the video and audio recording
+//Keep it client side if possible
+maybe this - https://github.com/streamproc/MediaStreamRecorder
+
+
+//How to get all voicemail messages
+http://xsp.ihs.broadsoft.com/com.broadsoft.xsi-actions/v2.0/user/jodonnell@broadsoft.com/VoiceMessagingMessages
+
+//How to get a message and the wav file
+http://xsp.ihs.broadsoft.com/com.broadsoft.xsi-actions/v2.0/user/jodonnell@broadsoft.com/VoiceMessagingMessages/436d878e-0285-467d-9b22-45b60900abe0
+
+
+----WEBRTC----
+//There is a sample app here https://btbc.ihs.broadsoft.com/webrtc/ - where is the code for this
+you need to log in with SIP credentials
+
+my sip password: KWYt090OE6DHKJZZ2B3f0c5523BG9A70D73a2421
+jodonnell@broadsoft.com
+jodonnell
+
+the source code is here: https://github.com/broadsoftxtended/webrtc/tree/master/src
+
+
+----FOCUS--
+All xsi stuff
+Phone Calling
+Video calling
+Full User Interface
+
+-Can deffer for now
+Personal assistant stuff can wait for now
+voicemail can wait
+dropdown for the status
+all the google stuff can wait for now
+
+
+---WEBRTC Config---
+stun:64.212.220.81:3478
+wss://wrs2.ihs.broadsoft.com:8060
+broadsoft.com
+
+sip_uri: 78f6c499a4@broadsoft.com
+
+
+This is where you get the SIP password
+https://xsp.ihs.broadsoft.com/dms/bc/pc/config.xml

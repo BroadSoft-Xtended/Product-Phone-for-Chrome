@@ -1,0 +1,32 @@
+<div class="settings-nav-container vip">
+  <div class="content-container">
+    <div class="header-message pad-bottom">Calls from VIPs will ring through regardless of your availability status</div>
+    <div class="form-label">Add VIPs</div>
+
+    <div class="inline-block search-container">
+      <input type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts()"/>
+      <button class="direct-call-button add-button" ng-show="showAddButton && searchText.length > 0" ng-click="addVip({firstName: 'Custom', lastName: '', number: searchText})">Add</button>
+    </div>
+    <div ng-show="searchContactsList.length > 0" class="search-results-container">
+      <div ng-click="addVip(contact)" ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
+        <contact-circle data-contact="contact"></contact-circle>
+        <div class="user-name">{{contact.firstName + ' ' + contact.lastName | truncate:30:35:showContactActions}}</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="content-container last">
+    <div ng-show="exlusionNumbers.length > 0" class="search-results-container results">
+      <div ng-repeat="contact in exlusionNumbers track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
+        <contact-circle data-contact="contact"></contact-circle>
+        <div class="info-container">
+          <div class="user-name user-name-results">{{contact.description | truncate:30:35:showContactActions}}</div>
+          <div class="phone-number">{{contact.number}}</div>
+        </div>
+        <div class="contact-actions" ng-show="showContactActions">
+          <img src="/assets/images/icons/icon-trash-can.svg" ng-click="removeVip(contact)"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="splash-container" ng-init="splashIndex = 0">
+  <div class="splash-header">Selfies wolf drinking vinegar tofu banjo.</div>
+  <div class="splash-text" ng-show="splashIndex == 0">Vinyl slow-carb meditation butcher direct trade listicle, crucifix single-origin coffee
+    sriracha biodiesel street art small batch fixie blog fap. Listicle squid Godard actually kogi ennui pug. Shabby
+    chic mixtape literally, post-ironic Portland four dollar toast.</div>
+
+  <div class="splash-text" ng-show="splashIndex == 1">Banjo slow-carb meditation butcher direct trade listicle, crucifix single-origin coffee
+    sriracha biodiesel street art small batch fixie blog fap. Listicle squid Godard actually kogi ennui pug. Shabby
+    chic mixtape literally, post-ironic Portland four dollar toast.</div>
+
+  <div class="splash-text" ng-show="splashIndex == 2">Cardio slow-carb meditation butcher direct trade listicle, crucifix single-origin coffee
+    sriracha biodiesel street art small batch fixie blog fap. Listicle squid Godard actually kogi ennui pug. Shabby
+    chic mixtape literally, post-ironic Portland four dollar toast.</div>
+
+  <div class="carousel-links">
+    <div class="carousel-dot" ng-class="{'selected': splashIndex == 0}" ng-click="splashIndex = 0; userAction = true;"></div>
+    <div class="carousel-dot" ng-class="{'selected': splashIndex == 1}" ng-click="splashIndex = 1; userAction = true;"></div>
+    <div class="carousel-dot" ng-class="{'selected': splashIndex == 2}" ng-click="splashIndex = 2; userAction = true;"></div>
+  </div>
+
+  <div class="splash-actions">
+    <div class="custom-checkbox">
+      <input type="checkbox" ng-click="avoidSplash()"/>
+      <div class="checkbox-label">Don't show tips at startup</div>
+    </div>
+    <a ui-sref="login" class="button-skip">Skip</a>
+  </div>
+</div>

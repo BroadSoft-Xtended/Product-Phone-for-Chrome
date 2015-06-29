@@ -1,0 +1,25 @@
+<div class="incoming-call">
+  <audio id="ringTone" autoplay autobuffer loop>
+    <source src="/assets/webrtcLibraries/media/ringtone.ogg">
+  </audio>
+
+  <div class="ripple-container">
+    <span class="ripple"></span>
+  </div>
+
+  <div class="user-icon-container">
+    <div class="user-icon">
+      <div class="letter white-text">{{util.getFirstLetter(displayName)}}</div>
+    </div>
+  </div>
+
+  <div class="call-from white-text">Call From</div>
+  <div class="display-name white-text">{{displayName}}</div>
+
+  <div class="actions">
+    <button ng-click="rtc.accept(true)" class="green-action "><i class="fa fa-video-camera"></i></button>
+    <button ng-click="rtc.accept(false)" class="green-action"><i class="fa fa-phone"></i></button>
+    <button ng-click="rtc.decline()" class="red-action"><img src="/assets/images/icons/icon-call-hangup.svg" /></button>
+  </div>
+</div>
+

@@ -1,0 +1,70 @@
+.login{
+  @login-width: 280px;
+
+  &.main-container{
+    width: @login-width;
+  }
+
+  .bs-logo-large{
+    width: 100%;
+    height: 65px;
+    margin-top: 63px;
+  }
+
+  .welcome-message{
+    height: 80px;
+    line-height: 20px;
+    margin-top: 20px;
+    color: #4c4c4c;
+    font-weight: 200;
+  }
+
+  .form-input {
+    width: calc(@login-width - 30px);
+    height: 40px;
+    font-size: 15px;
+    margin-bottom: 8px;
+    padding: 0 15px;
+    color: #c1c1c1;
+    border: solid 1px #e5e5e5;
+  }
+
+  .small-link{
+    font-size: 12px;
+    color: #ADADAD;
+    display: block;
+    text-decoration: none;
+    text-align: left;
+    padding-left: 3px;
+
+    &:hover{
+      opacity: 0.7;
+    }
+  }
+
+  .sign-in-container{
+    margin-left: auto;
+    margin-right: auto;
+    width: @login-width;
+    margin-top: 24px;
+
+    hr {
+      display: inline-block;
+      width: 46px;
+      height: 1px;
+      border: 0;
+      border-top: 1px solid #E7E7E7;
+      margin: 1em 33px;
+      padding: 0;
+      line-height: 10px;
+      vertical-align: middle;
+    }
+  }
+
+  .or{
+    display: inline-block;
+    margin: 10px 0;
+    color: #666666;
+    font-size: 16px;
+  }
+}

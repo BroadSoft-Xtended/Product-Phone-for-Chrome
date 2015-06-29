@@ -1,0 +1,41 @@
+<div class="settings-nav-container vip blocked">
+  <div class="content-container">
+    <div class="header-message pad-bottom">
+      The caller will receive a busy signal and will not be able to leave you voicemail.
+    </div>
+
+    <div class="form-label long">Block Private Calls</div>
+    <input type="checkbox" ng-model="privateCalls" ng-change="togglePrivateCalls()"/>
+    <div class="form-label long">Block Anonymous Calls</div>
+    <input type="checkbox" ng-model="anonymousCalls" ng-change="toggleAnonymousCalls()"/>
+
+  </div>
+  <div class="content-container last">
+    <div class="form-label nudge">Block Specific <br/> Callers</div>
+    <div class="inline-block search-container">
+      <input type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts()"/>
+      <button class="direct-call-button add-button" ng-show="showAddButton && searchText.length > 0" ng-click="addBlocked({firstName: 'Custom', lastName: '', number: searchText})">Add</button>
+    </div>
+
+    <div ng-show="searchContactsList.length > 0" class="search-results-container">
+      <div ng-click="addBlocked(contact)" ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
+        <contact-circle data-contact="contact"></contact-circle>
+        <div class="user-name">{{contact.firstName + ' ' + contact.lastName | truncate:30:35:showContactActions}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="content-container last">
+    <div ng-show="contacts.length > 0" class="search-results-container results">
+      <div ng-repeat="contact in contacts | filter:{name: '!PrivateCalls'} | filter:{name: '!AnonymousCalls'}" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
+        <contact-circle data-contact="contact"></contact-circle>
+        <div class="info-container">
+          <div class="user-name user-name-results">{{contact.name | truncate:30:35:showContactActions}}</div>
+          <div class="phone-number">{{contact.number}}</div>
+        </div>
+        <div class="contact-actions" ng-show="showContactActions">
+          <img src="/assets/images/icons/icon-trash-can.svg" ng-click="removeBlocked(contact)"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

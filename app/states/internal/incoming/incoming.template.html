@@ -1,0 +1,36 @@
+<div class="settings-nav-container incoming">
+  <div class="content-container">
+    <div class="header-message pad-bottom">Change how your incoming calls are handled</div>
+    <div class="form-label">Availability</div>
+    <select ng-model="personalAssistantData.presence" ng-change="setPersonalAssistantData()">
+      <option ng-repeat="option in stateList" ng-value="option.value" ng-selected="option.value == personalAssistantData.presence">{{option.text}}</option>
+    </select>
+  </div>
+  <div class="content-container">
+    <div class="form-label until">Until</div>
+    <input type="checkbox" class="until-checkbox" ng-model="personalAssistantData.enableExpirationTime" ng-change="setPersonalAssistantData()"/>
+    <div class="duration-container">
+      <input type="text" class="date-input" ng-model="personalAssistantData.expirationDate" ng-blur="setPersonalAssistantData()" placeholder="YYYY-MM-DD"/>
+      <select class="time-select" ng-model="personalAssistantData.expirationTime" ng-change="setPersonalAssistantData()">
+        <option ng-value="time" ng-repeat="time in Utility.getTimesForDropDown() track by $index">{{time}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="content-container">
+    <div class="form-label">Transfer To</div>
+    <input type="text" ng-model="personalAssistantData.attendantNumber" ng-blur="setPersonalAssistantData()"/>
+  </div>
+  <div class="content-container">
+    <div class="form-label">Forward To</div>
+    <input type="text" ng-model="callForwardAlways" ng-blur="setCallForwardAlways()"/>
+  </div>
+  <div class="content-container">
+    <div class="form-label mobile-number-text">Mobile Number</div>
+    <input type="checkbox" class="until-checkbox">
+    <input class="" type="text"/>
+  </div>
+  <div class="content-container last">
+    <div class="form-label">Call Notify Email</div>
+    <input type="text" ng-model="callNotifyEmail" ng-blur="setCallNotify()"/>
+  </div>
+</div>

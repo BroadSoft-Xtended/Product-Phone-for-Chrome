@@ -1,0 +1,51 @@
+.recent-container{
+  padding: 5px 0;
+
+  &:hover{
+    background-color: #F4f4f4;
+  }
+
+  .recent-details{
+    display: inline-block;
+  }
+
+  .user-name-container{
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 5px;
+  }
+
+  .user-name{
+    display: block;
+  }
+
+  .recent-arrows{
+    display: inline-block;
+    height: 9px;
+    width: 9px;
+    opacity: 0.3;
+
+    &.received{
+      .rotate();
+    }
+
+    &.missed{
+      .rotate();
+      opacity: 0.8;
+    }
+  }
+
+  .last-called-text{
+    display: inline-block;
+    font-size: 13px;
+    color: #999999;
+    width: 100%;
+  }
+
+  .phone-number{
+    display: inline-block;
+    font-size: 13px;
+    color: #999999;
+    font-weight: bold;
+  }
+}
