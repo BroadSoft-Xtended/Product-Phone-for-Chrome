@@ -219,19 +219,6 @@
       userAgent.attendedTransfer(number, session);
     };
 
-    service.holdAndCall = function(){
-      //sessions[] need to maintain multiple
-      //use the session call id to discern
-
-      //add to it etc.
-      //Remove on terminate
-      //push to it on call
-      //methods need to hold and terminate the correct call
-
-      //session1.hold
-      //session2.call
-    };
-
     service.join = function(){
       //needs to be N-Way
     };
@@ -248,7 +235,14 @@
 
     service.sendDTMF = function(digit) {
       var codes = {'0': 48, '1': 49, '2': 50, '3': 51, '4': 52, '5': 53, '6': 54, '7': 55, '8': 56, '9': 57, '#': '#', '*': '*'};
-      session.sendDTMF(codes[digit], {duration: 200, interToneGap: 50});
+
+      if(service.call1.active){
+        call1.session.sendDTMF(codes[digit], {duration: 200, interToneGap: 50});
+      }
+
+      if(service.call2.active){
+        call2.session.sendDTMF(codes[digit], {duration: 200, interToneGap: 50});
+      }
     };
 
     service.muteAudio = function(isMuted){
@@ -289,9 +283,6 @@
       userAgent.on('onReInvite', function(event){service.onReInvite(event);});
       userAgent.on('newRTCSession', function(e){
         var session = e.data.session;
-
-        console.log('new RTC session', session);
-        console.log('new RTC session', session.remote_identity.display_name);
 
         session.on('progress', function(event) {service.progress(event);});
         session.on('failed', function(event) {service.failed(event);});

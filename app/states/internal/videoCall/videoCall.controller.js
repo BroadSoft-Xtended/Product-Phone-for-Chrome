@@ -28,16 +28,16 @@
           Utility.setChromeToVideoSize();
           $scope.call1Active = true;
           $scope.secondNumberCall = '15062610113';
+          $scope.pendingNumber = '';
 
           $rootScope.$on('apply', function(){
             $scope.$apply();
           });
 
           $rootScope.$on('sessionReady', function(e, event){
-            //Fires when a new session is started
-            $scope.sessions = webRTC.getSessions();
+            $scope.pendingNumber = '';
 
-            console.log('on fired', event);
+            console.log('fired', event);
 
             if(document.querySelector('#dtmfRingBack')){
               document.querySelector('#dtmfRingBack').pause();
@@ -64,19 +64,21 @@
           if($state.params.makeCall){
             document.querySelector('#dtmfRingBack').play();
             $scope.contact = $state.params.contact;
+            $scope.pendingNumber = $scope.contact.number;
             webRTC.makeCall($scope.contact.number, $state.params.displayVideo);
+            console.log('show video', $state.params.displayVideo);
             $scope.sessions = webRTC.getSessions();
           }
 
-          $scope.addNewCall = function(){
+          $scope.addNewCall = function(number){
             webRTC.hold('call1');
             webRTC.call1.active = false;
             webRTC.call2.active = true;
 
-            //TODO
-            //document.querySelector('#dtmfRingBack').play();
+            document.querySelector('#dtmfRingBack').play();
 
-            webRTC.makeCall($scope.secondNumberCall, true);
+            $scope.pendingNumber = $scope.secondNumberCall;
+            webRTC.makeCall(number, true);
           };
 
           $scope.activateCall = function(activeCall){

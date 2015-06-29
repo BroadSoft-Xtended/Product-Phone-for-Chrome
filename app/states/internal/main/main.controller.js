@@ -16,7 +16,7 @@
         $scope.media = Media;
         $scope.showCallButton = false;
         $rootScope.settings = false;
-        $scope.searchText = '15062062704';
+        $scope.searchText = '';
 
         $scope.makeSearchCall = function(){
           Media.startAudioCall({number: $scope.searchText});

@@ -3,53 +3,61 @@
 @layer2: 10;
 
 .video-calls{
-  .legacy-buttons{
+  background-color: #262626;
+  height: 100vh;
+
+  .call-merge-actions{
     position: absolute;
-    z-index: 100;
-    top: 0;
-    right: 0;
+    z-index: @layer2;
+    left: 33%;
+
+    button{
+      display: inline-block;
+      background-color: blue;
+    }
   }
 
-  .myTestButton{
-    background-color: #003bb3;
+  .call-ringing-message{
+    color: #fff;
+    position: absolute;
+    top: 43%;
+    left: 45%;
+    font-weight: 100;
+
+    .calling-message{
+      font-size: 15px;
+    }
+
+    .calling-number{
+      font-size: 12px;
+    }
+  }
+
+  .user-details{
+    font-size: 25px;
+    font-weight: 100;
     color: white;
+    z-index: 1000;
+    position: absolute;
   }
 
   .localVideo {
     position: absolute;
+    z-index: @layer2;
     top: 10px;
     right: 10px;
-    height: 20%;
+
+    video{
+      width: 135px;
+    }
   }
 
   .remoteVideo{
     top: 0;
-    z-index: @layer0;
-    background-color: #262626;
+    z-index: @layer1;
     width: 100%;
     position: absolute;
     height: 100%;
-  }
-
-  .phone-number{
-    position: absolute;
-    top: 36%;
-    left: 45%;
-    margin-top: 100px;
-    display: block;
-    z-index: 9999;
-    color: white;
-    font-size: 17px;
-    font-weight: 100;
-  }
-
-  .audio-only-call-background{
-    width: 100%;
-    height: 100vh;
-    background-color: gray;
-    position: absolute;
-    top: 0;
-    z-index: -1;
   }
 
   .video-call-actions{
@@ -132,12 +140,6 @@
       margin-top: 0;
       margin-left: -4px;
     }
-  }
-
-  .user-details{
-    font-size: 25px;
-    font-weight: 100;
-    color: white;
   }
 
   .dialpad-container{
@@ -226,6 +228,7 @@
     position: relative;
     background: #ffffff;
   }
+
   .arrow-box:after {
     top: 100%;
     left: 50%;
