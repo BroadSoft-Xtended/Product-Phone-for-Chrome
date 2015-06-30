@@ -93,13 +93,13 @@
 
     service.failed = function(event){
       console.log('failed event', event);
-      if(service.call1.session && event.data.cause !== "Rejected"){
+      if(service.call1.session && event.data.cause !== "Rejected" && event.data.cause !== "Canceled"){
         console.log('found the first session');
         service.call1.session.terminate();
       }
       service.call1 = {session: null, active: false};
 
-      if(service.call2.session && event.data.cause !== "Rejected"){
+      if(service.call2.session && event.data.cause !== "Rejected" && event.data.cause !== "Canceled"){
         console.log('found the second session');
         service.call2.session.terminate();
       }
