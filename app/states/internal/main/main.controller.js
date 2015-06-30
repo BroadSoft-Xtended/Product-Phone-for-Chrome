@@ -23,10 +23,6 @@
         };
 
         $scope.searchContacts = function(event){
-          if($scope.searchText.match(/^[0-9 ]+$/) != null){
-            $scope.showCallButton = true;
-          }
-
           if(event.keyCode == 27){
             $scope.searchContactsList = [];
             $scope.searchText = '';

@@ -3,7 +3,6 @@
   ucone.factory('webRTC', ['$q', 'Storage', '$rootScope', '$state', 'Utility', 'Auth', function($q, Storage, $rootScope, $state, Utility, Auth){
     var service = {};
     var userAgent;
-    service.sessions = [];
 
     service.call1 = {session: null, active: false};
     service.call2 = {session: null, active: false};
@@ -11,17 +10,12 @@
     var isVideo = false;
     var configuration;
 
-    service.getSessions = function(){
-      //Return the items needed for the for loop in the UI
-      return service.sessions;
-    };
-
     service.stop = function(){
       userAgent.stop();
     };
 
-    service.toggleVideo = function(isVideo){
-      var options = {
+    service.toggleVideo = function(isVideo, session){
+      var options1 = {
         'mediaConstraints' : {
           'audio' : true,
           'video' : isVideo
@@ -35,9 +29,9 @@
       };
 
       if (userAgent.isConnected() && session) {
-        userAgent.getUserMedia(options, function(localStream) {
-          console.log('in the get user media');
-          var options = {
+        userAgent.getUserMedia(options1, function(localStream) {
+
+          var options2 = {
             'localMedia' : localStream,
             'createOfferConstraints' : {
               'mandatory' : {
@@ -46,9 +40,10 @@
               }
             }
           };
+
           var selfVideo = document.getElementById('selfVideo');
           selfVideo.src = window.URL.createObjectURL(localStream);
-          session.changeSession(options, function() {
+          session.changeSession(options2, function() {
             console.log('change session succeeded');
           }, function() {
             console.log('change session failed');
@@ -67,8 +62,14 @@
 
     service.disconnected = function(event){
       console.log('disconnected');
-      //if(session){session.terminate();}
-      //session = null;
+      service.call1.session.terminate();
+      service.call1 = {session: null, active: false};
+
+      service.call2.session.terminate();
+      service.call2 = {session: null, active: false};
+
+      Utility.setChromeToMinSize();
+      $state.go('app.header.main.favs');
     };
 
     service.registered = function(event){
@@ -77,8 +78,6 @@
     };
 
     service.registrationFailed = function(event){
-      //Emit an error for registration failing
-      //Need to keep retrying this connection here
       $rootScope.registeredWRS = false;
       console.log('registrationFailed');
     };
@@ -94,7 +93,16 @@
 
     service.failed = function(event){
       console.log('failed event', event);
-      console.log('sessions failed', service.sessions);
+      if(service.call1.session){
+        service.call1.session.terminate();
+      }
+      service.call1 = {session: null, active: false};
+
+      if(service.call2.session){
+        service.call2.session.terminate();
+      }
+      service.call1 = {session: null, active: false};
+      service.call2 = {session: null, active: false};
       Utility.setChromeToMinSize();
       $state.go('app.header.main.favs');
     };
@@ -111,18 +119,13 @@
 
     service.held = function(event){
       console.log('held');
-      //console.log(sessions[event.sender.id]);
     };
 
     service.ended = function(event){
       console.log('ended');
-      //Stop the ringtone
-      _.each(service.sessions, function(session){
-        session.session.terminate();
-      });
-
-      service.sessions = [];
       isVideo = false;
+      service.call1 = {session: null, active: false};
+      service.call2 = {session: null, active: false};
       Utility.setChromeToMinSize();
       $state.go('app.header.main.favs');
     };
@@ -132,7 +135,9 @@
     };
 
     service.incomingCall = function(event){
-      $state.go('app.incomingCall', {displayName: session.remote_identity.display_name});
+      console.log('incoming call from');
+      var name = service.call1.session.remote_identity.display_name || service.call2.session.remote_identity.display_name;
+      $state.go('app.incomingCall', {displayName: name});
     };
 
     service.makeCall = function(phoneNumber, displayVideo){
@@ -160,92 +165,95 @@
         }
       };
 
-      if(session){
-        session.answer(options);
+      if(service.call1.session){
+        service.call1.session.answer(options);
+      }
+      else if(service.call2.session){
+        service.call2.session.answer(options);
       }
     };
 
     service.decline = function(){
-      if(session){session.terminate();}
+      if(service.call1.session){
+        service.call1.session.terminate();
+        service.call1 = {session: null, active: false};
+      }
+
+      if(service.call2.session){
+        service.call2.session.terminate();
+        service.call2 = {session: null, active: false};
+      }
+
       Utility.setChromeToMinSize();
       $state.go('app.header.main.favs');
     };
 
-    service.hold = function(type){
+    service.hold = function(session){
+      session.hold(function(){
+        console.log('success');
+        return true;
+      }, function(error){
+        console.log('error');
+        console.log(error);
+      });
+    };
+
+    service.unhold = function(session){
+      session.unhold(function(){
+        console.log('success');
+        return true;
+      }, function(error){
+        console.log('error');
+        console.log(error);
+      });
+    };
+
+    service.transfer = function(number, session, type){
       if(type === 'call1'){
-        service.call1.session.hold(function(){
-          console.log('success');
-        }, function(error){
-          console.log('error');
-          console.log(error);
-        });
+        service.call1 = {session: null, active: false};
       }
 
       if(type === 'call2'){
-        service.call2.session.hold(function(){
-          console.log('success');
-        }, function(error){
-          console.log('error');
-          console.log(error);
-        });
-      }
-    };
-
-    service.unhold = function(type){
-      if(type === 'call1'){
-        service.call1.session.unhold(function(){
-          console.log('success');
-        }, function(error){
-          console.log('error');
-          console.log(error);
-        });
+        service.call2 = {session: null, active: false};
       }
 
-      if(type === 'call2'){
-        service.call2.session.unhold(function(){
-          console.log('success');
-        }, function(error){
-          console.log('error');
-          console.log(error);
-        });
-      }
-    };
-
-    service.transfer = function(number){
       userAgent.transfer(number, session);
+      Utility.setChromeToMinSize();
+      $state.go('app.header.main.favs');
     };
 
-    service.attendedTransfer = function(number) {
+    service.attendedTransfer = function(number, session) {
       userAgent.attendedTransfer(number, session);
     };
 
-    service.join = function(){
-      //needs to be N-Way
-    };
+    service.hangUp = function(type){
+      if(type === 'call1'){
+        service.call1.session.terminate();
+        service.call1 = {session: null, active: false};
+      }
 
-    service.hangUp = function(){
-      _.each(service.sessions, function(item){
-        item.session.terminate();
-      });
-      service.sessions = [];
+      if(type === 'call2'){
+        service.call2.session.terminate();
+        service.call2 = {session: null, active: false};
+      }
 
       Utility.setChromeToMinSize();
       $state.go('app.header.main.favs');
     };
 
-    service.sendDTMF = function(digit) {
-      var codes = {'0': 48, '1': 49, '2': 50, '3': 51, '4': 52, '5': 53, '6': 54, '7': 55, '8': 56, '9': 57, '#': '#', '*': '*'};
+    service.sendDTMF = function(digit, session) {
+      var codes = {'0': '0', '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '#': '#', '*': '*'};
 
       if(service.call1.active){
-        call1.session.sendDTMF(codes[digit], {duration: 200, interToneGap: 50});
+        session.sendDTMF(codes[digit], {duration: 200, interToneGap: 50});
       }
 
       if(service.call2.active){
-        call2.session.sendDTMF(codes[digit], {duration: 200, interToneGap: 50});
+        session.sendDTMF(codes[digit], {duration: 200, interToneGap: 50});
       }
     };
 
-    service.muteAudio = function(isMuted){
+    service.muteAudio = function(isMuted, session){
       var localStreams = session ? session.getLocalStreams() : null;
       if(!localStreams) {
         return;
@@ -291,7 +299,6 @@
         session.on('held', function(event) {service.held(event);});
         session.on('ended', function(event) {service.ended(event);});
         session.on('newDTMF', function(event) {service.newDTMF(event);});
-        if (session.direction === 'incoming') {service.incomingCall(e);}
 
         if(service.call1.session == null){
           console.log('set 1');
@@ -301,6 +308,8 @@
           console.log('set 2');
           service.call2 = {session: session, active: true};
         }
+
+        if (session.direction === 'incoming') {service.incomingCall(e);}
       });
 
       userAgent.start();

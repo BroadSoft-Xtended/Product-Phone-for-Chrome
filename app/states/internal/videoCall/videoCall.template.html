@@ -1,11 +1,9 @@
 <div class="video-calls">
   <!--GLOBALS-->
-  <div class="call-merge-actions">
-    <button class="call-merging-buttons" ng-click="activateCall('call1')">Activate Call 1</button>
-    <button class="call-merging-buttons" ng-click="joinCalls()">Join Both Calls</button>
+  <div class="call-merge-actions" ng-show="rtc.call1.session && rtc.call2.session">
+    <button class="call-merging-buttons " ng-click="activateCall('call1')">Activate Call 1</button>
+    <button class="call-merging-buttons join-calls-button" ng-click="joinCalls()">Join</button>
     <button class="call-merging-buttons" ng-click="activateCall('call2')">Activate Call 2</button>
-
-    <button ng-click="addNewCall('14104014435');">Make another Call</button>
   </div>
 
   <div class="call-ringing-message" ng-show="pendingNumber !== ''">
@@ -32,18 +30,18 @@
   <!--PER SESSION-->
   <div ng-show="rtc.call1.active">
     <div class="video-call-actions">
-      <a class="first hold" ng-click="held = !held; rtc.hold('call1');" ng-show="!held"><i class="fa fa-pause pause"></i></a>
-      <a class="first hold red" ng-click="held = !held; rtc.unhold('call1');" ng-show="held"><i class="fa fa-pause pause"></i></a>
-      <a ng-show="!muted" ng-click="muted = true; rtc.muteAudio(true);" class="muteAudioIcon">
+      <a class="first hold" ng-click="held = !held; rtc.hold(rtc.call1.session);" ng-show="!held"><i class="fa fa-pause pause"></i></a>
+      <a class="first hold red" ng-click="held = !held; rtc.unhold(rtc.call1.session);" ng-show="held"><i class="fa fa-pause pause"></i></a>
+      <a ng-show="!muted" ng-click="muted = true; rtc.muteAudio(true, rtc.call1.session);" class="muteAudioIcon">
         <img src="/assets/images/icons/icon-call-mute.svg" class="mute muteAudioIcon" />
       </a>
-      <a ng-show="muted" ng-click="muted = false; rtc.muteAudio(false);" class="unmuteAudioIcon">
+      <a ng-show="muted" ng-click="muted = false; rtc.muteAudio(false, rtc.call1.session);" class="unmuteAudioIcon">
         <img src="/assets/images/icons/icon-call-mute-red.svg" class="mute unmuteAudioIcon" />
       </a>
-      <a ng-show="video" ng-click="enableVideo(false)" class="selfViewDisable">
+      <a ng-show="video" ng-click="rtc.toggleVideo(false, rtc.call1.session); video = false;" class="selfViewDisable">
         <i class="fa fa-video-camera video-camera"></i>
       </a>
-      <a ng-show="!video" ng-click="enableVideo(true)" class="selfViewEnable">
+      <a ng-show="!video" ng-click="rtc.toggleVideo(true, rtc.call1.session); video = true;" class="selfViewEnable">
         <i class="fa fa-video-camera video-camera red"></i>
       </a>
       <a ng-click="showDialPad = !showDialPad; showSearchTransfer = false; showSearchAdd = false;"><img src="/assets/images/icons/icon-dialpad.svg" class="dial-pad" /></a>
@@ -53,7 +51,7 @@
       <a ng-click="showSearchAdd = !showSearchAdd; showSearchTransfer = false; showDialPad = false;">
         <img src="/assets/images/icons/icon-add-call.svg" class="add-call" />
       </a>
-      <a class="last hangup" ng-click="rtc.hangUp()">
+      <a class="last hangup" ng-click="rtc.hangUp('call1')">
         <img src="/assets/images/icons/icon-call-hangup.svg" class="hangup" />
       </a>
 
@@ -63,12 +61,13 @@
           <div class="search-container">
             <i class="fa fa-search search-icon"></i>
             <input type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts()"/>
+            <button class="direct-call-button" ng-show="searchText.length > 0" ng-click="transferCall(searchText, rtc.call1.session, 'call1')">Call</button>
             <div ng-show="searchContactsList.length > 0" class="search-results-container">
               <div ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
                 <contact-circle data-contact="contact"></contact-circle>
                 <div class="user-name">{{contact.firstName + ' ' + contact.lastName | truncate:30:35:showContactActions}}</div>
                 <div class="contact-actions" ng-show="showContactActions">
-                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="transferCall(contact.number)"/>
+                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="transferCall(contact.number, rtc.call1.session, 'call1')"/>
                 </div>
               </div>
             </div>
@@ -82,12 +81,13 @@
           <div class="search-container">
             <i class="fa fa-search search-icon"></i>
             <input type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts()"/>
+            <button class="direct-call-button" ng-show="searchText.length > 0" ng-click="addNewCall(searchText); searchContactsList.length = [];">Call</button>
             <div ng-show="searchContactsList.length > 0" class="search-results-container">
               <div ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
                 <contact-circle data-contact="contact"></contact-circle>
                 <div class="user-name">{{contact.firstName + ' ' + contact.lastName | truncate:30:35:showContactActions}}</div>
                 <div class="contact-actions" ng-show="showContactActions">
-                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="addNewCall(contact.number);"/>
+                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="addNewCall(contact.number); searchContactsList.length = [];"/>
                 </div>
               </div>
             </div>
@@ -96,36 +96,36 @@
       </div>
 
       <div class="dialpad-container" ng-show="showDialPad">
-        <div class="key" ng-click="playDtmf('1')"><span class="number-text">1</span><span class="sub-text"></span></div>
-        <div class="key" ng-click="playDtmf('2')"><span class="number-text">2</span><span class="sub-text">ABC</span></div>
-        <div class="key" ng-click="playDtmf('3')"><span class="number-text">3</span><span class="sub-text">DEF</span></div>
-        <div class="key" ng-click="playDtmf('4')"><span class="number-text">4</span><span class="sub-text">GHI</span></div>
-        <div class="key" ng-click="playDtmf('5')"><span class="number-text">5</span><span class="sub-text">JKL</span></div>
-        <div class="key" ng-click="playDtmf('6')"><span class="number-text">6</span><span class="sub-text">MNO</span></div>
-        <div class="key" ng-click="playDtmf('7')"><span class="number-text">7</span><span class="sub-text">PQRS</span></div>
-        <div class="key" ng-click="playDtmf('8')"><span class="number-text">8</span><span class="sub-text">TUV</span></div>
-        <div class="key" ng-click="playDtmf('9')"><span class="number-text">9</span><span class="sub-text">WXYZ</span></div>
-        <div class="key" ng-click="playDtmf('*')"><span class="number-text">*</span><span class="sub-text"></span></div>
-        <div class="key" ng-click="playDtmf('0')"><span class="number-text">0</span><span class="sub-text">+</span></div>
-        <div class="key" ng-click="playDtmf('#')"><span class="number-text">#</span><span class="sub-text"></span></div>
+        <div class="key" ng-click="playDtmf('1', rtc.call1.session)"><span class="number-text">1</span><span class="sub-text"></span></div>
+        <div class="key" ng-click="playDtmf('2', rtc.call1.session)"><span class="number-text">2</span><span class="sub-text">ABC</span></div>
+        <div class="key" ng-click="playDtmf('3', rtc.call1.session)"><span class="number-text">3</span><span class="sub-text">DEF</span></div>
+        <div class="key" ng-click="playDtmf('4', rtc.call1.session)"><span class="number-text">4</span><span class="sub-text">GHI</span></div>
+        <div class="key" ng-click="playDtmf('5', rtc.call1.session)"><span class="number-text">5</span><span class="sub-text">JKL</span></div>
+        <div class="key" ng-click="playDtmf('6', rtc.call1.session)"><span class="number-text">6</span><span class="sub-text">MNO</span></div>
+        <div class="key" ng-click="playDtmf('7', rtc.call1.session)"><span class="number-text">7</span><span class="sub-text">PQRS</span></div>
+        <div class="key" ng-click="playDtmf('8', rtc.call1.session)"><span class="number-text">8</span><span class="sub-text">TUV</span></div>
+        <div class="key" ng-click="playDtmf('9', rtc.call1.session)"><span class="number-text">9</span><span class="sub-text">WXYZ</span></div>
+        <div class="key" ng-click="playDtmf('*', rtc.call1.session)"><span class="number-text">*</span><span class="sub-text"></span></div>
+        <div class="key" ng-click="playDtmf('0', rtc.call1.session)"><span class="number-text">0</span><span class="sub-text">+</span></div>
+        <div class="key" ng-click="playDtmf('#', rtc.call1.session)"><span class="number-text">#</span><span class="sub-text"></span></div>
       </div>
     </div>
   </div>
 
   <div ng-show="rtc.call2.active">
     <div class="video-call-actions">
-      <a class="first hold" ng-click="held = !held; rtc.hold('call2');" ng-show="!held"><i class="fa fa-pause pause"></i></a>
-      <a class="first hold red" ng-click="held = !held; rtc.unhold('call2');" ng-show="held"><i class="fa fa-pause pause"></i></a>
-      <a ng-show="!muted" ng-click="muted = true; rtc.muteAudio(true);" class="muteAudioIcon">
+      <a class="first hold" ng-click="held = !held; rtc.hold(rtc.call2.session);" ng-show="!held" ><i class="fa fa-pause pause"></i></a>
+      <a class="first hold red" ng-click="held = !held; rtc.unhold(rtc.call2.session);" ng-show="held"><i class="fa fa-pause pause"></i></a>
+      <a ng-show="!muted" ng-click="muted = true; rtc.muteAudio(true, rtc.call2.session);" class="muteAudioIcon">
         <img src="/assets/images/icons/icon-call-mute.svg" class="mute muteAudioIcon" />
       </a>
-      <a ng-show="muted" ng-click="muted = false; rtc.muteAudio(false);" class="unmuteAudioIcon">
+      <a ng-show="muted" ng-click="muted = false; rtc.muteAudio(false, rtc.call2.session);" class="unmuteAudioIcon">
         <img src="/assets/images/icons/icon-call-mute-red.svg" class="mute unmuteAudioIcon" />
       </a>
-      <a ng-show="video" ng-click="enableVideo(false)" class="selfViewDisable">
+      <a ng-show="video" ng-click="rtc.toggleVideo(false, rtc.call2.session); video = false;" class="selfViewDisable">
         <i class="fa fa-video-camera video-camera"></i>
       </a>
-      <a ng-show="!video" ng-click="enableVideo(true)" class="selfViewEnable">
+      <a ng-show="!video" ng-click="rtc.toggleVideo(true, rtc.call2.session); video = true;" class="selfViewEnable">
         <i class="fa fa-video-camera video-camera red"></i>
       </a>
       <a ng-click="showDialPad = !showDialPad; showSearchTransfer = false; showSearchAdd = false;"><img src="/assets/images/icons/icon-dialpad.svg" class="dial-pad" /></a>
@@ -135,7 +135,7 @@
       <a ng-click="showSearchAdd = !showSearchAdd; showSearchTransfer = false; showDialPad = false;">
         <img src="/assets/images/icons/icon-add-call.svg" class="add-call" />
       </a>
-      <a class="last hangup" ng-click="rtc.hangUp()">
+      <a class="last hangup" ng-click="rtc.hangUp('call2')">
         <img src="/assets/images/icons/icon-call-hangup.svg" class="hangup" />
       </a>
 
@@ -145,12 +145,13 @@
           <div class="search-container">
             <i class="fa fa-search search-icon"></i>
             <input type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts()"/>
+            <button class="direct-call-button" ng-show="searchText.length > 0" ng-click="transferCall(searchText, rtc.call2.session, 'call2')">Call</button>
             <div ng-show="searchContactsList.length > 0" class="search-results-container">
               <div ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
                 <contact-circle data-contact="contact"></contact-circle>
                 <div class="user-name">{{contact.firstName + ' ' + contact.lastName | truncate:30:35:showContactActions}}</div>
                 <div class="contact-actions" ng-show="showContactActions">
-                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="transferCall(contact.number)"/>
+                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="transferCall(contact.number, rtc.call2.session, 'call2')"/>
                 </div>
               </div>
             </div>
@@ -164,12 +165,13 @@
           <div class="search-container">
             <i class="fa fa-search search-icon"></i>
             <input type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts()"/>
+            <button class="direct-call-button" ng-show="searchText.length > 0" ng-click="addNewCall(searchText); searchContactsList.length = [];">Call</button>
             <div ng-show="searchContactsList.length > 0" class="search-results-container">
               <div ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
                 <contact-circle data-contact="contact"></contact-circle>
                 <div class="user-name">{{contact.firstName + ' ' + contact.lastName | truncate:30:35:showContactActions}}</div>
                 <div class="contact-actions" ng-show="showContactActions">
-                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="addNewCall(contact.number);"/>
+                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="addNewCall(contact.number); searchContactsList.length = [];"/>
                 </div>
               </div>
             </div>
@@ -178,18 +180,18 @@
       </div>
 
       <div class="dialpad-container" ng-show="showDialPad">
-        <div class="key" ng-click="playDtmf('1')"><span class="number-text">1</span><span class="sub-text"></span></div>
-        <div class="key" ng-click="playDtmf('2')"><span class="number-text">2</span><span class="sub-text">ABC</span></div>
-        <div class="key" ng-click="playDtmf('3')"><span class="number-text">3</span><span class="sub-text">DEF</span></div>
-        <div class="key" ng-click="playDtmf('4')"><span class="number-text">4</span><span class="sub-text">GHI</span></div>
-        <div class="key" ng-click="playDtmf('5')"><span class="number-text">5</span><span class="sub-text">JKL</span></div>
-        <div class="key" ng-click="playDtmf('6')"><span class="number-text">6</span><span class="sub-text">MNO</span></div>
-        <div class="key" ng-click="playDtmf('7')"><span class="number-text">7</span><span class="sub-text">PQRS</span></div>
-        <div class="key" ng-click="playDtmf('8')"><span class="number-text">8</span><span class="sub-text">TUV</span></div>
-        <div class="key" ng-click="playDtmf('9')"><span class="number-text">9</span><span class="sub-text">WXYZ</span></div>
-        <div class="key" ng-click="playDtmf('*')"><span class="number-text">*</span><span class="sub-text"></span></div>
-        <div class="key" ng-click="playDtmf('0')"><span class="number-text">0</span><span class="sub-text">+</span></div>
-        <div class="key" ng-click="playDtmf('#')"><span class="number-text">#</span><span class="sub-text"></span></div>
+        <div class="key" ng-click="playDtmf('1', rtc.call2.session)"><span class="number-text">1</span><span class="sub-text"></span></div>
+        <div class="key" ng-click="playDtmf('2', rtc.call2.session)"><span class="number-text">2</span><span class="sub-text">ABC</span></div>
+        <div class="key" ng-click="playDtmf('3', rtc.call2.session)"><span class="number-text">3</span><span class="sub-text">DEF</span></div>
+        <div class="key" ng-click="playDtmf('4', rtc.call2.session)"><span class="number-text">4</span><span class="sub-text">GHI</span></div>
+        <div class="key" ng-click="playDtmf('5', rtc.call2.session)"><span class="number-text">5</span><span class="sub-text">JKL</span></div>
+        <div class="key" ng-click="playDtmf('6', rtc.call2.session)"><span class="number-text">6</span><span class="sub-text">MNO</span></div>
+        <div class="key" ng-click="playDtmf('7', rtc.call2.session)"><span class="number-text">7</span><span class="sub-text">PQRS</span></div>
+        <div class="key" ng-click="playDtmf('8', rtc.call2.session)"><span class="number-text">8</span><span class="sub-text">TUV</span></div>
+        <div class="key" ng-click="playDtmf('9', rtc.call2.session)"><span class="number-text">9</span><span class="sub-text">WXYZ</span></div>
+        <div class="key" ng-click="playDtmf('*', rtc.call2.session)"><span class="number-text">*</span><span class="sub-text"></span></div>
+        <div class="key" ng-click="playDtmf('0', rtc.call2.session)"><span class="number-text">0</span><span class="sub-text">+</span></div>
+        <div class="key" ng-click="playDtmf('#', rtc.call2.session)"><span class="number-text">#</span><span class="sub-text"></span></div>
       </div>
     </div>
   </div>

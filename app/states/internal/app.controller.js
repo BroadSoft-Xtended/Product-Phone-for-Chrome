@@ -14,7 +14,8 @@
         console.log('in the app controller');
 
         chrome.app.window.current().onClosed.addListener(function(){
-          webRTC.hangUp();
+          webRTC.hangUp('call1');
+          webRTC.hangUp('call2');
           webRTC.stop();
           $rootScope.username = undefined;
           $rootScope.authdata = undefined;

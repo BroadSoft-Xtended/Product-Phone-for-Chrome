@@ -12,8 +12,25 @@
     left: 33%;
 
     button{
+      .pseudo-button;
+      height: 27px;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      background-color: #000;
       display: inline-block;
-      background-color: blue;
+      font-size: 12px;
+      font-weight: 100;
+      padding: 0 16px;
+      margin-top: 12px;
+
+      &:hover{
+        opacity: 0.7;
+      }
+    }
+
+    .join-calls-button{
+      background-color: green;
     }
   }
 
@@ -25,11 +42,12 @@
     font-weight: 100;
 
     .calling-message{
-      font-size: 15px;
+      font-size: 24px;
+      font-weight: 300;
     }
 
     .calling-number{
-      font-size: 12px;
+      font-size: 16px;
     }
   }
 
@@ -39,6 +57,8 @@
     color: white;
     z-index: 1000;
     position: absolute;
+    top: 10px;
+    left: 10px;
   }
 
   .localVideo {

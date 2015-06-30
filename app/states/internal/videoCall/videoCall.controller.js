@@ -27,7 +27,6 @@
           $scope.rtc = webRTC;
           Utility.setChromeToVideoSize();
           $scope.call1Active = true;
-          $scope.secondNumberCall = '15062610113';
           $scope.pendingNumber = '';
 
           $rootScope.$on('apply', function(){
@@ -62,24 +61,26 @@
           });
 
           if($state.params.makeCall){
+            //Make a call on page load
             document.querySelector('#dtmfRingBack').play();
             $scope.contact = $state.params.contact;
             $scope.pendingNumber = $scope.contact.number;
             webRTC.makeCall($scope.contact.number, $state.params.displayVideo);
             console.log('show video', $state.params.displayVideo);
-            $scope.sessions = webRTC.getSessions();
           }
 
           $scope.addNewCall = function(number){
+            console.log('calling a new number', number);
+
             webRTC.hold('call1');
             webRTC.call1.active = false;
             webRTC.call2.active = true;
 
             document.querySelector('#dtmfRingBack').play();
 
-            $scope.pendingNumber = $scope.secondNumberCall;
             webRTC.makeCall(number, true);
           };
+
 
           $scope.activateCall = function(activeCall){
             if(activeCall == 'call1'){
@@ -98,31 +99,11 @@
             }
           };
 
-          $scope.holdCurrentCall = function(currentSession){
-            var sessions = webRTC.getSessions();
-            if(sessions.length > 1){
-              _.each(sessions, function(session){
-                console.log('sessid', session.id);
-                if(session.id !== currentSession.id){
-                  webRTC.unhold(session.session);
-                }
-                else{
-                  webRTC.hold(currentSession);
-                }
-              });
-            }
-          };
-
           $scope.joinCalls = function(){
             BSConference.start();
           };
 
-          $scope.enableVideo = function(val){
-            $scope.video = val;
-            webRTC.toggleVideo(val);
-          };
-
-          $scope.playDtmf = function(number){
+          $scope.playDtmf = function(number, session){
             if(number === '#'){
               document.querySelector('#dtmfHash').play();
             }
@@ -132,7 +113,7 @@
             else{
               document.querySelector('#dtmf' + number).play();
             }
-            webRTC.sendDTMF(number);
+            webRTC.sendDTMF(number, session);
           };
 
           $scope.searchContacts = function(){
@@ -146,13 +127,8 @@
             });
           };
 
-          $scope.addCall = function(number){
-            webRTC.attendedTransfer(number);
-            $state.go('app.header.main.favs');
-          };
-
-          $scope.transferCall = function(number){
-            webRTC.transfer(number);
+          $scope.transferCall = function(number, session){
+            webRTC.transfer(number, session);
             $state.go('app.header.main.favs');
           };
 
