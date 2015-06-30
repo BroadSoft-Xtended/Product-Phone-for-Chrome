@@ -32,14 +32,14 @@
       chrome.storage.local.get(function(storage){
         configuration = {
           'ws_servers' : [ {
-            'ws_uri' : 'wss://wrs3.ihs.broadsoft.com:8060',
+            'ws_uri' : storage.sipConfig.primaryWrsAddress,
             'weight' : 0
           } ],
           'uri' : storage.sipConfig.sipLineport,
           'auth_user': storage.sipConfig.sipUsername,
           'authorization_user': storage.sipConfig.sipUsername,
           'password': storage.sipConfig.sipPassword,
-          'stun_servers': '64.212.220.82:3478',
+          'stun_servers': storage.sipConfig.primaryStunServer,
           'trace_sip' : true,
           'displayName': (_.unescape(storage.sipConfig.userFirstName + ' ' + storage.sipConfig.userLastName)).replace("&apos;", "'")
         };
