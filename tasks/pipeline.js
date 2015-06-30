@@ -8,7 +8,8 @@ var jsFilesToInject = [
   'app/**/*controller.js',
   'app/**/*directive.js',
   'app/**/*factory.js',
-  'app/**/*filter.js'
+  'app/**/*filter.js',
+  'locals/**/*.js'
 ];
 
 var templateFilesToInject = [

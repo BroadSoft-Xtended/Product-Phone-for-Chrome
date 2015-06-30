@@ -1,13 +1,13 @@
 <div class="settings-nav-container incoming">
   <div class="content-container">
-    <div class="header-message pad-bottom">Change how your incoming calls are handled</div>
-    <div class="form-label">Availability</div>
+    <div class="header-message pad-bottom">{{'Incoming-HeaderMessage' | translator}}</div>
+    <div class="form-label">{{'Availability' | translator}}</div>
     <select ng-model="personalAssistantData.presence" ng-change="setPersonalAssistantData()">
-      <option ng-repeat="option in stateList" ng-value="option.value" ng-selected="option.value == personalAssistantData.presence">{{option.text}}</option>
+      <option ng-repeat="option in stateList" ng-value="option.value" ng-selected="option.value == personalAssistantData.presence">{{option.text | translator}}</option>
     </select>
   </div>
   <div class="content-container">
-    <div class="form-label until">Until</div>
+    <div class="form-label until">{{'Until' | translator}}</div>
     <input type="checkbox" class="until-checkbox" ng-model="personalAssistantData.enableExpirationTime" ng-change="setPersonalAssistantData()"/>
     <div class="duration-container">
       <input type="text" class="date-input" ng-model="personalAssistantData.expirationDate" ng-blur="setPersonalAssistantData()" placeholder="YYYY-MM-DD"/>
@@ -17,20 +17,20 @@
     </div>
   </div>
   <div class="content-container">
-    <div class="form-label">Transfer To</div>
+    <div class="form-label">{{'TransferTo' | translator}}</div>
     <input type="text" ng-model="personalAssistantData.attendantNumber" ng-blur="setPersonalAssistantData()"/>
   </div>
   <div class="content-container">
-    <div class="form-label">Forward To</div>
+    <div class="form-label">{{'ForwardTo' | translator}}</div>
     <input type="text" ng-model="callForwardAlways" ng-blur="setCallForwardAlways()"/>
   </div>
   <div class="content-container">
-    <div class="form-label mobile-number-text">Mobile Number</div>
+    <div class="form-label mobile-number-text">{{'MobileNumber' | translator}}</div>
     <input type="checkbox" class="until-checkbox">
     <input class="" type="text"/>
   </div>
   <div class="content-container last">
-    <div class="form-label">Call Notify Email</div>
+    <div class="form-label">{{'CallNotifyEmail' | translator}}</div>
     <input type="text" ng-model="callNotifyEmail" ng-blur="setCallNotify()"/>
   </div>
 </div>

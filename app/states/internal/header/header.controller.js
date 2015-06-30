@@ -12,6 +12,7 @@
 
       controller: ['$rootScope', '$scope', 'BSPersonalAssistant', function ($rootScope, $scope, BSPersonalAssistant) {
         console.log('in the header controller');
+        console.log('Your language is:', $rootScope.language);
         $scope.searchText = '';
         $scope.searchContactsList = [];
 

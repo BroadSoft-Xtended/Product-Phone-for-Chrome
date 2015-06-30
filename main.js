@@ -10,7 +10,7 @@ var ucone = angular.module('ucone', ["ui.router", "base64"], function($provide) 
 ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
   // For any unmatched url, send to /route1
-  $urlRouterProvider.otherwise("/app/header/main/favs");
+  //$urlRouterProvider.otherwise("/app/header/main/favs");
   //$urlRouterProvider.otherwise("/app/header/settings/incoming");
   $urlRouterProvider.otherwise("/login");
   //$urlRouterProvider.otherwise("/app/videoCall");

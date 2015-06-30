@@ -13,6 +13,8 @@
 
         Utility.setChromeToMinSize();
 
+        $rootScope.language = Utility.getBrowserLanguage();
+
         //TODO REMOVE
         $scope.email = 'jodonnell@broadsoft.com';
         $scope.password = window.password;

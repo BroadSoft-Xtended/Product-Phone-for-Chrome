@@ -1,10 +1,10 @@
 <div class="settings-nav-container vip">
   <div class="content-container">
-    <div class="header-message pad-bottom">Calls from VIPs will ring through regardless of your availability status</div>
-    <div class="form-label">Add VIPs</div>
+    <div class="header-message pad-bottom">{{'VIP-HeaderMessage' | translator}}</div>
+    <div class="form-label">{{'AddVIPs' | translator}}</div>
 
     <div class="inline-block search-container">
-      <input type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts()"/>
+      <input type="text" placeholder="{{'SearchExample' | translator}}" ng-model="searchText" ng-keyup="searchContacts()"/>
       <button class="direct-call-button add-button" ng-show="showAddButton && searchText.length > 0" ng-click="addVip({firstName: 'Custom', lastName: '', number: searchText})">Add</button>
     </div>
     <div ng-show="searchContactsList.length > 0" class="search-results-container">

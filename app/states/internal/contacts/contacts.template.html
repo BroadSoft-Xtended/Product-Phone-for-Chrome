@@ -1,4 +1,4 @@
-<div class="directory-separator google-separator">Google Contacts</div>
+<div class="directory-separator google-separator">{{'GoogleContacts' | translator}}</div>
 
 <div ng-repeat="contact in googleContacts track by $index" class="favs-container" ng-mouseenter="showContactActions = true" ng-mouseleave="showContactActions = false">
   <contact-circle data-contact="contact"></contact-circle>
@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<div class="directory-separator">Telephone Directory</div>
+<div class="directory-separator">{{'TelephoneDirectory' | translator}}</div>
 
 <div ng-repeat="contact in telephoneContacts track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
   <contact-circle data-contact="contact"></contact-circle>

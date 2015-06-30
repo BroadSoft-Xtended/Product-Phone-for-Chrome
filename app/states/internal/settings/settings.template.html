@@ -16,9 +16,9 @@
 
 <div class="settings-tabs nav-tabs" ng-init="currentTab = 'incoming'">
   <div class="main-nav-tabs">
-    <a ui-sref="app.header.settings.incoming" class="nav-link" ng-class="{selected: currentTab == 'incoming'}" ng-click="currentTab = 'incoming'">Incoming</a>
-    <a ui-sref="app.header.settings.vip" class="nav-link" ng-class="{selected: currentTab == 'vip'}" ng-click="currentTab = 'vip'">Vip</a>
-    <a ui-sref="app.header.settings.blocked" class="nav-link" ng-class="{selected: currentTab == 'blocked'}" ng-click="currentTab = 'blocked'">Blocked</a>
+    <a ui-sref="app.header.settings.incoming" class="nav-link" ng-class="{selected: currentTab == 'incoming'}" ng-click="currentTab = 'incoming'">{{'Incoming' | translator}}</a>
+    <a ui-sref="app.header.settings.vip" class="nav-link" ng-class="{selected: currentTab == 'vip'}" ng-click="currentTab = 'vip'">{{'VIP' | translator}}</a>
+    <a ui-sref="app.header.settings.blocked" class="nav-link" ng-class="{selected: currentTab == 'blocked'}" ng-click="currentTab = 'blocked'">{{'Blocked' | translator}}</a>
   </div>
   <a ui-sref="app.header.main.favs">
     <i class="fa fa-arrow-left"></i>

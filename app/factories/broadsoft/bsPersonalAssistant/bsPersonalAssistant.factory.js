@@ -82,12 +82,12 @@
 
     service.getUserStates = function(){
       return [{value: 'None', text: 'Available'},
-      {value: 'Business Trip', text: 'Business Trip'},
-      {value: 'Gone for the Day', text: 'Gone for the day'},
+      {value: 'Business Trip', text: 'BusinessTrip'},
+      {value: 'Gone for the Day', text: 'GoneForTheDay'},
       {value: 'Lunch', text: 'Lunch'},
       {value: 'Meeting', text: 'Meeting'},
-      {value: 'Out Of Office', text: 'Out of office'},
-      {value: 'Temporarily Out', text: 'Temporarily Out'},
+      {value: 'Out Of Office', text: 'OutOfOffice'},
+      {value: 'Temporarily Out', text: 'TemporarilyOut'},
       {value: 'Training', text: 'Training'},
       {value: 'Unavailable', text: 'Unavailable'},
       {value: 'Vacation', text: 'Vacation'}];

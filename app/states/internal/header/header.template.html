@@ -4,11 +4,10 @@
   <div class="status-name">{{$root.userFirstName}}</div>
   <div class="status-select-container">
     <select class="{{selectedStatus}} update-status pseudo-button" data-ng-model="selectedStatus" ng-change="statusChange()">
-      <option ng-repeat="option in stateList" ng-value="option.value" ng-selected="option.value == selectedStatus">{{option.text}}</option>
+      <option ng-repeat="option in stateList" ng-value="option.value" ng-selected="option.value == selectedStatus">{{option.text | translator}}</option>
     </select>
   </div>
-  <!--TODO Link to the voicemail once it works-->
-  <!--<a ui-sref="app.header.myVoicemail"><img class="ic-pull-contact pseudo-button" src="/assets/images/icons/icon-voicemail-no-messages.svg"/></a>-->
+
   <a ui-sref="app.header.main.favs" ng-show="$root.settings"><i class="fa fa-cog ic-cog pseudo-button hyperlink-override" ng-class="{'cog-green': $root.settings}"></i></a>
   <a ui-sref="app.header.settings.incoming" ng-show="!$root.settings"><i class="fa fa-cog ic-cog pseudo-button hyperlink-override" ng-class="{'cog-green': $root.settings}"></i></a>
 </div>

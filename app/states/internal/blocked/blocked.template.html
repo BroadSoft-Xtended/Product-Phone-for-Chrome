@@ -1,19 +1,19 @@
 <div class="settings-nav-container vip blocked">
   <div class="content-container">
     <div class="header-message pad-bottom">
-      The caller will receive a busy signal and will not be able to leave you voicemail.
+      {{'Blocked-HeaderMessage' | translator}}
     </div>
 
-    <div class="form-label long">Block Private Calls</div>
+    <div class="form-label long">{{'BlockPrivateCalls' | translator}}</div>
     <input type="checkbox" ng-model="privateCalls" ng-change="togglePrivateCalls()"/>
-    <div class="form-label long">Block Anonymous Calls</div>
+    <div class="form-label long">{{'BlockAnonymousCalls' | translator}}</div>
     <input type="checkbox" ng-model="anonymousCalls" ng-change="toggleAnonymousCalls()"/>
 
   </div>
   <div class="content-container last">
-    <div class="form-label nudge">Block Specific <br/> Callers</div>
+    <div class="form-label nudge">{{'BlockSpecific' | translator}} <br/> {{'Callers' | translator}}</div>
     <div class="inline-block search-container">
-      <input type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts()"/>
+      <input type="text" placeholder="{{'SearchExample' | translator}}" ng-model="searchText" ng-keyup="searchContacts()"/>
       <button class="direct-call-button add-button" ng-show="showAddButton && searchText.length > 0" ng-click="addBlocked({firstName: 'Custom', lastName: '', number: searchText})">Add</button>
     </div>
 

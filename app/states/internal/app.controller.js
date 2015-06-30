@@ -25,7 +25,7 @@
         chrome.storage.local.get(function(storage){
           if(!$rootScope.username || !$rootScope.authdata){
             console.log('invalid username or authdata');
-            $state.go('login', {message: 'Invalid username or password.'});
+            $state.go('login', {message: 'Login-InvalidError'});
           }
         });
 
@@ -39,8 +39,6 @@
             });
           });
         });
-
-        $rootScope.language = 'en';
 
         $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
           console.error('Error transitioning to state: \'' + toState.name + '\'...');

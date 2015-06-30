@@ -4,8 +4,6 @@
     var service = {};
 
     service.setChromeToMinSize = function(){
-      //TODO Uncomment this
-
       var monitorWidth = window.screen.availWidth;
       var monitorHeight = window.screen.availHeight;
       var top = Math.round((monitorHeight / 2) - (568 / 2));
@@ -22,8 +20,6 @@
     };
 
     service.setChromeToVideoSize = function(){
-      //TODO Uncomment this
-
       var monitorWidth = window.screen.availWidth;
       var monitorHeight = window.screen.availHeight;
       var videoWidth = Math.round(monitorWidth/2);
@@ -88,6 +84,14 @@
       }
       return service.sanitizeDates(date) + 'T' + time +  ':00.000-' + service.getTimeZone();
     };
+
+    service.getBrowserLanguage = function(){
+      var language = navigator.language || navigator.userLanguage || 'en-US';
+      console.log('Your current language is :', language);
+      return language;
+    };
+
+
 
     return service;
   }]);
