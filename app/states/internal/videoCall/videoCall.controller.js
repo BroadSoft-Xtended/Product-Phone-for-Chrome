@@ -72,7 +72,7 @@
           $scope.addNewCall = function(number){
             console.log('calling a new number', number);
 
-            webRTC.hold('call1');
+            webRTC.hold(webRTC.call1.session);
             webRTC.call1.active = false;
             webRTC.call2.active = true;
 

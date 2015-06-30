@@ -93,12 +93,14 @@
 
     service.failed = function(event){
       console.log('failed event', event);
-      if(service.call1.session){
+      if(service.call1.session && event.data.cause !== "Rejected"){
+        console.log('found the first session');
         service.call1.session.terminate();
       }
       service.call1 = {session: null, active: false};
 
-      if(service.call2.session){
+      if(service.call2.session && event.data.cause !== "Rejected"){
+        console.log('found the second session');
         service.call2.session.terminate();
       }
       service.call1 = {session: null, active: false};
@@ -136,7 +138,13 @@
 
     service.incomingCall = function(event){
       console.log('incoming call from');
-      var name = service.call1.session.remote_identity.display_name || service.call2.session.remote_identity.display_name;
+      var name = '';
+      if(service.call1.session){
+        name = service.call1.session.remote_identity.display_name;
+      }
+      else if(service.call2.session){
+        name = service.call2.session.remote_identity.display_name;
+      }
       $state.go('app.incomingCall', {displayName: name});
     };
 
@@ -150,8 +158,7 @@
     };
 
     service.accept = function(videoEnabled){
-      $state.go('app.videoCall');
-
+      console.log('accepting', videoEnabled);
       var options = {
         'mediaConstraints' : {
           'audio' : true,
@@ -171,17 +178,24 @@
       else if(service.call2.session){
         service.call2.session.answer(options);
       }
+
+      $state.go('app.videoCall');
     };
 
     service.decline = function(){
+      console.log('declining call');
       if(service.call1.session){
+        console.log('here');
         service.call1.session.terminate();
         service.call1 = {session: null, active: false};
+        console.log('here');
       }
 
       if(service.call2.session){
+        console.log('here2');
         service.call2.session.terminate();
         service.call2 = {session: null, active: false};
+        console.log('here2');
       }
 
       Utility.setChromeToMinSize();
