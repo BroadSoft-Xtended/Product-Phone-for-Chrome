@@ -600,7 +600,7 @@ input[type=date] {
   font-size: 15px;
   margin-bottom: 8px;
   padding: 0 15px;
-  color: #c1c1c1;
+  color: black;
   border: solid 1px #e5e5e5;
 }
 .login .small-link {

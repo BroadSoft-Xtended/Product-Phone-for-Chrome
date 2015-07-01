@@ -1,7 +1,5 @@
 .idea
 *.psd
 bower_components
-assets/dependencies
 myPassword.js
-node_modules
 .DS_Store
