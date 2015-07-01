@@ -44,6 +44,8 @@
           'displayName': (_.unescape(storage.sipConfig.userFirstName + ' ' + storage.sipConfig.userLastName)).replace("&apos;", "'")
         };
 
+        console.log("the user's config: ", configuration);
+
         $rootScope.userFirstName = storage.sipConfig.userFirstName;
 
         defer.resolve(configuration);
