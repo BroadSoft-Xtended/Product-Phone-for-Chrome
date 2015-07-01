@@ -1,6 +1,5 @@
 .idea
 *.psd
-dist
 bower_components
 assets/dependencies
 myPassword.js
