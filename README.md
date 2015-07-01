@@ -1,6 +1,11 @@
-# ucone
+# Chrome Phone
 
-### How to run this app
+### How to install the latest version
+- Install Google Chorme latest
+- Drag and drop this file into you browser with the URL of chorme://extensions
+- https://github.com/broadsoftxtended/Product-ChromePhone/blob/master/dist/ChromePhone-V-1.crx
+
+### How to run this app (Development)
 
 ```
 git clone https://github.com/jodonnell-broadsoft/ucone.git
