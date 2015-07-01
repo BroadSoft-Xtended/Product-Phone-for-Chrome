@@ -3,8 +3,8 @@ var en = new function() {
     return {
       'Login-SignIn': 'Sign In',
       'Login-PleasEnter': 'Please enter your credentials to log in.',
-      'Login-XSPPlaceholder': 'XSP (https://xsp.ihs.broadsoft.com)',
-      'Login-EmailSample': 'Email',
+      'Login-XSPPlaceholder': 'Login url',
+      'Login-EmailSample': 'user@domain',
       'Login-PasswordSample': 'Password',
       'Login-InvalidError': 'Invalid username or password.',
 
