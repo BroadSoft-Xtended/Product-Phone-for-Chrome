@@ -753,10 +753,21 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       params: {message: null},
       resolve: {},
 
-      controller: ['$rootScope', '$scope', '$state', '$http', 'Auth', 'Utility', function ($rootScope, $scope, $state, $http, Auth, Utility) {
+      controller: ['$rootScope', '$scope', '$state', '$http', 'Auth', 'Utility', 'Storage', function ($rootScope, $scope, $state, $http, Auth, Utility, Storage) {
         console.log('in the login controller');
+        $scope.spinner = false;
 
         Utility.setChromeToMinSize();
+
+        chrome.storage.local.get(function(storage){
+          if(storage.LoginUrl){
+            $scope.xsp = storage.LoginUrl
+          }
+          if(storage.LoginEmail){
+            $scope.email = storage.LoginEmail
+          }
+          $scope.$apply();
+        });
 
         $rootScope.language = Utility.getBrowserLanguage();
 
@@ -764,7 +775,13 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
           $scope.errorMessage = $state.params.message;
         }
 
+        $scope.rememberLoginUrlAndEmail = function(){
+          Storage.setValue('LoginUrl', $scope.xsp);
+          Storage.setValue('LoginEmail', $scope.email);
+        };
+
         $scope.broadsoftLogin = function(login){
+          $scope.rememberLoginUrlAndEmail();
           console.log('bsft login');
           login.$pristine = false;
           if(login.$valid){
@@ -773,12 +790,15 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
             $http.get($rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/' + $scope.email + '/directories/Enterprise').success(function(response){
               $state.go('app.header.main.favs');
             }).error(function(error){
-              console.log(error);
+              $scope.spinner = false;
+              console.log('Login Error', error);
+              $scope.errorMessage = 'InvalidUserNamePassword'
               login.$valid = false;
             });
           }
           else{
-            $scope.errorMessage = 'Invalid username or password.'
+            $scope.spinner = false;
+            $scope.errorMessage = 'InvalidUserNamePassword'
           }
         };
 
@@ -906,6 +926,8 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
           'trace_sip' : true,
           'displayName': (_.unescape(storage.sipConfig.userFirstName + ' ' + storage.sipConfig.userLastName)).replace("&apos;", "'")
         };
+
+        console.log("the user's config: ", configuration);
 
         $rootScope.userFirstName = storage.sipConfig.userFirstName;
 
@@ -1595,7 +1617,6 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     var service = {};
     var chromePhoneDeviceType = 'Chrome-Phone';
     var configUrl = $rootScope.xsp + ':443/dms/chrome-phone/config.json';
-    var username;
 
     service.getChromeDevice = function(){
       var defer = $q.defer();
@@ -1734,13 +1755,17 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     var service = this;
 
     service.startVideoCall = function(contact){
-      Storage.setValue('currentCallContact', contact);
-      $state.go('app.videoCall', {contact: contact, makeCall: true, displayVideo: true});
+      if($rootScope.registeredWRS){
+        Storage.setValue('currentCallContact', contact);
+        $state.go('app.videoCall', {contact: contact, makeCall: true, displayVideo: true});
+      }
     };
 
     service.startAudioCall = function(contact){
-      Storage.setValue('currentCallContact', contact);
-      $state.go('app.videoCall', {contact: contact, makeCall: true, displayVideo: false});
+      if($rootScope.registeredWRS){
+        Storage.setValue('currentCallContact', contact);
+        $state.go('app.videoCall', {contact: contact, makeCall: true, displayVideo: false});
+      }
     };
 
     return service;
@@ -2251,8 +2276,8 @@ var en = new function() {
     return {
       'Login-SignIn': 'Sign In',
       'Login-PleasEnter': 'Please enter your credentials to log in.',
-      'Login-XSPPlaceholder': 'XSP (https://xsp.ihs.broadsoft.com)',
-      'Login-EmailSample': 'Email',
+      'Login-XSPPlaceholder': 'Login url',
+      'Login-EmailSample': 'user@domain',
       'Login-PasswordSample': 'Password',
       'Login-InvalidError': 'Invalid username or password.',
 
@@ -2306,7 +2331,10 @@ var en = new function() {
       'Join': 'Join',
 
       'NoFavsYet': 'You have no favs yet.',
-      'AddAFavInstructions': 'Click on a contact to add one.'
+      'AddAFavInstructions': 'Click on a contact to add one.',
+
+      'InvalidUserNamePassword': 'Invalid username, password or login url.',
+      'WRSNotRegistered': 'WRS is not registered'
     }
   }
 };
@@ -2370,7 +2398,9 @@ var es = new function() {
       'Join': '',
 
       'NoFavsYet': '',
-      'AddAFavInstructions': ''
+      'AddAFavInstructions': '',
+
+      'InvalidUserNamePassword': ''
     }
   }
 };
@@ -2434,7 +2464,9 @@ var fr = new function() {
       'Join': '',
 
       'NoFavsYet': '',
-      'AddAFavInstructions': ''
+      'AddAFavInstructions': '',
+
+      'InvalidUserNamePassword': ''
     }
   }
 };
@@ -2498,7 +2530,9 @@ var german = new function() {
       'Join': '',
 
       'NoFavsYet': '',
-      'AddAFavInstructions': ''
+      'AddAFavInstructions': '',
+
+      'InvalidUserNamePassword': ''
     }
   }
 };
@@ -2562,7 +2596,9 @@ var italian = new function() {
       'Join': '',
 
       'NoFavsYet': '',
-      'AddAFavInstructions': ''
+      'AddAFavInstructions': '',
+
+      'InvalidUserNamePassword': ''
     }
   }
 };

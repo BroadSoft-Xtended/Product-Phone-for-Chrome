@@ -81,13 +81,13 @@
           <div class="search-container">
             <i class="fa fa-search search-icon"></i>
             <input type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts()"/>
-            <button class="direct-call-button" ng-show="searchText.length > 0" ng-click="addNewCall(searchText); searchContactsList.length = [];">{{'Call' | translator}}</button>
+            <button class="direct-call-button" ng-show="searchText.length > 0" ng-click="addNewCall(searchText); searchContactsList.length = []; showSearchAdd = false;">{{'Call' | translator}}</button>
             <div ng-show="searchContactsList.length > 0" class="search-results-container">
               <div ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
                 <contact-circle data-contact="contact"></contact-circle>
                 <div class="user-name">{{contact.firstName + ' ' + contact.lastName | truncate:30:35:showContactActions}}</div>
                 <div class="contact-actions" ng-show="showContactActions">
-                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="addNewCall(contact.number); searchContactsList.length = [];"/>
+                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="addNewCall(contact.number); searchContactsList.length = []; showSearchAdd = false;"/>
                 </div>
               </div>
             </div>
@@ -165,13 +165,13 @@
           <div class="search-container">
             <i class="fa fa-search search-icon"></i>
             <input type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts()"/>
-            <button class="direct-call-button" ng-show="searchText.length > 0" ng-click="addNewCall(searchText); searchContactsList.length = [];">{{'Call' | translator}}</button>
+            <button class="direct-call-button" ng-show="searchText.length > 0" ng-click="addNewCall(searchText); searchContactsList.length = []; showSearchAdd = false;">{{'Call' | translator}}</button>
             <div ng-show="searchContactsList.length > 0" class="search-results-container">
               <div ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
                 <contact-circle data-contact="contact"></contact-circle>
                 <div class="user-name">{{contact.firstName + ' ' + contact.lastName | truncate:30:35:showContactActions}}</div>
                 <div class="contact-actions" ng-show="showContactActions">
-                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="addNewCall(contact.number); searchContactsList.length = [];"/>
+                  <img src="/assets/images/icons/icon_pickup.svg" ng-click="addNewCall(contact.number); searchContactsList.length = []; showSearchAdd = false;"/>
                 </div>
               </div>
             </div>

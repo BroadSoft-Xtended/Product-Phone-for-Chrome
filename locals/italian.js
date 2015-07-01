@@ -58,7 +58,9 @@ var italian = new function() {
       'Join': '',
 
       'NoFavsYet': '',
-      'AddAFavInstructions': ''
+      'AddAFavInstructions': '',
+
+      'InvalidUserNamePassword': ''
     }
   }
 };

@@ -58,7 +58,10 @@ var en = new function() {
       'Join': 'Join',
 
       'NoFavsYet': 'You have no favs yet.',
-      'AddAFavInstructions': 'Click on a contact to add one.'
+      'AddAFavInstructions': 'Click on a contact to add one.',
+
+      'InvalidUserNamePassword': 'Invalid username, password or login url.',
+      'WRSNotRegistered': 'WRS is not registered'
     }
   }
 };

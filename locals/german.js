@@ -58,7 +58,9 @@ var german = new function() {
       'Join': '',
 
       'NoFavsYet': '',
-      'AddAFavInstructions': ''
+      'AddAFavInstructions': '',
+
+      'InvalidUserNamePassword': ''
     }
   }
 };

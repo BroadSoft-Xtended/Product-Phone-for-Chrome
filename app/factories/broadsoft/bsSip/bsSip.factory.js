@@ -5,7 +5,6 @@
     var service = {};
     var chromePhoneDeviceType = 'Chrome-Phone';
     var configUrl = $rootScope.xsp + ':443/dms/chrome-phone/config.json';
-    var username;
 
     service.getChromeDevice = function(){
       var defer = $q.defer();

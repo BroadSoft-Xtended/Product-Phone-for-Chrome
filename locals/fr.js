@@ -58,7 +58,9 @@ var fr = new function() {
       'Join': '',
 
       'NoFavsYet': '',
-      'AddAFavInstructions': ''
+      'AddAFavInstructions': '',
+
+      'InvalidUserNamePassword': ''
     }
   }
 };
