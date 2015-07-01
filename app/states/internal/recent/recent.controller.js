@@ -10,15 +10,22 @@
 
       resolve: {},
 
-      controller: ['$rootScope', '$scope', 'Media', 'BSCallLogs', function ($rootScope, $scope, Media, BSCallLogs) {
+      controller: ['$rootScope', '$scope', 'Media', 'BSCallLogs', 'LocalContacts', function ($rootScope, $scope, Media, BSCallLogs, LocalContacts) {
         console.log('in the recent controller');
         $scope.spinner = true;
         $scope.media = Media;
+        $scope.foo = {};
 
         BSCallLogs.getData().then(function(results){
           $scope.spinner = false;
           $scope.contacts = results;
         });
+
+        $scope.addToFavs = function(contact){
+          $scope.foo = {};
+          LocalContacts.add(contact);
+          $scope.openPopup = false;
+        }
       }]
     });
   }]);

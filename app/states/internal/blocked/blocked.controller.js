@@ -34,8 +34,8 @@
         };
 
         $scope.addBlocked = function(contact){
-          $scope.searchContactsList = [];
-          $scope.searchText = '';
+          $scope.searchBlockedContactsList = [];
+          $scope.blockedSearchText = '';
 
           console.log(contact.number);
 
@@ -50,18 +50,18 @@
           });
         };
 
-        $scope.searchContacts = function(){
-          if($scope.searchText.match(/^[0-9 ]+$/) != null){
+        $scope.searchBlockedContacts = function(){
+          if($scope.blockedSearchText.match(/^[0-9 ]+$/) != null){
             $scope.showAddButton = true;
           }
 
           if(event.keyCode == 27){
-            $scope.searchContactsList = [];
-            $scope.searchText = '';
+            $scope.searchBlockedContactsList = [];
+            $scope.blockedSearchText = '';
           }
 
-          BSDirectory.searchDirectoryContacts($scope.searchText, 1, 4).then(function(results){
-            $scope.searchContactsList = results;
+          BSDirectory.searchDirectoryContacts($scope.blockedSearchText, 1, 4).then(function(results){
+            $scope.searchBlockedContactsList = results;
           });
         };
 

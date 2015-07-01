@@ -47,7 +47,18 @@ var fr = new function() {
       'BlockPrivateCalls': '',
       'BlockAnonymousCalls': '',
       'BlockSpecific': '',
-      'Callers': ''
+      'Callers': '',
+
+      'CallFrom': '',
+      'Call': '',
+      'Calling': '',
+
+      'ActivateCall1': '',
+      'ActivateCall2': '',
+      'Join': '',
+
+      'NoFavsYet': '',
+      'AddAFavInstructions': ''
     }
   }
 };

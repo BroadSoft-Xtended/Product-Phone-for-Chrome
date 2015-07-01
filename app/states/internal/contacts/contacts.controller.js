@@ -10,16 +10,12 @@
 
       resolve: {},
 
-      controller: ['$rootScope', '$scope', 'BSDirectory', 'Media', function ($rootScope, $scope, BSDirectory, Media) {
+      controller: ['$rootScope', '$scope', 'BSDirectory', 'Media', 'LocalContacts', function ($rootScope, $scope, BSDirectory, Media, LocalContacts) {
         console.log('in the contacts controller');
         $scope.bsPageStart = 1;
         $scope.telephoneContacts = [];
         $scope.media = Media;
-
-        $scope.googleContacts = [{imageUrl: 'assets/images/sampleFace.png', firstName: 'Albert1', lastName: 'Sanchez', status: 'away'},
-          {imageUrl: 'assets/images/sampleFace.png', firstName: 'Albert2', lastName: 'Sanchez', status: 'offline'},
-          {imageUrl: 'assets/images/sampleFace.png', firstName: 'Albert3', lastName: 'Sanchez', status: 'available'}];
-
+        $scope.foo = {};
 
         $scope.getBroadsoftContacts = function(){
           BSDirectory.getDirectoryContacts($scope.bsPageStart, 50).then(function(contacts){
@@ -36,6 +32,12 @@
 
         //Run on page start
         $scope.getBroadsoftContacts();
+
+        $scope.addToContactFavs = function(contact){
+          $scope.foo = {};
+          LocalContacts.add(contact);
+          $scope.openPopup = false;
+        }
 
         //Set for debugging
         window.$scope = $scope;

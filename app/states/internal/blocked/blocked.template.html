@@ -13,12 +13,12 @@
   <div class="content-container last">
     <div class="form-label nudge">{{'BlockSpecific' | translator}} <br/> {{'Callers' | translator}}</div>
     <div class="inline-block search-container">
-      <input type="text" placeholder="{{'SearchExample' | translator}}" ng-model="searchText" ng-keyup="searchContacts()"/>
-      <button class="direct-call-button add-button" ng-show="showAddButton && searchText.length > 0" ng-click="addBlocked({firstName: 'Custom', lastName: '', number: searchText})">Add</button>
+      <input type="text" placeholder="{{'SearchExample' | translator}}" ng-model="blockedSearchText" ng-keyup="searchBlockedContacts()"/>
+      <button class="direct-call-button add-button" ng-show="showAddButton && blockedSearchText.length > 0" ng-click="addBlocked({firstName: 'Custom', lastName: '', number: blockedSearchText})">Add</button>
     </div>
 
-    <div ng-show="searchContactsList.length > 0" class="search-results-container">
-      <div ng-click="addBlocked(contact)" ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
+    <div ng-show="searchBlockedContactsList.length > 0" class="search-results-container">
+      <div ng-click="addBlocked(contact)" ng-repeat="contact in searchBlockedContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
         <contact-circle data-contact="contact"></contact-circle>
         <div class="user-name">{{contact.firstName + ' ' + contact.lastName | truncate:30:35:showContactActions}}</div>
       </div>

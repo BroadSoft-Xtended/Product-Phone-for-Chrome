@@ -70,3 +70,48 @@ sip_uri: 78f6c499a4@broadsoft.com
 
 This is where you get the SIP password
 https://xsp.ihs.broadsoft.com/dms/bc/pc/config.xml
+
+
+---AS FAR AS I GOT WITH GOOGLE CONTACTS---
+//$scope.contacts = LocalContacts.get();
+
+        $scope.googleAuth = function(){
+          chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
+            console.log(token);
+
+            //Params
+            //?access_token=' + token + '&alt=json&max-results=99999999&v=3
+
+            //You need the v=3
+
+            //Get all contacts
+            //https://www.google.com/m8/feeds/contacts/default/full?access_token=ya29.eQGYWn4TXMdxSRWoWdKit8aQmI9gR3264msmZu2uH80-T55oJtD8t8yflbnnEAxCH3PSVhOYwb8BVA&alt=json&v=3
+
+            //Get all the contacts
+            //https://www.google.com/m8/feeds/groups/default/full
+
+            //Get the my contacts group
+            //https://www.google.com/m8/feeds/groups/default/base/6?access_token=ya29.eQGYWn4TXMdxSRWoWdKit8aQmI9gR3264msmZu2uH80-T55oJtD8t8yflbnnEAxCH3PSVhOYwb8BVA&alt=json&v=3
+
+            //Get all the groups
+            //https://www.google.com/m8/feeds/groups/default/full?access_token=ya29.eQGYWn4TXMdxSRWoWdKit8aQmI9gR3264msmZu2uH80-T55oJtD8t8yflbnnEAxCH3PSVhOYwb8BVA&alt=json&v=3
+            $http.get('https://www.google.com/m8/feeds/groups/default/full?access_token=' + token + '&alt=json&v=2').success(function(response){
+              //window.resp = response;
+              console.log('groups: ', response);
+            }).error(function(data, errorCode){
+              console.log('error', data);
+              console.log(errorCode);
+            });
+
+            //Get all the contacts in the myContacts group (Starred)
+            $http.get('https://www.google.com/m8/feeds/groups/default/full=' + token + '&alt=json&v=2&group=Contacts').success(function(response){
+              //window.resp = response;
+              console.log('responsezzz:', response);
+            }).error(function(data, errorCode){
+              console.log('error', data);
+              console.log(errorCode);
+            });
+          });
+        };
+
+        $scope.googleAuth();

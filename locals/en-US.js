@@ -47,7 +47,18 @@ var en = new function() {
       'BlockPrivateCalls': 'Block Private Calls',
       'BlockAnonymousCalls': 'Block Anonymous Calls',
       'BlockSpecific': 'Block Specific',
-      'Callers': 'Callers'
+      'Callers': 'Callers',
+
+      'CallFrom': 'Call From',
+      'Call': 'Call',
+      'Calling': 'Calling...',
+
+      'ActivateCall1': 'Activate Call 1',
+      'ActivateCall2': 'Activate Call 2',
+      'Join': 'Join',
+
+      'NoFavsYet': 'You have no favs yet.',
+      'AddAFavInstructions': 'Click on a contact to add one.'
     }
   }
 };

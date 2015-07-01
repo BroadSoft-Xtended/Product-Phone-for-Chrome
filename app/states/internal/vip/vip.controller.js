@@ -20,8 +20,8 @@
         };
 
         $scope.addVip = function(contact){
-          $scope.searchContactsList = [];
-          $scope.searchText = '';
+          $scope.searchVipContactsList = [];
+          $scope.vipSearchText = '';
           BSPersonalAssistant.addExclusionNumber(contact).then(function(){
             $scope.getAllNumbers();
           });
@@ -33,18 +33,18 @@
           });
         };
 
-        $scope.searchContacts = function(){
-          if($scope.searchText.match(/^[0-9 ]+$/) != null){
+        $scope.searchVipContacts = function(){
+          if($scope.vipSearchText.match(/^[0-9 ]+$/) != null){
             $scope.showAddButton = true;
           }
 
           if(event.keyCode == 27){
-            $scope.searchContactsList = [];
-            $scope.searchText = '';
+            $scope.searchVipContactsList = [];
+            $scope.vipSearchText = '';
           }
 
-          BSDirectory.searchDirectoryContacts($scope.searchText, 1, 5).then(function(results){
-            $scope.searchContactsList = results;
+          BSDirectory.searchDirectoryContacts($scope.vipSearchText, 1, 5).then(function(results){
+            $scope.searchVipContactsList = results;
           });
         };
 

@@ -4,11 +4,11 @@
     <div class="form-label">{{'AddVIPs' | translator}}</div>
 
     <div class="inline-block search-container">
-      <input type="text" placeholder="{{'SearchExample' | translator}}" ng-model="searchText" ng-keyup="searchContacts()"/>
-      <button class="direct-call-button add-button" ng-show="showAddButton && searchText.length > 0" ng-click="addVip({firstName: 'Custom', lastName: '', number: searchText})">Add</button>
+      <input type="text" placeholder="{{'SearchExample' | translator}}" ng-model="vipSearchText" ng-keyup="searchVipContacts()"/>
+      <button class="direct-call-button add-button" ng-show="showAddButton && vipSearchText.length > 0" ng-click="addVip({firstName: 'Custom', lastName: '', number: vipSearchText})">Add</button>
     </div>
-    <div ng-show="searchContactsList.length > 0" class="search-results-container">
-      <div ng-click="addVip(contact)" ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
+    <div ng-show="searchVipContactsList.length > 0" class="search-results-container">
+      <div ng-click="addVip(contact)" ng-repeat="contact in searchVipContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
         <contact-circle data-contact="contact"></contact-circle>
         <div class="user-name">{{contact.firstName + ' ' + contact.lastName | truncate:30:35:showContactActions}}</div>
       </div>

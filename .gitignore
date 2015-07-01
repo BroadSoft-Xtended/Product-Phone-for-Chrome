@@ -1,11 +1,6 @@
 .idea
-node_modules
 *.psd
-design_docs
 dist
 bower_components
-gdrive
 assets/dependencies
-reference
-reference
 myPassword.js
