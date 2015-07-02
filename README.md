@@ -45,6 +45,9 @@ Finally, you can configure a list of VIPs — people that will always get throug
 To use the UC-One Phone for Chrome, the user must be provisioned with the services above. These services are included in the BroadWorks Premium Enterprise Seat.
 
 ## Documentation
+
+[Configuring BroadWorks and Provisioning Users to use the UC-One Phone for Chrome](https://github.com/BroadSoft-Xtended/Product-Phone-for-Chrome/blob/master/documentation/BroadWorksConfiguration.md)
+
 [Architecture Overview](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Architecture.md)
 
 [Help Develop this App](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Development.md)
