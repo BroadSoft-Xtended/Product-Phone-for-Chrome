@@ -1,5 +1,7 @@
 # Phone for Chrome
 
+![](http://puu.sh/iKFuu/49b8df1956.png)
+
 ## Overview
 
 This is a google chorme app that lets you make audio and video calls. It also allows you to manage contacts and find people in your organization. It also allows you to manage your Broadworks settings. It is an open source product from Broadsoft with the main contributors being [Jonathan O'Donnell](https://github.com/jodonnell-broadsoft) and Jamie Palmer.
