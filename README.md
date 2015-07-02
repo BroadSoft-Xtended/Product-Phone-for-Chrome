@@ -5,7 +5,7 @@
 This is a google chorme app that lets you make audio and video calls. It also allows you to manage contacts and find people in your organization. It also allows you to manage your Broadworks settings. It is an open source product from Broadsoft with the main contributors being [Jonathan O'Donnell](https://github.com/jodonnell-broadsoft) and Jamie Palmer.
 
 ![](http://puu.sh/iKFf6/5213a83e44.png)
-![](http://puu.sh/iKEXL/19d389d6d3.png)
+![](http://puu.sh/iKFgu/5c87180538.png)
 ![](http://puu.sh/iKEYo/095e4cb3ec.png)
 ![](http://puu.sh/iKF90/d7b93e076b.png)
 
