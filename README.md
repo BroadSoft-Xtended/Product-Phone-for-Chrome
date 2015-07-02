@@ -11,17 +11,16 @@ This is a google chorme app that lets you make audio and video calls. It also al
 ![](http://puu.sh/iKF90/d7b93e076b.png)
 
 ## Documentation
+[Architecture Overview](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Architecture.md)
 
-[Branding How To](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/BrandingAndLogoChanges.md)
+[Help Develop this App](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Development.md)
 
-[App Dependencies](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Dependencies.md)
+[Contribute to this App](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/HowToContributeToThisApplication.md)
+
+[How to Brand this App](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/BrandingAndLogoChanges.md)
+
+[Third Party Dependencies](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Dependencies.md)
 
 [Building and Packaging this app for Production](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/HowToBuildAndPackage.md)
 
-[Translate this app](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/TranslationAndAddingLanguages.md)
-
-[Architecture](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Architecture.md)
-
-[Developing this App](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Development.md)
-
-[Contribute to this App](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/HowToContributeToThisApplication.md)
+[How to translate this app](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/TranslationAndAddingLanguages.md)
