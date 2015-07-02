@@ -6,7 +6,7 @@ This is a google chorme app that lets you make audio and video calls. It also al
 
 ![](http://puu.sh/iKFf6/5213a83e44.png)
 ![](http://puu.sh/iKFgu/5c87180538.png)
-![](http://puu.sh/iKEYo/095e4cb3ec.png)
+![](http://puu.sh/iKFi2/bdd810bdc8.png)
 ![](http://puu.sh/iKF90/d7b93e076b.png)
 
 ## Documentation
