@@ -9,10 +9,18 @@ This is a google chorme app that lets you make audio and video calls. It also al
 ![](http://puu.sh/iKEYo/095e4cb3ec.png)
 ![](http://puu.sh/iKF90/d7b93e076b.png)
 
+## Documentation
+
 [Branding How To](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/BrandingAndLogoChanges.md)
+
 [App Dependencies](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Dependencies.md)
+
 [Building and Packaging this app for Production](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/HowToBuildAndPackage.md)
+
 [Translate this app](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/TranslationAndAddingLanguages.md)
+
 [Architecture](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Architecture.md)
+
 [Developing this App](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Development.md)
+
 [Contribute to this App](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/HowToContributeToThisApplication.md)
