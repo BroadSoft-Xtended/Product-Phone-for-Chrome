@@ -14,17 +14,17 @@ This is an Open Source product provided by the BroadSoft Xtended Open Source Ini
 
 - **Personal Assistant:** You can easily select your Personal Assistant profile from the “Quick Pick” list in the top bar of the application.
 
-![](http://puu.sh/iKPHj/d02a322ca9.png)
+![](http://puu.sh/iKPQg/3bba7a743d.png)
 
 Personal assistant will notify callers of your status.  If you want to provide a duration, you can navigate to the “Incoming” tab in the settings page and configure an “Until” message:
 
-![](http://puu.sh/iKPJc/378dc2ddff.png)
+![](http://puu.sh/iKPRP/1ef02966e5.png)
 
 If you configure a “Transfer To” number, the Personal Assistant will give your callers the option to be transferred to your attendant.
 
 Finally, you can configure a list of VIPs — people that will always get through to you, regardless of you Personal Assistant status:
 
-![](http://puu.sh/iKPIb/6990497b44.png) 
+![](http://puu.sh/iKPSU/d0d59ec28d.png) 
 
 - **Call Forwarding Always:** The Phone for Chrome also allows you to quickly configure and turn Call Forwarding on.  When enabled, your calls are always forwarded to that number until you turn Call Forwarding off.  Call Forwarding can be configured in the “Incoming” settings tab on the Phone for Chrome.
 
