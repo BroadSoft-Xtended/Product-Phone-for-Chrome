@@ -4,17 +4,19 @@ Phone for Chrome has been tested with BroadWorks Release 21.SP1.  It should also
 
 To use the Phone for Chrome, the BroadWorks system must be configured with a Device Profile Type called “Chrome-Phone”.   This process must be performed once for each BroadWorks system.  This configuration can be done by simply importing the “Chrome-Phone” [Device Type Archive File](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Chrome-Phone.DTAF.zip)  (DTAF).  
 
-To import the DTAF and configure BroadWorks for use with the UC-One Phone for Chrome -- follow these steps:
+To import the DTAF, follow these steps:
 
-1) Download the DTAF file and unzip it.  
+1) [Download](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Chrome-Phone.DTAF.zip) the DTAF file and unzip it.  
 
-2)     Log in to BroadWorks as an administrator.
+2)     Log in to BroadWorks as a system administrator.
 
 3)     Browse to System → Resources → Identity/Device Profile Types and then click Import.
 
-4)     Select Browse to find the extracted DTAF file for the model and then click OK to start the import.
+4)     Select Browse to find the extracted DTAF file for the UC-One Phone for Chrome and then click OK to start the import.
 
-After the import finishes, a new “Chrome-Phone” device profile type will be added to the BroadWorks system.  To complete the configuration, perform the following post-import configuration steps:
+After the import finishes, a new “Chrome-Phone” device profile type will be added to the BroadWorks system.  
+
+To complete the configuration, perform the following post-import configuration steps:
 
 5)     Browse to System → Resources → Identity/Device Profile Types.
 
@@ -24,11 +26,11 @@ After the import finishes, a new “Chrome-Phone” device profile type will be 
 
 8)   Browse to System → Resources → Device Management Tag Sets and select the System Default tag set. 
 
-9)  The UC-One Phone for Chrome configuration templates makes use of the tags in the following table.  Add the tags if they do not already exist.
+9)  The UC-One Phone for Chrome configuration template makes use of the tags in the following table.  Add the tags if they do not already exist.
 
 ![](http://puu.sh/iKVfQ/b316e76b48.png)
 
-Now your system is ready to provision users with the UC-One Phone fro Chrome.   
+Now your system is ready to provision users with the UC-One Phone for Chrome.   
 
 ## Provisioning Users for UC-One Phone for Chrome
 
