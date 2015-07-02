@@ -8,6 +8,8 @@
 
 [Translate this app](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/TranslationAndAddingLanguages.md)
 
+[Architecture](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Architecture.md)
+
 ### How to install the latest version
 - Install the latest version of Google Chorme
 - Drag and drop this file into you browser with the URL of chorme://extensions
