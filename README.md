@@ -1,4 +1,4 @@
-# Phone for Chrome
+# Broadsoft - Phone for Chrome
 
 ![](http://puu.sh/iKFuu/49b8df1956.png)
 
