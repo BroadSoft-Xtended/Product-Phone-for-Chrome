@@ -4,7 +4,6 @@ Phone for Chrome has been tested with BroadWorks Release 21.SP1.  It should also
 
 To use the Phone for Chrome, the BroadWorks system must be configured with a Device Profile Type called “Chrome-Phone”.   This process must be performed once for each BroadWorks system.  This configuration can be done by simply importing the “Chrome-Phone” [Device Type Archive File](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Chrome-Phone.DTAF.zip)  (DTAF).  It can be downloaded from the Phone for Chrome project on the Xtended Open Source Initiative group on GitHub.  
 
-
 To import the DTAF and configure BroadWorks for use with the UC-One Phone for Chrome -- follow these steps:
 
 1) Download the DTAF file and unzip it.  
