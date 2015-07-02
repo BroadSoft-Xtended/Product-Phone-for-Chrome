@@ -10,11 +10,9 @@ The Phone for Chrome allows incoming and outgoing voice and video calling from w
 
 This is an Open Source product provided by the BroadSoft Xtended Open Source Initiative.  It was developed using the BroadSoft ExSIP library, and the BroadSoft Xtended APIs.  A reference implementation is available on the **Google Chrome Store**.  The source code is provided to service providers who wish to brand and customize the Phone for Chrome for they UC-One market offer.  
 
-The Phone for Chrome integrates with the following UC-One services on BroadWorks:
+### The Phone for Chrome integrates with the following UC-One services on BroadWorks:
 
-![](http://puu.sh/iKFgu/5c87180538.png)
-![](http://puu.sh/iKFi2/bdd810bdc8.png)
-![](http://puu.sh/iKF90/d7b93e076b.png)
+
 
 ## Documentation
 [Architecture Overview](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Architecture.md)
