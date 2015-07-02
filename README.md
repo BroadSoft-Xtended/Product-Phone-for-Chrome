@@ -4,7 +4,13 @@
 
 ## Overview
 
-This is a google chorme app that lets you make audio and video calls. It also allows you to manage contacts and find people in your organization. It also allows you to manage your Broadworks settings. It is an open source product from Broadsoft with the main contributors being [Jonathan O'Donnell](https://github.com/jodonnell-broadsoft) and Jamie Palmer.
+The UC-One Phone for Chrome is a Google Chrome application.  It is designed to work with the BroadSoft UC-One platform.  To use this application, **you must have a UC-One account from a service provider that is running the BroadSoft BroadWorks software.**   Your account must be properly provisioned with a Chrome-Phone as either a primary or secondary device.  
+
+The Phone for Chrome allows incoming and outgoing voice and video calling from within the Chrome experience.  It uses the latest WebRTC engine built into the Google Chrome browser in conjunction with the WebRTC server capabilities on BroadSoft’s UC-One platform for a high quality voice and video calling experience.  The Phone for Chrome should work on any Chrome enabled platform — including Windows, Mac, Linux and of course any reasonably powered ChromeBook or ChromeBox.  
+
+This is an Open Source product provided by the BroadSoft Xtended Open Source Initiative.  It was developed using the BroadSoft ExSIP library, and the BroadSoft Xtended APIs.  A reference implementation is available on the *Google Chrome Store*.  The source code is provided to service providers who wish to brand and customize the Phone for Chrome for they UC-One market offer.  
+
+The Phone for Chrome integrates with the following UC-One services on BroadWorks:
 
 ![](http://puu.sh/iKFgu/5c87180538.png)
 ![](http://puu.sh/iKFi2/bdd810bdc8.png)
