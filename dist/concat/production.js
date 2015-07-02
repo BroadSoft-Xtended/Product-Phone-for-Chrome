@@ -792,7 +792,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
             }).error(function(error){
               $scope.spinner = false;
               console.log('Login Error', error);
-              $scope.errorMessage = 'InvalidUserNamePassword'
+              $scope.errorMessage = 'InvalidUserNamePassword';
               login.$valid = false;
             });
           }
