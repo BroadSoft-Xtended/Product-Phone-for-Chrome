@@ -2309,7 +2309,7 @@ var en = new function() {
       'Availability': 'Availability',
       'Until': 'Until',
       'TransferTo': 'Transfer To',
-      'Forward To': 'Forward To',
+      'ForwardTo': 'ForwardTo',
       'MobileNumber': 'Mobile Number',
       'CallNotifyEmail': 'Call Notify Email',
 
@@ -2376,7 +2376,7 @@ var es = new function() {
       'Availability': '',
       'Until': '',
       'TransferTo': '',
-      'Forward To': '',
+      'ForwardTo': '',
       'MobileNumber': '',
       'CallNotifyEmail': '',
 
@@ -2442,7 +2442,7 @@ var fr = new function() {
       'Availability': '',
       'Until': '',
       'TransferTo': '',
-      'Forward To': '',
+      'ForwardTo': '',
       'MobileNumber': '',
       'CallNotifyEmail': '',
 
@@ -2508,7 +2508,7 @@ var german = new function() {
       'Availability': '',
       'Until': '',
       'TransferTo': '',
-      'Forward To': '',
+      'ForwardTo': '',
       'MobileNumber': '',
       'CallNotifyEmail': '',
 
@@ -2574,7 +2574,7 @@ var italian = new function() {
       'Availability': '',
       'Until': '',
       'TransferTo': '',
-      'Forward To': '',
+      'ForwardTo': '',
       'MobileNumber': '',
       'CallNotifyEmail': '',
 

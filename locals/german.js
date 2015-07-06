@@ -36,7 +36,7 @@ var german = new function() {
       'Availability': '',
       'Until': '',
       'TransferTo': '',
-      'Forward To': '',
+      'ForwardTo': '',
       'MobileNumber': '',
       'CallNotifyEmail': '',
 
