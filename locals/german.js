@@ -53,8 +53,10 @@ var german = new function() {
       'Call': '',
       'Calling': '',
 
-      'ActivateCall1': '',
-      'ActivateCall2': '',
+      'Call1Hold': '',
+      'Call1Active': '',
+      'Call2Hold': '',
+      'Call2Active': '',
       'Join': '',
 
       'NoFavsYet': '',

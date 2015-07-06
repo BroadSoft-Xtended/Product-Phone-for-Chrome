@@ -2365,8 +2365,10 @@ var en = new function() {
       'Call': 'Call',
       'Calling': 'Calling...',
 
-      'ActivateCall1': 'Activate Call 1',
-      'ActivateCall2': 'Activate Call 2',
+      'Call1Hold': 'Call 1 (Hold)',
+      'Call1Active': 'Call 1 (Active)',
+      'Call2Hold': 'Call 2 (Hold)',
+      'Call2Active': 'Call 2 (Active)',
       'Join': 'Join',
 
       'NoFavsYet': 'You have no favs yet.',
@@ -2432,8 +2434,10 @@ var es = new function() {
       'Call': '',
       'Calling': '',
 
-      'ActivateCall1': '',
-      'ActivateCall2': '',
+      'Call1Hold': '',
+      'Call1Active': '',
+      'Call2Hold': '',
+      'Call2Active': '',
       'Join': '',
 
       'NoFavsYet': '',
@@ -2498,8 +2502,10 @@ var fr = new function() {
       'Call': '',
       'Calling': '',
 
-      'ActivateCall1': '',
-      'ActivateCall2': '',
+      'Call1Hold': '',
+      'Call1Active': '',
+      'Call2Hold': '',
+      'Call2Active': '',
       'Join': '',
 
       'NoFavsYet': '',
@@ -2564,8 +2570,10 @@ var german = new function() {
       'Call': '',
       'Calling': '',
 
-      'ActivateCall1': '',
-      'ActivateCall2': '',
+      'Call1Hold': '',
+      'Call1Active': '',
+      'Call2Hold': '',
+      'Call2Active': '',
       'Join': '',
 
       'NoFavsYet': '',
@@ -2630,8 +2638,10 @@ var italian = new function() {
       'Call': '',
       'Calling': '',
 
-      'ActivateCall1': '',
-      'ActivateCall2': '',
+      'Call1Hold': '',
+      'Call1Active': '',
+      'Call2Hold': '',
+      'Call2Active': '',
       'Join': '',
 
       'NoFavsYet': '',
