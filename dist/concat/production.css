@@ -84,6 +84,15 @@ ng\:form {
   line-height: 38px;
   font-weight: 100;
 }
+.favs-contact-actions{
+  position: absolute;
+  right: 0px;
+}
+
+.recent-contact-actions{
+  position: absolute;
+  right: 0px;
+}
 .directory-separator{
   border-top: 1px solid #F0F0F0;
   border-bottom: 1px solid #F0F0F0;
@@ -328,6 +337,7 @@ input[type=date]{
 @import "blocked";
 @import "constants";
 @import "contacts";
+@import "contactActions";
 @import "contact-circle";
 @import "favs";
 @import "globals";

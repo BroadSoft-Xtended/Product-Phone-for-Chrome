@@ -27,7 +27,20 @@
           favs = storage.favs;
         }
 
-        var contactAlreadyExists = _.find(favs, function(obj) { return obj.name == contact.name });
+        console.log('favs', favs);
+
+        var contactAlreadyExists = _.find(favs, function(obj) {
+          console.log(obj.name, contact.name);
+          if(contact.name){
+            return obj.name == contact.name
+          }
+          else{
+            return obj.firstName + ' ' + obj.lastName == contact.firstName + ' ' + contact.lastName;
+          }
+        });
+
+        console.log('favs', contactAlreadyExists);
+
 
         if(contact.name == 'Unknown' || contact.firstName == 'Unknown'){
           favs.push(contact);

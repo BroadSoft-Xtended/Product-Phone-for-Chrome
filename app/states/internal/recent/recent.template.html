@@ -14,16 +14,5 @@
     </div>
   </div>
 
-  <div class="contact-actions" ng-show="showContactActions">
-    <img src="/assets/images/icons/icon_pickup.svg" title="{{'WRSNotRegistered' | translator}}"/>
-    <img src="/assets/images/icons/icon_video.svg" ng-click="media.startVideoCall(contact);" title="{{'WRSNotRegistered' | translator}}"/>
-    <img src="/assets/images/icons/icon_contact_more.svg" ng-click="foo[$index] = true;"/>
-  </div>
-
-  <div ng-show="foo[$index] && showContactActions" class="more-popup">
-    <div class="inline-block" ng-click="addToFavs(contact)">
-      Add to favs
-    </div>
-    <div class="inline-block" style="float: right;" ng-click="foo[$index] = false;">X</div>
-  </div>
+  <contact-actions contact="contact" show="showContactActions" delete-mode="false" class="recent-contact-actions" index="$index"></contact-actions>
 </div>

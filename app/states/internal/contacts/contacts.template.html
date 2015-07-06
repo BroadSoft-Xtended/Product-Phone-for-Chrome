@@ -3,18 +3,7 @@
 <div ng-repeat="contact in telephoneContacts track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
   <contact-circle data-contact="contact"></contact-circle>
   <div class="user-name">{{(contact.firstName + ' ' + contact.lastName) | truncate:25:40:showContactActions}}</div>
-  <div class="contact-actions" ng-show="showContactActions">
-    <img src="/assets/images/icons/icon_pickup.svg" />
-    <img src="/assets/images/icons/icon_video.svg" ng-click="media.startVideoCall(contact);"/>
-    <img src="/assets/images/icons/icon_contact_more.svg" ng-click="foo[$index] = true;"/>
-  </div>
-
-  <div ng-show="foo[$index] && showContactActions" class="more-popup">
-    <div class="inline-block" ng-click="addToContactFavs(contact)">
-      Add to favs
-    </div>
-    <div class="inline-block" style="float: right;" ng-click="foo[$index] = false;">X</div>
-  </div>
+  <contact-actions contact="contact" show="showContactActions" delete-mode="false" class="recent-contact-actions" index="$index"></contact-actions>
 </div>
 
 <img src="/assets/images/spinner.gif" class="more-contacts-loader"/>

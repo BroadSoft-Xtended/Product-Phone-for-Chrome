@@ -1,19 +1,8 @@
 <div class="favs">
   <div ng-repeat="contact in contacts track by $index" class="favs-container" ng-mouseenter="showContactActions = true" ng-mouseleave="showContactActions = false">
     <contact-circle data-contact="contact"></contact-circle>
-    <div class="user-name">{{(contact.name || contact.firstName + ' ' + contact.lastName) | truncate:25:40:showContactActions}}</div>
-    <div class="contact-actions" ng-show="showContactActions">
-      <img src="/assets/images/icons/icon_pickup.svg" ng-click="media.startAudioCall(contact);"/>
-      <img src="/assets/images/icons/icon_video.svg" ng-click="media.startVideoCall(contact);"/>
-      <img src="/assets/images/icons/icon_contact_more.svg" ng-click="foo[$index] = true;"/>
-    </div>
-
-    <div ng-show="foo[$index] && showContactActions" class="more-popup">
-      <div class="inline-block" ng-click="removeFav($index)">
-        Remove from favs
-      </div>
-      <div class="inline-block" style="float: right;" ng-click="foo[$index] = false;">X</div>
-    </div>
+    <div class="user-name">{{(contact.name || contact.firstName + ' ' + contact.lastName) | truncate:25:40:show}}</div>
+    <contact-actions class="favs-contact-actions" delete-mode="true" contact="contact" show="showContactActions" index="$index"></contact-actions>
   </div>
 
   <div ng-show="contacts.length < 1">

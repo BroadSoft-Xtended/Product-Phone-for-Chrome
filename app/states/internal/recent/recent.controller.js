@@ -21,11 +21,7 @@
           $scope.contacts = results;
         });
 
-        $scope.addToFavs = function(contact){
-          $scope.foo = {};
-          LocalContacts.add(contact);
-          $scope.openPopup = false;
-        }
+
       }]
     });
   }]);

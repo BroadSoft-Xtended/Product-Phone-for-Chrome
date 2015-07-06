@@ -12,22 +12,18 @@
 
       controller: ['$rootScope', '$scope', 'LocalContacts', '$http', function ($rootScope, $scope, LocalContacts, $http) {
         console.log('in the favs controller');
-        $scope.foo = {};
-
-        $scope.removeFav = function(index){
-          $scope.foo = {};
-
-          LocalContacts.delete(index).then(function(contacts){
-            console.log('removed');
-            console.log(contacts);
-            $scope.contacts = contacts;
-          });
-        };
 
         LocalContacts.get().then(function(contacts){
           $scope.contacts = contacts;
-          console.log('con', contacts);
+          console.log('fav contacts: ', contacts);
         });
+
+        $rootScope.$on('favsChanged', function(){
+          LocalContacts.get().then(function(contacts){
+            $scope.contacts = contacts;
+            console.log('fav contacts: ', contacts);
+          });
+        })
       }]
     });
   }]);

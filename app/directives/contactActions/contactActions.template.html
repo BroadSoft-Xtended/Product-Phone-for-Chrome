@@ -1,0 +1,21 @@
+<div class="contact-actions-container">
+  <div class="contact-actions" ng-show="show">
+    <img src="/assets/images/icons/icon_pickup.svg" ng-click="media.startAudioCall(contact);"/>
+    <img src="/assets/images/icons/icon_video.svg" ng-click="media.startVideoCall(contact);"/>
+    <img src="/assets/images/icons/icon_contact_more.svg" ng-click="foo[$index] = true;"/>
+  </div>
+
+  <div ng-show="foo[$index] && show" class="more-popup">
+    <div ng-show="deleteMode == true" class="inline-block" ng-click="removeFav(index)">
+      Remove from favs
+    </div>
+    <div ng-show="deleteMode == false" class="inline-block" ng-click="addToFavs(contact)">
+      Add to favs
+    </div>
+    <div class="inline-block" style="float: right;" ng-click="foo[$index] = false;">X</div>
+  </div>
+
+  <!--<img src="/assets/images/icons/icon_pickup.svg" title="{{'WRSNotRegistered' | translator}}"/>-->
+
+
+</div>

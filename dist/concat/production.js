@@ -222,22 +222,18 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
       controller: ['$rootScope', '$scope', 'LocalContacts', '$http', function ($rootScope, $scope, LocalContacts, $http) {
         console.log('in the favs controller');
-        $scope.foo = {};
-
-        $scope.removeFav = function(index){
-          $scope.foo = {};
-
-          LocalContacts.delete(index).then(function(contacts){
-            console.log('removed');
-            console.log(contacts);
-            $scope.contacts = contacts;
-          });
-        };
 
         LocalContacts.get().then(function(contacts){
           $scope.contacts = contacts;
-          console.log('con', contacts);
+          console.log('fav contacts: ', contacts);
         });
+
+        $rootScope.$on('favsChanged', function(){
+          LocalContacts.get().then(function(contacts){
+            $scope.contacts = contacts;
+            console.log('fav contacts: ', contacts);
+          });
+        })
       }]
     });
   }]);
@@ -453,11 +449,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
           $scope.contacts = results;
         });
 
-        $scope.addToFavs = function(contact){
-          $scope.foo = {};
-          LocalContacts.add(contact);
-          $scope.openPopup = false;
-        }
+
       }]
     });
   }]);
@@ -843,6 +835,40 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     });
   }]);
 })();
+
+(function() {
+  'use strict';
+
+  ucone.directive('contactActions', function(Media, LocalContacts, $rootScope){
+    return {
+      scope: {
+        contact: '=',
+        deleteMode: '=',
+        show: '='
+      },
+      templateUrl: '/app/directives/contactActions/contactActions.template.html',
+      link: function(scope, element, attrs){
+        scope.media = Media;
+
+        scope.addToFavs = function(contact){
+          console.log('add');
+          LocalContacts.add(contact).then(function(){
+            scope.openPopup = false;
+            $rootScope.$broadcast('favsChanged');
+          });
+        };
+
+        scope.removeFav = function(index){
+          console.log('remove');
+          LocalContacts.delete(index).then(function(contacts){
+            $rootScope.$broadcast('favsChanged');
+          });
+        };
+      }
+    }
+  });
+})();
+
 
 (function() {
   'use strict';
@@ -1710,7 +1736,20 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
           favs = storage.favs;
         }
 
-        var contactAlreadyExists = _.find(favs, function(obj) { return obj.name == contact.name });
+        console.log('favs', favs);
+
+        var contactAlreadyExists = _.find(favs, function(obj) {
+          console.log(obj.name, contact.name);
+          if(contact.name){
+            return obj.name == contact.name
+          }
+          else{
+            return obj.firstName + ' ' + obj.lastName == contact.firstName + ' ' + contact.lastName;
+          }
+        });
+
+        console.log('favs', contactAlreadyExists);
+
 
         if(contact.name == 'Unknown' || contact.firstName == 'Unknown'){
           favs.push(contact);

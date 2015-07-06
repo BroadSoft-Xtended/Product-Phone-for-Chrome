@@ -41,6 +41,14 @@ ng\:form {
   width: 27px;
   padding: 15px;
 }
+.favs-contact-actions {
+  position: absolute;
+  right: 0px;
+}
+.recent-contact-actions {
+  position: absolute;
+  right: 0px;
+}
 .contact-pic-container {
   position: relative;
   display: inline-block;
