@@ -30,7 +30,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
       resolve: {},
 
-      controller: ['$rootScope', '$state', 'BSSip', 'Storage', 'webRTC', 'Auth', function ($rootScope, $state, BSSip, Storage, webRTC, Auth) {
+      controller: ['$rootScope', '$state', 'BSSip', 'Storage', 'webRTC', 'Auth', 'Utility', function ($rootScope, $state, BSSip, Storage, webRTC, Auth, Utility) {
         console.log('in the app controller');
 
         chrome.app.window.current().onClosed.addListener(function(){
@@ -39,6 +39,11 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
           webRTC.stop();
           $rootScope.username = undefined;
           $rootScope.authdata = undefined;
+        });
+
+        chrome.app.window.current().onRestored.addListener(function(){
+          console.log('onResized fired');
+          Utility.setChromeToMinSize();
         });
 
         //Force the user to be logged in to access the app
@@ -220,8 +225,13 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
       resolve: {},
 
-      controller: ['$rootScope', '$scope', 'LocalContacts', '$http', function ($rootScope, $scope, LocalContacts, $http) {
+      controller: ['$rootScope', '$scope', 'LocalContacts', 'Utility', '$timeout', function ($rootScope, $scope, LocalContacts, Utility, $timeout) {
         console.log('in the favs controller');
+
+        //$timeout(function(){
+        //  Utility.setChromeToMinSize();
+        //});
+
 
         LocalContacts.get().then(function(contacts){
           $scope.contacts = contacts;
@@ -1838,6 +1848,15 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     var service = {};
 
     service.setChromeToMinSize = function(){
+      console.log('set the window to min size');
+      console.log(chrome.app.window.current().isFullscreen());
+
+      if(chrome.app.window.current().isFullscreen()){
+        console.log('in here');
+        chrome.app.window.current().restore();
+        chrome.app.window.current().fullscreen();
+      }
+
       var monitorWidth = window.screen.availWidth;
       var monitorHeight = window.screen.availHeight;
       var top = Math.round((monitorHeight / 2) - (568 / 2));
@@ -1854,6 +1873,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.setChromeToVideoSize = function(){
+      console.log('set the window to video size');
       var monitorWidth = window.screen.availWidth;
       var monitorHeight = window.screen.availHeight;
       var videoWidth = Math.round(monitorWidth/2);

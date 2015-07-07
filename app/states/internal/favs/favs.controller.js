@@ -10,8 +10,13 @@
 
       resolve: {},
 
-      controller: ['$rootScope', '$scope', 'LocalContacts', '$http', function ($rootScope, $scope, LocalContacts, $http) {
+      controller: ['$rootScope', '$scope', 'LocalContacts', 'Utility', '$timeout', function ($rootScope, $scope, LocalContacts, Utility, $timeout) {
         console.log('in the favs controller');
+
+        //$timeout(function(){
+        //  Utility.setChromeToMinSize();
+        //});
+
 
         LocalContacts.get().then(function(contacts){
           $scope.contacts = contacts;

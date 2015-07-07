@@ -4,6 +4,15 @@
     var service = {};
 
     service.setChromeToMinSize = function(){
+      console.log('set the window to min size');
+      console.log(chrome.app.window.current().isFullscreen());
+
+      if(chrome.app.window.current().isFullscreen()){
+        console.log('in here');
+        chrome.app.window.current().restore();
+        chrome.app.window.current().fullscreen();
+      }
+
       var monitorWidth = window.screen.availWidth;
       var monitorHeight = window.screen.availHeight;
       var top = Math.round((monitorHeight / 2) - (568 / 2));
@@ -20,6 +29,7 @@
     };
 
     service.setChromeToVideoSize = function(){
+      console.log('set the window to video size');
       var monitorWidth = window.screen.availWidth;
       var monitorHeight = window.screen.availHeight;
       var videoWidth = Math.round(monitorWidth/2);

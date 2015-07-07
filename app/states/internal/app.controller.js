@@ -10,7 +10,7 @@
 
       resolve: {},
 
-      controller: ['$rootScope', '$state', 'BSSip', 'Storage', 'webRTC', 'Auth', function ($rootScope, $state, BSSip, Storage, webRTC, Auth) {
+      controller: ['$rootScope', '$state', 'BSSip', 'Storage', 'webRTC', 'Auth', 'Utility', function ($rootScope, $state, BSSip, Storage, webRTC, Auth, Utility) {
         console.log('in the app controller');
 
         chrome.app.window.current().onClosed.addListener(function(){
@@ -19,6 +19,11 @@
           webRTC.stop();
           $rootScope.username = undefined;
           $rootScope.authdata = undefined;
+        });
+
+        chrome.app.window.current().onRestored.addListener(function(){
+          console.log('onResized fired');
+          Utility.setChromeToMinSize();
         });
 
         //Force the user to be logged in to access the app
