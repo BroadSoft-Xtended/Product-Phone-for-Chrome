@@ -529,6 +529,11 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
             $scope.$apply();
           });
 
+          $rootScope.$on('progressEventFired', function(e, event){
+            console.log('caught the progress event');
+            $scope.$apply();
+          });
+
           $rootScope.$on('sessionReady', function(e, event){
             $scope.pendingNumber = '';
 
@@ -2016,7 +2021,8 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.progress = function(event){
-      console.log('progress');
+      console.log('progressEventFired');
+      $rootScope.$broadcast('progressEventFired', event);
     };
 
     service.failed = function(event){
@@ -2040,6 +2046,8 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     service.started = function(event){
       //comes back from the server evnt
       console.log('broadcasting...');
+      service.call1.progress = false;
+      service.call2.progress = false;
       $rootScope.$broadcast('sessionReady', event);
     };
 

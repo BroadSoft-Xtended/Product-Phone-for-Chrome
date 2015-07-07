@@ -88,7 +88,8 @@
     };
 
     service.progress = function(event){
-      console.log('progress');
+      console.log('progressEventFired');
+      $rootScope.$broadcast('progressEventFired', event);
     };
 
     service.failed = function(event){
@@ -112,6 +113,8 @@
     service.started = function(event){
       //comes back from the server evnt
       console.log('broadcasting...');
+      service.call1.progress = false;
+      service.call2.progress = false;
       $rootScope.$broadcast('sessionReady', event);
     };
 

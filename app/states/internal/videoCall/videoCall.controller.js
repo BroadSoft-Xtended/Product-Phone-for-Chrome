@@ -33,6 +33,11 @@
             $scope.$apply();
           });
 
+          $rootScope.$on('progressEventFired', function(e, event){
+            console.log('caught the progress event');
+            $scope.$apply();
+          });
+
           $rootScope.$on('sessionReady', function(e, event){
             $scope.pendingNumber = '';
 
