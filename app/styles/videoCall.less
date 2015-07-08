@@ -45,6 +45,7 @@
     top: 43%;
     left: 45%;
     font-weight: 100;
+    z-index: 999;
 
     .calling-message{
       font-size: 24px;
@@ -72,6 +73,11 @@
     top: 10px;
     right: 10px;
 
+    &.audio-only{
+      z-index: 0;
+      background-color: rgb(39, 39, 39);
+    }
+
     video{
       width: 135px;
     }
@@ -83,6 +89,11 @@
     width: 100%;
     position: absolute;
     height: 100%;
+
+    &.audio-only{
+      z-index: 0;
+      background-color: rgb(39, 39, 39);
+    }
   }
 
   .video-call-actions{

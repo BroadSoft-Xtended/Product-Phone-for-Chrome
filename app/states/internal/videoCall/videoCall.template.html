@@ -13,15 +13,15 @@
     <div class="calling-number">{{pendingNumber}}</div>
   </div>
 
-  <div class="localVideo">
+  <div class="localVideo" ng-class="{'audio-only': !$root.video}">
     <video id="selfVideo" autoplay="autoplay" muted="true" class="localVideo fadeable"></video>
   </div>
 
-  <div class="remoteVideo">
+  <div class="remoteVideo" ng-class="{'audio-only': !$root.video}">
     <video id="remoteVideo1" class="remoteVideo" autoplay="autoplay" ng-show="rtc.call1.active"></video>
   </div>
 
-  <div class="remoteVideo">
+  <div class="remoteVideo" ng-class="{'audio-only': !$root.video}">
     <video id="remoteVideo2" class="remoteVideo" autoplay="autoplay" ng-show="rtc.call2.active"></video>
   </div>
 

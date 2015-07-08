@@ -929,6 +929,7 @@ input[type=date] {
   top: 43%;
   left: 45%;
   font-weight: 100;
+  z-index: 999;
 }
 .video-calls .call-ringing-message .calling-message {
   font-size: 24px;
@@ -952,6 +953,10 @@ input[type=date] {
   top: 10px;
   right: 10px;
 }
+.video-calls .localVideo.audio-only {
+  z-index: 0;
+  background-color: #272727;
+}
 .video-calls .localVideo video {
   width: 135px;
 }
@@ -961,6 +966,10 @@ input[type=date] {
   width: 100%;
   position: absolute;
   height: 100%;
+}
+.video-calls .remoteVideo.audio-only {
+  z-index: 0;
+  background-color: #272727;
 }
 .video-calls .video-call-actions {
   z-index: 100;

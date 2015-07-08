@@ -1820,6 +1820,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
     service.startVideoCall = function(contact){
       if($rootScope.registeredWRS){
+        $rootScope.video = true;
         Storage.setValue('currentCallContact', contact);
         $state.go('app.videoCall', {contact: contact, makeCall: true, displayVideo: true});
       }
@@ -1830,6 +1831,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
     service.startAudioCall = function(contact){
       if($rootScope.registeredWRS){
+        $rootScope.video = false;
         Storage.setValue('currentCallContact', contact);
         $state.go('app.videoCall', {contact: contact, makeCall: true, displayVideo: false});
       }
@@ -1969,7 +1971,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
 (function(){
   'use strict';
-  ucone.factory('webRTC', ['$q', 'Storage', '$rootScope', '$state', 'Utility', 'Auth', function($q, Storage, $rootScope, $state, Utility, Auth){
+  ucone.factory('webRTC',  ['$q', 'Storage', '$rootScope', '$state', 'Utility', 'Auth', function($q, Storage, $rootScope, $state, Utility, Auth){
     var service = {};
     var userAgent;
 
@@ -2169,6 +2171,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.hold = function(session){
+      console.log('attempt hold', session);
       session.hold(function(){
         console.log('success');
         return true;
@@ -2179,6 +2182,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.unhold = function(session){
+      console.log('attempt unhold', session);
       session.unhold(function(){
         console.log('success');
         return true;
@@ -2201,7 +2205,6 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
       service.closeVideo();
     };
-
 
     service.attendedTransfer = function(number, session) {
       userAgent.attendedTransfer(number, session);
@@ -2229,6 +2232,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       console.log('call2', service.call2);
       //Check to see if there is another call on hold. If so, activate it
       if(service.call1.session == null && service.call2.session !== null){
+        console.log('unholding call 2');
         service.unhold(service.call2.session);
         service.call1.active = false;
         service.call2.active = true;
@@ -2236,6 +2240,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
       //Check to see if there is another call on hold. If so, activate it
       if(service.call2.session == null && service.call1.session !== null){
+        console.log('unholding call 1');
         service.unhold(service.call1.session);
         service.call1.active = true;
         service.call2.active = false;
