@@ -30,7 +30,7 @@ Finally, you can configure a list of VIPs — people that will always get throug
 
 - **BroadWorks Anywhere:** The Phone for Chrome is designed to be deployed in conjunction with BroadWorks Anywhere.  BroadWorks Anywhere allows you to configure your mobile number. When enabled, both your mobile phone and your Phone for Chrome will ring whenever anyone calls your UC-One business number.
 
-- **Selectivee Call Rejection:** The Phone for Chrome also allows you to choose to reject certain types of calls based on caller identity. You can choose to reject calls from specific calling numbers, calls from anonymous callers, or incoming calls set as private.
+- **Selective Call Rejection:** The Phone for Chrome also allows you to choose to reject certain types of calls based on caller identity. You can choose to reject calls from specific calling numbers, calls from anonymous callers, or incoming calls set as private.
 
 - **N-Way Calling:** The Phone for Chrome supports N-way calling for both voice and video calls.
 
