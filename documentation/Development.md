@@ -2,7 +2,7 @@
 
 ### How to install the latest version
 - Install the latest version of Google Chorme
-- Drag and drop this file into you browser with the URL of chorme://extensions
+- Drag and drop this file into you browser with the URL of chrome://extensions
 - https://github.com/broadsoftxtended/Product-ChromePhone/blob/master/dist/ChromePhone-V-1.crx
 
 ### How to run this app (Development)
