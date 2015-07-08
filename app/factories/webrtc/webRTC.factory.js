@@ -68,8 +68,7 @@
       service.call2.session.terminate();
       service.call2 = {session: null, active: false};
 
-      Utility.setChromeToMinSize();
-      $state.go('app.header.main.favs');
+      service.closeVideo();
     };
 
     service.registered = function(event){
@@ -104,10 +103,8 @@
         console.log('found the second session');
         service.call2.session.terminate();
       }
-      service.call1 = {session: null, active: false};
-      service.call2 = {session: null, active: false};
-      Utility.setChromeToMinSize();
-      $state.go('app.header.main.favs');
+
+      service.closeVideo();
     };
 
     service.started = function(event){
@@ -129,10 +126,8 @@
     service.ended = function(event){
       console.log('ended');
       isVideo = false;
-      service.call1 = {session: null, active: false};
-      service.call2 = {session: null, active: false};
-      Utility.setChromeToMinSize();
-      $state.go('app.header.main.favs');
+
+      service.closeVideo();
     };
 
     service.newDTMF = function(){
@@ -201,8 +196,7 @@
         console.log('here2');
       }
 
-      Utility.setChromeToMinSize();
-      $state.go('app.header.main.favs');
+      service.closeVideo();
     };
 
     service.hold = function(session){
@@ -235,27 +229,56 @@
       }
 
       userAgent.transfer(number, session);
-      Utility.setChromeToMinSize();
-      $state.go('app.header.main.favs');
+
+      service.closeVideo();
     };
+
 
     service.attendedTransfer = function(number, session) {
       userAgent.attendedTransfer(number, session);
     };
 
     service.hangUp = function(type){
+      console.log('hang up the call: ', type);
       if(type === 'call1'){
+        console.log('hanging up on call 1');
         service.call1.session.terminate();
         service.call1 = {session: null, active: false};
       }
 
       if(type === 'call2'){
+        console.log('hanging up on call 2');
         service.call2.session.terminate();
         service.call2 = {session: null, active: false};
       }
 
-      Utility.setChromeToMinSize();
-      $state.go('app.header.main.favs');
+      service.closeVideo();
+    };
+
+    service.closeVideo = function(){
+      console.log('call1', service.call1);
+      console.log('call2', service.call2);
+      //Check to see if there is another call on hold. If so, activate it
+      if(service.call1.session == null && service.call2.session !== null){
+        service.unhold(service.call2.session);
+        service.call1.active = false;
+        service.call2.active = true;
+      }
+
+      //Check to see if there is another call on hold. If so, activate it
+      if(service.call2.session == null && service.call1.session !== null){
+        service.unhold(service.call1.session);
+        service.call1.active = true;
+        service.call2.active = false;
+      }
+
+      if(service.call1.session == null && service.call2.session == null){
+        console.log('both sessions are null');
+        service.call1 = {session: null, active: false};
+        service.call2 = {session: null, active: false};
+        Utility.setChromeToMinSize();
+        $state.go('app.header.main.favs');
+      }
     };
 
     service.sendDTMF = function(digit, session) {

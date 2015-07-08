@@ -26,8 +26,18 @@
             $rootScope.$broadcast('favsChanged');
           });
         };
+
+        scope.startAudioCall = function(contact){
+          var error = Media.startAudioCall(contact);
+          if(error){
+            $rootScope.wrsError = true;
+          }
+        };
+
+        scope.startVideoCall = function(contact){
+          Media.startVideoCall(contact);
+        };
       }
     }
   });
 })();
-

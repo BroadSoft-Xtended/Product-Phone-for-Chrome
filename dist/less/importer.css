@@ -49,6 +49,35 @@ ng\:form {
   position: absolute;
   right: 0px;
 }
+.wrs-down-message {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  background-color: rgba(52, 52, 52, 0.82);
+  top: 0px;
+  left: 0px;
+  box-shadow: 3px;
+  -moz-box-shadow: 0px 3px 39px 0px #7a797a;
+  padding: 10px;
+}
+.wrs-down-message .message-contents {
+  background-color: #ffffff;
+  width: 94%;
+  margin-top: 165px;
+}
+.wrs-down-message .wrs-message {
+  color: #6F6E6E;
+  padding: 38px 22px;
+  font-size: 18px;
+  text-align: center;
+}
+.wrs-down-message .wrs-close-button {
+  cursor: pointer;
+  color: #6C6C6C;
+  float: right;
+  padding: 9px;
+  font-size: 21px;
+}
 .contact-pic-container {
   position: relative;
   display: inline-block;
