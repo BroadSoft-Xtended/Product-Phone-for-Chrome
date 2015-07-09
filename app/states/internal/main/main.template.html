@@ -2,13 +2,17 @@
   <i class="fa fa-search search-icon"></i>
   <input class="search-input" type="text" placeholder="{{'SearchExample' | translator}}" ng-model="searchText" ng-keyup="searchContacts($event)"/>
   <button class="direct-call-button" ng-show="searchText.length > 0" ng-click="makeSearchCall()">{{'Call' | translator}}</button>
-  <div ng-show="searchContactsList.length > 0" class="search-results-container">
-    <div ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
-      <contact-circle data-contact="contact"></contact-circle>
-      <div class="user-name">{{(contact.firstName + ' ' + contact.lastName) | truncate:25:38:showContactActions}}</div>
-      <contact-actions contact="contact" show="showContactActions" delete-mode="false" class="recent-contact-actions" index="$index"></contact-actions>
+
+  <div class="search-results-scroll" ng-show="searchContactsList.length > 0">
+    <div class="search-results-container">
+      <div ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(searchContactsList, $index)" ng-mouseleave="showContactActions = false">
+        <contact-circle data-contact="contact"></contact-circle>
+        <div class="user-name">{{(contact.firstName + ' ' + contact.lastName) | truncate:25:38:showContactActions}}</div>
+        <contact-actions contact="contact" show="showContactActions" delete-mode="false" class="recent-contact-actions" index="$index"></contact-actions>
+      </div>
     </div>
   </div>
+
 </div>
 
 <div class="nav-tabs" ng-init="currentTab = 'favs'">

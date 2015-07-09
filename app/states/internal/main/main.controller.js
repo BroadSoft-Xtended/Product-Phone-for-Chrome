@@ -12,6 +12,7 @@
 
       controller: ['$rootScope', '$scope', '$state', 'BSDirectory', 'Media', function ($rootScope, $scope, $state, BSDirectory, Media) {
         console.log('in the main controller');
+        $scope.bsPageStart = 1;
         $scope.searchContactsList = [];
         $scope.media = Media;
         $scope.showCallButton = false;
@@ -28,10 +29,23 @@
             $scope.searchText = '';
           }
           else{
-            BSDirectory.searchDirectoryContacts($scope.searchText, 1, 7).then(function(results){
+            BSDirectory.searchDirectoryContacts($scope.searchText, 1, 8).then(function(results){
               console.log('res', results);
               $scope.searchContactsList = results;
             });
+          }
+        };
+
+        $scope.getBroadsoftContacts = function(){
+          BSDirectory.getDirectoryContacts($scope.bsPageStart, 8).then(function(contacts){
+            $scope.bsPageStart += 8;
+            $scope.searchContactsList = $scope.searchContactsList.concat(contacts);
+          });
+        };
+
+        $scope.loadMoreContacts = function(contacts, index){
+          if(index >= contacts.length - 8){
+            $scope.getBroadsoftContacts();
           }
         };
       }]

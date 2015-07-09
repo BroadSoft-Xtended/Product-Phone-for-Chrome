@@ -30,17 +30,14 @@
           }
         };
 
-        //Run on page start
-        $scope.getBroadsoftContacts();
-
         $scope.addToContactFavs = function(contact){
           $scope.foo = {};
           LocalContacts.add(contact);
           $scope.openPopup = false;
-        }
+        };
 
-        //Set for debugging
-        window.$scope = $scope;
+        //Run on page start
+        $scope.getBroadsoftContacts();
       }]
     });
   }]);

@@ -814,6 +814,8 @@ input[type=date]{
   width: 376px;
   border: 1px solid #E2E1E1;
   box-shadow: 0 0 11px 0 #ccc;
+  height: 486px;
+  overflow: scroll;
 }
 .border-radius (@radius: 50%) {
   -webkit-border-radius: @radius;
