@@ -981,21 +981,22 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
     };
 
-    service.setConfig = function(){
+    service.setConfig = function(type){
+      console.log('type', type);
       var defer = $q.defer();
       var configuration;
 
       chrome.storage.local.get(function(storage){
         configuration = {
           'ws_servers' : [ {
-            'ws_uri' : storage.sipConfig.primaryWrsAddress,
+            'ws_uri' : type == 'attemptTwo' ? storage.sipConfig.secondaryWrsAddress : storage.sipConfig.primaryWrsAddress,
             'weight' : 0
           } ],
           'uri' : storage.sipConfig.sipLineport,
           'auth_user': storage.sipConfig.sipUsername,
           'authorization_user': storage.sipConfig.sipUsername,
           'password': storage.sipConfig.sipPassword,
-          'stun_servers': storage.sipConfig.primaryStunServer,
+          'stun_servers': type == 'attemptTwo' ? storage.sipConfig.secondaryStunServer : storage.sipConfig.primaryStunServer,
           'trace_sip' : true,
           'displayName': (_.unescape(storage.sipConfig.userFirstName + ' ' + storage.sipConfig.userLastName)).replace("&apos;", "'")
         };
@@ -2128,6 +2129,12 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
     service.disconnected = function(event){
       console.log('disconnected');
+
+      Auth.setConfig('attemptTwo').then(function(config){
+        service.init(config).then(function(userAgent){
+        });
+      });
+
       service.call1.session.terminate();
       service.call1 = {session: null, active: false};
 
@@ -2144,6 +2151,11 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
     service.registrationFailed = function(event){
       $rootScope.registeredWRS = false;
+
+      Auth.setConfig('attemptTwo').then(function(config){
+        service.init(config).then(function(userAgent){
+        });
+      });
       console.log('registrationFailed');
     };
 

@@ -62,6 +62,12 @@
 
     service.disconnected = function(event){
       console.log('disconnected');
+
+      Auth.setConfig('attemptTwo').then(function(config){
+        service.init(config).then(function(userAgent){
+        });
+      });
+
       service.call1.session.terminate();
       service.call1 = {session: null, active: false};
 
@@ -78,6 +84,11 @@
 
     service.registrationFailed = function(event){
       $rootScope.registeredWRS = false;
+
+      Auth.setConfig('attemptTwo').then(function(config){
+        service.init(config).then(function(userAgent){
+        });
+      });
       console.log('registrationFailed');
     };
 

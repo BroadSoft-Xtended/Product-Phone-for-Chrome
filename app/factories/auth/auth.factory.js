@@ -25,21 +25,22 @@
       $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
     };
 
-    service.setConfig = function(){
+    service.setConfig = function(type){
+      console.log('type', type);
       var defer = $q.defer();
       var configuration;
 
       chrome.storage.local.get(function(storage){
         configuration = {
           'ws_servers' : [ {
-            'ws_uri' : storage.sipConfig.primaryWrsAddress,
+            'ws_uri' : type == 'attemptTwo' ? storage.sipConfig.secondaryWrsAddress : storage.sipConfig.primaryWrsAddress,
             'weight' : 0
           } ],
           'uri' : storage.sipConfig.sipLineport,
           'auth_user': storage.sipConfig.sipUsername,
           'authorization_user': storage.sipConfig.sipUsername,
           'password': storage.sipConfig.sipPassword,
-          'stun_servers': storage.sipConfig.primaryStunServer,
+          'stun_servers': type == 'attemptTwo' ? storage.sipConfig.secondaryStunServer : storage.sipConfig.primaryStunServer,
           'trace_sip' : true,
           'displayName': (_.unescape(storage.sipConfig.userFirstName + ' ' + storage.sipConfig.userLastName)).replace("&apos;", "'")
         };
