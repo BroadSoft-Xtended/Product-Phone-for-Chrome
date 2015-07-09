@@ -302,10 +302,15 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
       resolve: {},
 
-      controller: ['$scope', 'Utility', 'BSPersonalAssistant', 'BSCallForwardAlways', 'BSCallNotify', function ($scope, Utility, BSPersonalAssistant, BSCallForwardAlways, BSCallNotify) {
+      controller: ['$scope', 'Utility', 'BSPersonalAssistant', 'BSCallForwardAlways', 'BSCallNotify', 'BSBroadworksAnywhere', function ($scope, Utility, BSPersonalAssistant, BSCallForwardAlways, BSCallNotify, BSBroadworksAnywhere) {
         console.log('in the incoming controller');
         $scope.Utility = Utility;
         $scope.stateList = BSPersonalAssistant.getUserStates();
+
+        BSBroadworksAnywhere.get().then(function(results){
+          $scope.mobileNumber = results[0];
+          $scope.mobileNumberActive = results[1] == 'true';
+        });
 
         BSPersonalAssistant.getPersonalAssistantData().then(function(results){
           $scope.personalAssistantData = results;
@@ -343,6 +348,12 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
             $scope.callNotifyEmail = results;
           });
         };
+
+        $scope.setBroadworksAnywhere = function(){
+          BSBroadworksAnywhere.set($scope.mobileNumber, $scope.mobileNumberActive).then(function(results){
+            $scope.moblieNumber = results;
+          })
+        }
       }]
     });
   }]);
@@ -1035,6 +1046,79 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       $http.get(baseUrl + $rootScope.username + apiName)
         .success(function(response){
           defer.resolve(response.AnonymousCallRejection.active.$ == 'true');
+        }).error(function(error){
+          console.log(error);
+          defer.reject(error);
+        });
+
+      return defer.promise;
+    };
+
+    return service;
+  }]);
+})();
+
+
+(function(){
+  'use strict';
+
+  ucone.factory('BSBroadworksAnywhere', ['$rootScope', '$http', '$q', function($rootScope, $http, $q){
+    var service = {};
+
+    var baseUrl = $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
+
+    service.set = function (phoneNumber, active) {
+      var defer = $q.defer();
+
+      service.get().then(function(oldNumber){
+        var apiName = '/services/BroadworksAnywhere/Location/' + oldNumber[0];
+
+        var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?>' +
+          '<BroadWorksAnywhereLocation xmlns="http://schema.broadsoft.com/xsi">'+
+          '<phoneNumber>' + phoneNumber + '</phoneNumber>' +
+          '<description>My Phone</description>' +
+          '<active>' + active + '</active>' +
+          '<broadworksCallControl>false</broadworksCallControl>' +
+          '<useDiversionInhibitor>false</useDiversionInhibitor>' +
+          '<answerConfirmationRequired>false</answerConfirmationRequired>' +
+          '</BroadWorksAnywhereLocation>';
+
+        var req = {
+          method: 'PUT',
+          url: baseUrl + $rootScope.username + apiName,
+          headers: {
+            'Accept': 'text/xml',
+            'Content-Type': 'text/xml'
+          },
+          data: xmlParams
+        };
+
+        console.log('foo', req);
+
+        $http(req)
+          .success(function(response){
+            console.log('BSBroadworksAnywhere SET', response);
+            defer.resolve(phoneNumber);
+          }).error(function(error){
+            console.log(error);
+            defer.reject(error);
+          });
+      });
+
+      return defer.promise;
+    };
+
+    service.get = function () {
+      var apiName = '/services/BroadworksAnywhere';
+      var defer = $q.defer();
+
+      $http.get(baseUrl + $rootScope.username + apiName)
+        .success(function(response){
+          console.log('BSBroadworksAnywhere Get: ', response);
+          if(!response.BroadWorksAnywhere.locations){
+            defer.resolve('');
+          }
+          defer.resolve([response.BroadWorksAnywhere.locations.location.phoneNumber.$, response.BroadWorksAnywhere.locations.location.active.$]);
         }).error(function(error){
           console.log(error);
           defer.reject(error);

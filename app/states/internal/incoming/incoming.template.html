@@ -26,8 +26,8 @@
   </div>
   <div class="content-container">
     <div class="form-label mobile-number-text">{{'MobileNumber' | translator}}</div>
-    <input type="checkbox" class="until-checkbox">
-    <input class="" type="text"/>
+    <input type="checkbox" class="until-checkbox" ng-model="mobileNumberActive" ng-change="setBroadworksAnywhere()">
+    <input class="" type="text" ng-model="mobileNumber" ng-blur="setBroadworksAnywhere()"/>
   </div>
   <div class="content-container last">
     <div class="form-label">{{'CallNotifyEmail' | translator}}</div>
