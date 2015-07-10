@@ -24,6 +24,23 @@ ng\:form {
 .blocked.settings-nav-container .nudge {
   margin-left: 26px;
 }
+.blocked .form-left {
+  float: left;
+}
+.blocked .form-right {
+  float: right;
+}
+.blocked .header-content-height {
+  height: 94px;
+}
+.blocked .check-box-row {
+  width: 100%;
+  float: left;
+  clear: both;
+}
+.blocked .check-box-row-text {
+  width: 200px !important;
+}
 .directory-separator {
   border-top: 1px solid #F0F0F0;
   border-bottom: 1px solid #F0F0F0;
@@ -329,10 +346,13 @@ input[type=date] {
   width: 100px !important;
 }
 .incoming .form-panel-height {
-  height: 30px;
+  height: 42px;
+}
+.incoming .form-panel-height-1 {
+  height: 69px;
 }
 .incoming .form-left-text {
-  line-height: 30px;
+  line-height: 45px !important;
 }
 .incoming .form-left {
   float: left;

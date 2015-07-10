@@ -33,6 +33,28 @@ ng\:form {
       margin-left: 26px;
     }
   }
+
+  .form-left{
+    float: left;
+  }
+
+  .form-right{
+    float: right;
+  }
+
+  .header-content-height{
+    height: 94px;
+  }
+
+  .check-box-row{
+    width: 100%;
+    float: left;
+    clear: both;
+  }
+
+  .check-box-row-text{
+    width: 200px !important;
+  }
 }
 //colors
 //fonts
@@ -423,11 +445,15 @@ input[type=date]{
   }
 
   .form-panel-height{
-    height: 30px;
+    height: 42px;
+  }
+
+  .form-panel-height-1{
+    height: 69px;
   }
 
   .form-left-text{
-    line-height: 30px;
+    line-height: 45px !important;
   }
 
   .form-left{

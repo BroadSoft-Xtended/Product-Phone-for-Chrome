@@ -1,14 +1,16 @@
 <div class="settings-nav-container vip blocked">
-  <div class="content-container">
+  <div class="content-container header-content-height">
     <div class="header-message pad-bottom">
       {{'Blocked-HeaderMessage' | translator}}
     </div>
-
-    <div class="form-label long">{{'BlockPrivateCalls' | translator}}</div>
-    <input type="checkbox" ng-model="privateCalls" ng-change="togglePrivateCalls()"/>
-    <div class="form-label long">{{'BlockAnonymousCalls' | translator}}</div>
-    <input type="checkbox" ng-model="anonymousCalls" ng-change="toggleAnonymousCalls()"/>
-
+    <div class="check-box-row">
+      <div class="form-label form-left check-box-row-text">{{'BlockPrivateCalls' | translator}}</div>
+      <input class="form-right" type="checkbox" ng-model="privateCalls" ng-change="togglePrivateCalls()"/>
+    </div>
+    <div>
+      <div class="form-label form-left check-box-row-text">{{'BlockAnonymousCalls' | translator}}</div>
+      <input class="form-right" type="checkbox" ng-model="anonymousCalls" ng-change="toggleAnonymousCalls()"/>
+    </div>
   </div>
   <div class="content-container last">
     <div class="form-label nudge">{{'BlockSpecific' | translator}} <br/> {{'Callers' | translator}}</div>
