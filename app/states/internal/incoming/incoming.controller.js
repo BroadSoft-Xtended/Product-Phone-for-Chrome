@@ -37,10 +37,11 @@
             presence: $scope.personalAssistantData.presence,
             enableExpirationTime: $scope.personalAssistantData.enableExpirationTime,
             expirationTime: Utility.formatDate($scope.personalAssistantData.expirationDate, $scope.personalAssistantData.expirationTime),
-            enableTransferToAttendant: $scope.personalAssistantData.attendantNumber !== '' ? 'true' : 'false',
+            enableTransferToAttendant: $scope.personalAssistantData.enableTransferToAttendant,
             attendantNumber: $scope.personalAssistantData.attendantNumber,
             ringSplash: 'false'
           };
+
 
           BSPersonalAssistant.setPersonalAssistantData(params).then(function(results){
             console.log('data: ', results);

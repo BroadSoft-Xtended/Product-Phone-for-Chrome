@@ -354,10 +354,11 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
             presence: $scope.personalAssistantData.presence,
             enableExpirationTime: $scope.personalAssistantData.enableExpirationTime,
             expirationTime: Utility.formatDate($scope.personalAssistantData.expirationDate, $scope.personalAssistantData.expirationTime),
-            enableTransferToAttendant: $scope.personalAssistantData.attendantNumber !== '' ? 'true' : 'false',
+            enableTransferToAttendant: $scope.personalAssistantData.enableTransferToAttendant,
             attendantNumber: $scope.personalAssistantData.attendantNumber,
             ringSplash: 'false'
           };
+
 
           BSPersonalAssistant.setPersonalAssistantData(params).then(function(results){
             console.log('data: ', results);
@@ -1491,10 +1492,12 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       var expirationDate = (typeof data.expirationTime !== 'undefined') ? data.expirationTime.$.split('T')[0] : '';
       var expirationTime = (typeof data.expirationTime !== 'undefined') ? data.expirationTime.$.split('T')[1].substr(0, 5) : '';
       var enableExpirationTime = (typeof data.enableExpirationTime !== 'undefined') ? data.enableExpirationTime.$ === "true" : '';
+      var enableTransferToAttendant = (typeof data.enableTransferToAttendant !== 'undefined') ? data.enableTransferToAttendant.$ === "true" : '';
 
       return {
         presence: presence,
         attendantNumber: attendantNumber,
+        enableTransferToAttendant: enableTransferToAttendant,
         expirationDate: expirationDate,
         expirationTime: expirationTime,
         enableExpirationTime: enableExpirationTime
@@ -1520,7 +1523,10 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
         var apiName = '/services/personalassistant';
         var defer = $q.defer();
 
+        console.log('ETTA', params.enableTransferToAttendant);
+
         params.enableExpirationTime = params.enableExpirationTime ? 'true': 'false';
+        params.enableTransferToAttendant = params.enableTransferToAttendant ? 'true': 'false';
 
         var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
 
@@ -1992,7 +1998,6 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       console.log(chrome.app.window.current().isFullscreen());
 
       if(chrome.app.window.current().isFullscreen()){
-        console.log('in here');
         chrome.app.window.current().restore();
         chrome.app.window.current().fullscreen();
       }
@@ -2084,8 +2089,6 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       console.log('Your current language is :', language);
       return language;
     };
-
-
 
     return service;
   }]);

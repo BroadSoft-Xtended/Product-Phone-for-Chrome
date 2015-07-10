@@ -12,10 +12,12 @@
       var expirationDate = (typeof data.expirationTime !== 'undefined') ? data.expirationTime.$.split('T')[0] : '';
       var expirationTime = (typeof data.expirationTime !== 'undefined') ? data.expirationTime.$.split('T')[1].substr(0, 5) : '';
       var enableExpirationTime = (typeof data.enableExpirationTime !== 'undefined') ? data.enableExpirationTime.$ === "true" : '';
+      var enableTransferToAttendant = (typeof data.enableTransferToAttendant !== 'undefined') ? data.enableTransferToAttendant.$ === "true" : '';
 
       return {
         presence: presence,
         attendantNumber: attendantNumber,
+        enableTransferToAttendant: enableTransferToAttendant,
         expirationDate: expirationDate,
         expirationTime: expirationTime,
         enableExpirationTime: enableExpirationTime
@@ -41,7 +43,10 @@
         var apiName = '/services/personalassistant';
         var defer = $q.defer();
 
+        console.log('ETTA', params.enableTransferToAttendant);
+
         params.enableExpirationTime = params.enableExpirationTime ? 'true': 'false';
+        params.enableTransferToAttendant = params.enableTransferToAttendant ? 'true': 'false';
 
         var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
 

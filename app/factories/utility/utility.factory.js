@@ -8,7 +8,6 @@
       console.log(chrome.app.window.current().isFullscreen());
 
       if(chrome.app.window.current().isFullscreen()){
-        console.log('in here');
         chrome.app.window.current().restore();
         chrome.app.window.current().fullscreen();
       }
@@ -100,8 +99,6 @@
       console.log('Your current language is :', language);
       return language;
     };
-
-
 
     return service;
   }]);
