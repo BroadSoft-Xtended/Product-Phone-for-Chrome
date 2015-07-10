@@ -6,7 +6,7 @@ To use the Phone for Chrome, the BroadWorks system must be configured with a Dev
 
 To import the DTAF, follow these steps:
 
-1) [Download](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Chrome-Phone.DTAF.zip) the DTAF file and unzip it.  
+1) [Download](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/dtaf) the corresponding release specific DTAF file and unzip it.  
 
 2)     Log in to BroadWorks as a system administrator.
 
