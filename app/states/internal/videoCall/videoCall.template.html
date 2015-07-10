@@ -1,11 +1,9 @@
 <div class="video-calls">
   <!--GLOBALS-->
   <div class="call-merge-actions" ng-show="rtc.call1.session && rtc.call2.session">
-    <button class="call-merging-buttons " ng-click="activateCall('call1')" ng-show="rtc.call1.session.isOnHold">{{'Call1Hold' | translator}}</button>
-    <button class="call-merging-buttons " ng-click="activateCall('call1')" ng-show="!rtc.call1.session.isOnHold">{{'Call1Active' | translator}}</button>
+    <button class="call-merging-buttons " ng-click="activateCall('call1')">{{'Call1Activate' | translator}}</button>
     <button class="call-merging-buttons join-calls-button" ng-click="joinCalls()">{{'Join' | translator}}</button>
-    <button class="call-merging-buttons" ng-click="activateCall('call2')" ng-show="rtc.call2.session.isOnHold">{{'Call2Hold' | translator}}</button>
-    <button class="call-merging-buttons" ng-click="activateCall('call2')" ng-show="!rtc.call2.session.isOnHold">{{'Call2Active' | translator}}</button>
+    <button class="call-merging-buttons" ng-click="activateCall('call2')">{{'Call2Activate' | translator}}</button>
   </div>
 
   <div class="call-ringing-message" ng-show="pendingNumber !== ''">

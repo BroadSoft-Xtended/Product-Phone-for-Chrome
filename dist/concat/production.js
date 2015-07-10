@@ -655,15 +655,15 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
           $scope.activateCall = function(activeCall){
             if(activeCall == 'call1'){
               console.log('activating call 1');
-              webRTC.unhold('call1');
-              webRTC.hold('call2');
+              webRTC.unhold(webRTC.call1.session);
+              webRTC.hold(webRTC.call2.session);
               webRTC.call1.active = true;
               webRTC.call2.active = false;
             }
             if(activeCall == 'call2'){
               console.log('activating call 2');
-              webRTC.unhold('call2');
-              webRTC.hold('call1');
+              webRTC.unhold(webRTC.call2.session);
+              webRTC.hold(webRTC.call1.session);
               webRTC.call1.active = false;
               webRTC.call2.active = true;
             }
@@ -1537,11 +1537,28 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
         var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
 
+        console.log('params', params.attendantNumber);
+        console.log('params', typeof params.attendantNumber);
+
+
+
         console.log('foo', params.expirationTime);
 
         if(params.enableExpirationTime === 'false'){
           xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
         }
+
+        if(params.attendantNumber == '' && params.enableExpirationTime === 'false'){
+
+          console.log('we made it');
+          xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
+        }
+
+      if(params.attendantNumber == '' && params.enableExpirationTime !== 'false'){
+
+        console.log('we made it');
+        xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
+      }
 
         console.log(xmlParams);
 
@@ -2332,7 +2349,17 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.hold = function(session){
-      console.log('attempt hold', session);
+      console.log('hold session', session);
+      //console.log('type', type);
+      //console.log('type', service.call1);
+      //console.log('type', service.call2);
+      //var session;
+      //if(type == 'call1'){
+      //  session = service.call1.session;
+      //}
+      //if(type == 'call2'){
+      //  session = service.call2.session;
+      //}
       session.hold(function(){
         console.log('success');
         return true;
@@ -2343,6 +2370,20 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.unhold = function(session){
+      console.log('unhold session', session);
+
+      //console.log('type', type);
+      //console.log('type', service.call1);
+      //console.log('type', service.call2);
+      //
+      //var session;
+      //if(type == 'call1'){
+      //  session = service.call1.session;
+      //}
+      //if(type == 'call2'){
+      //  session = service.call2.session;
+      //}
+
       console.log('attempt unhold', session);
       session.unhold(function(){
         console.log('success');
@@ -2354,6 +2395,8 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.transfer = function(number, session, type){
+      console.log('transfer in progress', number);
+      console.log('transfer in progress', session);
       if(type === 'call1'){
         service.call1 = {session: null, active: false};
       }
@@ -2599,6 +2642,9 @@ var en = new function() {
       'CallFrom': 'Call From',
       'Call': 'Call',
       'Calling': 'Calling...',
+
+      'Call1Activate': 'Activate Call 1',
+      'Call2Activate': 'Activate Call 2',
 
       'Call1Hold': 'Call 1 (Hold)',
       'Call1Active': 'Call 1 (Active)',

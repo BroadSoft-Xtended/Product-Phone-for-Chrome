@@ -90,15 +90,15 @@
           $scope.activateCall = function(activeCall){
             if(activeCall == 'call1'){
               console.log('activating call 1');
-              webRTC.unhold('call1');
-              webRTC.hold('call2');
+              webRTC.unhold(webRTC.call1.session);
+              webRTC.hold(webRTC.call2.session);
               webRTC.call1.active = true;
               webRTC.call2.active = false;
             }
             if(activeCall == 'call2'){
               console.log('activating call 2');
-              webRTC.unhold('call2');
-              webRTC.hold('call1');
+              webRTC.unhold(webRTC.call2.session);
+              webRTC.hold(webRTC.call1.session);
               webRTC.call1.active = false;
               webRTC.call2.active = true;
             }

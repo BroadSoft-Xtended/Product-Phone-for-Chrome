@@ -53,6 +53,9 @@ var en = new function() {
       'Call': 'Call',
       'Calling': 'Calling...',
 
+      'Call1Activate': 'Activate Call 1',
+      'Call2Activate': 'Activate Call 2',
+
       'Call1Hold': 'Call 1 (Hold)',
       'Call1Active': 'Call 1 (Active)',
       'Call2Hold': 'Call 2 (Hold)',

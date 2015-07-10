@@ -50,11 +50,28 @@
 
         var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
 
+        console.log('params', params.attendantNumber);
+        console.log('params', typeof params.attendantNumber);
+
+
+
         console.log('foo', params.expirationTime);
 
         if(params.enableExpirationTime === 'false'){
           xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
         }
+
+        if(params.attendantNumber == '' && params.enableExpirationTime === 'false'){
+
+          console.log('we made it');
+          xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
+        }
+
+      if(params.attendantNumber == '' && params.enableExpirationTime !== 'false'){
+
+        console.log('we made it');
+        xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
+      }
 
         console.log(xmlParams);
 

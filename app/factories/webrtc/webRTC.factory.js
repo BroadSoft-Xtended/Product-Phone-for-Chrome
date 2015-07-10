@@ -229,7 +229,17 @@
     };
 
     service.hold = function(session){
-      console.log('attempt hold', session);
+      console.log('hold session', session);
+      //console.log('type', type);
+      //console.log('type', service.call1);
+      //console.log('type', service.call2);
+      //var session;
+      //if(type == 'call1'){
+      //  session = service.call1.session;
+      //}
+      //if(type == 'call2'){
+      //  session = service.call2.session;
+      //}
       session.hold(function(){
         console.log('success');
         return true;
@@ -240,6 +250,20 @@
     };
 
     service.unhold = function(session){
+      console.log('unhold session', session);
+
+      //console.log('type', type);
+      //console.log('type', service.call1);
+      //console.log('type', service.call2);
+      //
+      //var session;
+      //if(type == 'call1'){
+      //  session = service.call1.session;
+      //}
+      //if(type == 'call2'){
+      //  session = service.call2.session;
+      //}
+
       console.log('attempt unhold', session);
       session.unhold(function(){
         console.log('success');
@@ -251,6 +275,8 @@
     };
 
     service.transfer = function(number, session, type){
+      console.log('transfer in progress', number);
+      console.log('transfer in progress', session);
       if(type === 'call1'){
         service.call1 = {session: null, active: false};
       }
