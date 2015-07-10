@@ -39,16 +39,17 @@
             expirationTime: Utility.formatDate($scope.personalAssistantData.expirationDate, $scope.personalAssistantData.expirationTime),
             enableTransferToAttendant: $scope.personalAssistantData.attendantNumber !== '' ? 'true' : 'false',
             attendantNumber: $scope.personalAssistantData.attendantNumber,
-            ringSplash: $scope.personalAssistantData.ringSplash
+            ringSplash: 'false'
           };
 
           BSPersonalAssistant.setPersonalAssistantData(params).then(function(results){
+            console.log('data: ', results);
             $scope.personalAssistantData = results;
           })
         };
 
         $scope.setCallForwardAlways = function(){
-          BSCallForwardAlways.setNumber($scope.callForwardAlways).then(function(results){});
+          BSCallForwardAlways.setNumber($scope.callForwardAlways, $scope.callForwardAlwaysActive).then(function(results){});
         };
 
         $scope.setCallNotify = function(){

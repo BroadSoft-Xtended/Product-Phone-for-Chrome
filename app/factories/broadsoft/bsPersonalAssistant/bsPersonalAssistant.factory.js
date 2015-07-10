@@ -42,7 +42,6 @@
         var defer = $q.defer();
 
         params.enableExpirationTime = params.enableExpirationTime ? 'true': 'false';
-        params.enableTransferToAttendant = params.enableTransferToAttendant ? 'true': 'false';
 
         var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
 

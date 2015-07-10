@@ -17,15 +17,17 @@
     </div>
   </div>
   <div class="content-container">
-    <div class="form-label">{{'TransferTo' | translator}}</div>
+    <div class="form-label checkbox-offset">{{'TransferTo' | translator}}</div>
+    <input type="checkbox" class="until-checkbox" ng-model="personalAssistantData.enableTransferToAttendant" ng-change="setPersonalAssistantData()">
     <input type="text" ng-model="personalAssistantData.attendantNumber" ng-blur="setPersonalAssistantData()"/>
   </div>
   <div class="content-container">
-    <div class="form-label">{{'ForwardTo' | translator}}</div>
+    <div class="form-label checkbox-offset">{{'ForwardTo' | translator}}</div>
+    <input type="checkbox" class="until-checkbox" ng-model="callForwardAlwaysActive" ng-change="setCallForwardAlways()">
     <input type="text" ng-model="callForwardAlways" ng-blur="setCallForwardAlways()"/>
   </div>
   <div class="content-container">
-    <div class="form-label mobile-number-text">{{'MobileNumber' | translator}}</div>
+    <div class="form-label checkbox-offset">{{'MobileNumber' | translator}}</div>
     <input type="checkbox" class="until-checkbox" ng-model="mobileNumberActive" ng-change="setBroadworksAnywhere()">
     <input class="" type="text" ng-model="mobileNumber" ng-blur="setBroadworksAnywhere()"/>
   </div>

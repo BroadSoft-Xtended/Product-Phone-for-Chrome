@@ -356,16 +356,17 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
             expirationTime: Utility.formatDate($scope.personalAssistantData.expirationDate, $scope.personalAssistantData.expirationTime),
             enableTransferToAttendant: $scope.personalAssistantData.attendantNumber !== '' ? 'true' : 'false',
             attendantNumber: $scope.personalAssistantData.attendantNumber,
-            ringSplash: $scope.personalAssistantData.ringSplash
+            ringSplash: 'false'
           };
 
           BSPersonalAssistant.setPersonalAssistantData(params).then(function(results){
+            console.log('data: ', results);
             $scope.personalAssistantData = results;
           })
         };
 
         $scope.setCallForwardAlways = function(){
-          BSCallForwardAlways.setNumber($scope.callForwardAlways).then(function(results){});
+          BSCallForwardAlways.setNumber($scope.callForwardAlways, $scope.callForwardAlwaysActive).then(function(results){});
         };
 
         $scope.setCallNotify = function(){
@@ -1199,16 +1200,14 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       return defer.promise;
     };
 
-    service.setNumber = function(number){
+    service.setNumber = function(number, active){
       var apiName = '/services/CallForwardingAlways?';
       var defer = $q.defer();
 
       number = number || '';
 
-      var active = !!number;
-
-      var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><CallForwardingAlways xmlns="http://schema.broadsoft.com/xsi"><active>' + active + '</active><forwardToPhoneNumber>' + number + '</forwardToPhoneNumber><ringSplash>' + active + '</ringSplash></CallForwardingAlways>';
-      if(number === ''){ xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><CallForwardingAlways xmlns="http://schema.broadsoft.com/xsi"><active>' + active + '</active><ringSplash>' + active + '</ringSplash></CallForwardingAlways>';}
+      var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><CallForwardingAlways xmlns="http://schema.broadsoft.com/xsi"><active>' + active + '</active><forwardToPhoneNumber>' + number + '</forwardToPhoneNumber><ringSplash>' + 'false' + '</ringSplash></CallForwardingAlways>';
+      if(number === ''){ xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><CallForwardingAlways xmlns="http://schema.broadsoft.com/xsi"><active>' + active + '</active><ringSplash>' + 'false' + '</ringSplash></CallForwardingAlways>';}
 
       var req = {
         method: 'PUT',
@@ -1522,7 +1521,6 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
         var defer = $q.defer();
 
         params.enableExpirationTime = params.enableExpirationTime ? 'true': 'false';
-        params.enableTransferToAttendant = params.enableTransferToAttendant ? 'true': 'false';
 
         var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
 
@@ -2008,8 +2006,8 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       chrome.app.window.current().innerBounds.maxHeight = 568;
       chrome.app.window.current().innerBounds.minWidth = 400;
       chrome.app.window.current().innerBounds.minHeight = 568;
-      chrome.app.window.current().innerBounds.top = top;
-      chrome.app.window.current().innerBounds.left = left;
+      //chrome.app.window.current().innerBounds.top = top;
+      //chrome.app.window.current().innerBounds.left = left;
       chrome.app.window.current().innerBounds.width = 400;
       chrome.app.window.current().innerBounds.height = 568;
     };
@@ -2027,8 +2025,8 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       chrome.app.window.current().innerBounds.maxHeight = null;
       chrome.app.window.current().innerBounds.minWidth = videoWidth;
       chrome.app.window.current().innerBounds.minHeight = videoHeight;
-      chrome.app.window.current().innerBounds.top = top;
-      chrome.app.window.current().innerBounds.left = left;
+      //chrome.app.window.current().innerBounds.top = top;
+      //chrome.app.window.current().innerBounds.left = left;
       chrome.app.window.current().innerBounds.width = videoWidth;
       chrome.app.window.current().innerBounds.height = videoHeight;
     };

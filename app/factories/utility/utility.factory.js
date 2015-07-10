@@ -22,8 +22,8 @@
       chrome.app.window.current().innerBounds.maxHeight = 568;
       chrome.app.window.current().innerBounds.minWidth = 400;
       chrome.app.window.current().innerBounds.minHeight = 568;
-      chrome.app.window.current().innerBounds.top = top;
-      chrome.app.window.current().innerBounds.left = left;
+      //chrome.app.window.current().innerBounds.top = top;
+      //chrome.app.window.current().innerBounds.left = left;
       chrome.app.window.current().innerBounds.width = 400;
       chrome.app.window.current().innerBounds.height = 568;
     };
@@ -41,8 +41,8 @@
       chrome.app.window.current().innerBounds.maxHeight = null;
       chrome.app.window.current().innerBounds.minWidth = videoWidth;
       chrome.app.window.current().innerBounds.minHeight = videoHeight;
-      chrome.app.window.current().innerBounds.top = top;
-      chrome.app.window.current().innerBounds.left = left;
+      //chrome.app.window.current().innerBounds.top = top;
+      //chrome.app.window.current().innerBounds.left = left;
       chrome.app.window.current().innerBounds.width = videoWidth;
       chrome.app.window.current().innerBounds.height = videoHeight;
     };

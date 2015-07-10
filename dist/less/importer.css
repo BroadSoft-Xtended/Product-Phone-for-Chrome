@@ -325,7 +325,7 @@ input[type=date] {
 .incoming .until-checkbox {
   display: inline-block;
 }
-.incoming .mobile-number-text {
+.incoming .checkbox-offset {
   width: 100px !important;
 }
 .incoming-call {

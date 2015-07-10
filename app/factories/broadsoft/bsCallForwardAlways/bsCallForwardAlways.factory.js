@@ -22,16 +22,14 @@
       return defer.promise;
     };
 
-    service.setNumber = function(number){
+    service.setNumber = function(number, active){
       var apiName = '/services/CallForwardingAlways?';
       var defer = $q.defer();
 
       number = number || '';
 
-      var active = !!number;
-
-      var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><CallForwardingAlways xmlns="http://schema.broadsoft.com/xsi"><active>' + active + '</active><forwardToPhoneNumber>' + number + '</forwardToPhoneNumber><ringSplash>' + active + '</ringSplash></CallForwardingAlways>';
-      if(number === ''){ xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><CallForwardingAlways xmlns="http://schema.broadsoft.com/xsi"><active>' + active + '</active><ringSplash>' + active + '</ringSplash></CallForwardingAlways>';}
+      var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><CallForwardingAlways xmlns="http://schema.broadsoft.com/xsi"><active>' + active + '</active><forwardToPhoneNumber>' + number + '</forwardToPhoneNumber><ringSplash>' + 'false' + '</ringSplash></CallForwardingAlways>';
+      if(number === ''){ xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><CallForwardingAlways xmlns="http://schema.broadsoft.com/xsi"><active>' + active + '</active><ringSplash>' + 'false' + '</ringSplash></CallForwardingAlways>';}
 
       var req = {
         method: 'PUT',

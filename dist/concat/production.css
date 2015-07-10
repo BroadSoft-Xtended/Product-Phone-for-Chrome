@@ -418,7 +418,7 @@ input[type=date]{
     display: inline-block;
   }
 
-  .mobile-number-text{
+  .checkbox-offset {
     width: 100px !important;
   }
 }
