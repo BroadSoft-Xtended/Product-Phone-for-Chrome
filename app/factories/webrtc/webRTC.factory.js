@@ -105,6 +105,17 @@
 
     service.failed = function(event){
       console.log('failed event', event);
+      console.log('failure cause: ', event.data.cause);
+      if(event.data.cause == "Invalid Target"){
+        console.log('Invalid Target error');
+        service.call1.session = null;
+        service.call1.active  = false;
+        service.call2.session = null;
+        service.call2.active  = false;
+        Utility.setChromeToMinSize();
+        $state.go('app.header.main.favs');
+      }
+
       if(service.call1.session && event.data.cause !== "Rejected" && event.data.cause !== "Canceled"){
         console.log('found the first session');
         service.call1.session.terminate();
@@ -120,7 +131,7 @@
     };
 
     service.started = function(event){
-      //comes back from the server evnt
+      //comes back from the server event
       service.blockIncoming = true;
       console.log('broadcasting...');
       service.call1.progress = false;
@@ -275,6 +286,7 @@
     };
 
     service.closeVideo = function(){
+      console.log('closing video');
       service.blockIncoming = false;
       console.log('call1', service.call1);
       console.log('call2', service.call2);

@@ -69,9 +69,16 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
           $rootScope.authdata = undefined;
         });
 
+        chrome.app.window.current().onMinimized.addListener(function(){
+          $rootScope.minimized = true;
+        });
+
         chrome.app.window.current().onRestored.addListener(function(){
-          console.log('onResized fired');
-          Utility.setChromeToMinSize();
+          console.log('onResized fired', chrome.app.window.current().isMinimized());
+          if(!$rootScope.minimized){
+            Utility.setChromeToMinSize();
+          }
+          $rootScope.minimized = false;
         });
 
         //Force the user to be logged in to access the app
@@ -2201,6 +2208,17 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
     service.failed = function(event){
       console.log('failed event', event);
+      console.log('failure cause: ', event.data.cause);
+      if(event.data.cause == "Invalid Target"){
+        console.log('Invalid Target error');
+        service.call1.session = null;
+        service.call1.active  = false;
+        service.call2.session = null;
+        service.call2.active  = false;
+        Utility.setChromeToMinSize();
+        $state.go('app.header.main.favs');
+      }
+
       if(service.call1.session && event.data.cause !== "Rejected" && event.data.cause !== "Canceled"){
         console.log('found the first session');
         service.call1.session.terminate();
@@ -2216,7 +2234,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.started = function(event){
-      //comes back from the server evnt
+      //comes back from the server event
       service.blockIncoming = true;
       console.log('broadcasting...');
       service.call1.progress = false;
@@ -2371,6 +2389,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.closeVideo = function(){
+      console.log('closing video');
       service.blockIncoming = false;
       console.log('call1', service.call1);
       console.log('call2', service.call2);

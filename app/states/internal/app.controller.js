@@ -49,9 +49,16 @@
           $rootScope.authdata = undefined;
         });
 
+        chrome.app.window.current().onMinimized.addListener(function(){
+          $rootScope.minimized = true;
+        });
+
         chrome.app.window.current().onRestored.addListener(function(){
-          console.log('onResized fired');
-          Utility.setChromeToMinSize();
+          console.log('onResized fired', chrome.app.window.current().isMinimized());
+          if(!$rootScope.minimized){
+            Utility.setChromeToMinSize();
+          }
+          $rootScope.minimized = false;
         });
 
         //Force the user to be logged in to access the app
