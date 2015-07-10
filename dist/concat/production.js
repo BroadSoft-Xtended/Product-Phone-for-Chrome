@@ -910,7 +910,10 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
         };
 
         scope.startVideoCall = function(contact){
-          Media.startVideoCall(contact);
+          var error = Media.startVideoCall(contact);
+          if(error){
+            $rootScope.wrsError = true;
+          }
         };
       }
     }
