@@ -37,7 +37,7 @@
         };
 
         $scope.getBroadsoftContacts = function(){
-          BSDirectory.getDirectoryContacts($scope.bsPageStart, 8).then(function(contacts){
+          BSDirectory.searchDirectoryContacts($scope.searchText, $scope.bsPageStart, 8).then(function(contacts){
             $scope.bsPageStart += 8;
             $scope.searchContactsList = $scope.searchContactsList.concat(contacts);
           });
