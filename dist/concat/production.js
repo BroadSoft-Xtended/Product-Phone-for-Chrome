@@ -1456,7 +1456,6 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     var baseUrl = $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
 
     service.formatPAData = function(data){
-      var ringSplash = (typeof data.ringSplash !== 'undefined') ? data.ringSplash.$ === "true" : false;
       var presence = (typeof data.presence !== 'undefined') ? data.presence.$ : 'Available';
       var attendantNumber = (typeof data.attendantNumber !== 'undefined') ? data.attendantNumber.$ : '';
       var expirationDate = (typeof data.expirationTime !== 'undefined') ? data.expirationTime.$.split('T')[0] : '';
@@ -1464,7 +1463,6 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       var enableExpirationTime = (typeof data.enableExpirationTime !== 'undefined') ? data.enableExpirationTime.$ === "true" : '';
 
       return {
-        ringSplash: ringSplash,
         presence: presence,
         attendantNumber: attendantNumber,
         expirationDate: expirationDate,
@@ -1493,15 +1491,14 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
         var defer = $q.defer();
 
         params.enableExpirationTime = params.enableExpirationTime ? 'true': 'false';
-        params.ringSplash = params.ringSplash ? 'true': 'false';
         params.enableTransferToAttendant = params.enableTransferToAttendant ? 'true': 'false';
 
-        var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ params.ringSplash +'</ringSplash></PersonalAssistant>';
+        var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
 
         console.log('foo', params.expirationTime);
 
         if(params.enableExpirationTime === 'false'){
-          xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ params.ringSplash +'</ringSplash></PersonalAssistant>';
+          xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
         }
 
         console.log(xmlParams);
@@ -2073,6 +2070,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
     service.call1 = {session: null, active: false};
     service.call2 = {session: null, active: false};
+    service.blockIncoming = false;
 
     var isVideo = false;
     var configuration;
@@ -2187,6 +2185,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
     service.started = function(event){
       //comes back from the server evnt
+      service.blockIncoming = true;
       console.log('broadcasting...');
       service.call1.progress = false;
       service.call2.progress = false;
@@ -2213,7 +2212,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.incomingCall = function(event){
-      console.log('incoming call from');
+      console.log('incoming call from', event);
       var name = '';
       if(service.call1.session){
         name = service.call1.session.remote_identity.display_name;
@@ -2221,7 +2220,10 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       else if(service.call2.session){
         name = service.call2.session.remote_identity.display_name;
       }
-      $state.go('app.incomingCall', {displayName: name});
+
+      if(!service.blockIncoming) {
+        $state.go('app.incomingCall', {displayName: name});
+      }
     };
 
     service.makeCall = function(phoneNumber, displayVideo){
@@ -2234,6 +2236,8 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.accept = function(videoEnabled){
+      $rootScope.video = videoEnabled;
+
       console.log('accepting', videoEnabled);
       var options = {
         'mediaConstraints' : {
@@ -2335,6 +2339,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     };
 
     service.closeVideo = function(){
+      service.blockIncoming = false;
       console.log('call1', service.call1);
       console.log('call2', service.call2);
       //Check to see if there is another call on hold. If so, activate it

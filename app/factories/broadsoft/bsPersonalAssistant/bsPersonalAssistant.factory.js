@@ -7,7 +7,6 @@
     var baseUrl = $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
 
     service.formatPAData = function(data){
-      var ringSplash = (typeof data.ringSplash !== 'undefined') ? data.ringSplash.$ === "true" : false;
       var presence = (typeof data.presence !== 'undefined') ? data.presence.$ : 'Available';
       var attendantNumber = (typeof data.attendantNumber !== 'undefined') ? data.attendantNumber.$ : '';
       var expirationDate = (typeof data.expirationTime !== 'undefined') ? data.expirationTime.$.split('T')[0] : '';
@@ -15,7 +14,6 @@
       var enableExpirationTime = (typeof data.enableExpirationTime !== 'undefined') ? data.enableExpirationTime.$ === "true" : '';
 
       return {
-        ringSplash: ringSplash,
         presence: presence,
         attendantNumber: attendantNumber,
         expirationDate: expirationDate,
@@ -44,15 +42,14 @@
         var defer = $q.defer();
 
         params.enableExpirationTime = params.enableExpirationTime ? 'true': 'false';
-        params.ringSplash = params.ringSplash ? 'true': 'false';
         params.enableTransferToAttendant = params.enableTransferToAttendant ? 'true': 'false';
 
-        var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ params.ringSplash +'</ringSplash></PersonalAssistant>';
+        var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
 
         console.log('foo', params.expirationTime);
 
         if(params.enableExpirationTime === 'false'){
-          xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ params.ringSplash +'</ringSplash></PersonalAssistant>';
+          xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
         }
 
         console.log(xmlParams);

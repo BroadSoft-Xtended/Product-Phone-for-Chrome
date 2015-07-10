@@ -6,6 +6,7 @@
 
     service.call1 = {session: null, active: false};
     service.call2 = {session: null, active: false};
+    service.blockIncoming = false;
 
     var isVideo = false;
     var configuration;
@@ -120,6 +121,7 @@
 
     service.started = function(event){
       //comes back from the server evnt
+      service.blockIncoming = true;
       console.log('broadcasting...');
       service.call1.progress = false;
       service.call2.progress = false;
@@ -146,7 +148,7 @@
     };
 
     service.incomingCall = function(event){
-      console.log('incoming call from');
+      console.log('incoming call from', event);
       var name = '';
       if(service.call1.session){
         name = service.call1.session.remote_identity.display_name;
@@ -154,7 +156,10 @@
       else if(service.call2.session){
         name = service.call2.session.remote_identity.display_name;
       }
-      $state.go('app.incomingCall', {displayName: name});
+
+      if(!service.blockIncoming) {
+        $state.go('app.incomingCall', {displayName: name});
+      }
     };
 
     service.makeCall = function(phoneNumber, displayVideo){
@@ -167,6 +172,8 @@
     };
 
     service.accept = function(videoEnabled){
+      $rootScope.video = videoEnabled;
+
       console.log('accepting', videoEnabled);
       var options = {
         'mediaConstraints' : {
@@ -268,6 +275,7 @@
     };
 
     service.closeVideo = function(){
+      service.blockIncoming = false;
       console.log('call1', service.call1);
       console.log('call2', service.call2);
       //Check to see if there is another call on hold. If so, activate it
