@@ -16,10 +16,12 @@
       </select>
     </div>
   </div>
-  <div class="content-container">
-    <div class="form-label checkbox-offset">{{'TransferTo' | translator}}</div>
-    <input type="checkbox" class="until-checkbox" ng-model="personalAssistantData.enableTransferToAttendant" ng-change="setPersonalAssistantData()">
-    <input type="text" ng-model="personalAssistantData.attendantNumber" ng-blur="setPersonalAssistantData()"/>
+  <div class="content-container form-panel-height">
+    <div class="form-label checkbox-offset form-left form-left-text">{{'TransferTo' | translator}}</div>
+    <div class="form-right">
+      <input type="checkbox" class="until-checkbox" ng-model="personalAssistantData.enableTransferToAttendant" ng-change="setPersonalAssistantData()">
+      <input type="text" ng-model="personalAssistantData.attendantNumber" ng-blur="setPersonalAssistantData()"/>
+    </div>
   </div>
   <div class="content-container">
     <div class="form-label checkbox-offset">{{'ForwardTo' | translator}}</div>

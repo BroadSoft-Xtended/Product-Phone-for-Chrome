@@ -328,6 +328,18 @@ input[type=date] {
 .incoming .checkbox-offset {
   width: 100px !important;
 }
+.incoming .form-panel-height {
+  height: 30px;
+}
+.incoming .form-left-text {
+  line-height: 30px;
+}
+.incoming .form-left {
+  float: left;
+}
+.incoming .form-right {
+  float: right;
+}
 .incoming-call {
   background-color: #333333;
   height: 100vh;
