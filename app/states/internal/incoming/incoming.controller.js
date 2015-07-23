@@ -25,7 +25,8 @@
         });
 
         BSCallForwardAlways.getData().then(function(results){
-          $scope.callForwardAlways = results;
+          $scope.callForwardAlways = results[0];
+          $scope.callForwardAlwaysActive = results[1];
         });
 
         BSCallNotify.getData().then(function(results){
@@ -50,7 +51,10 @@
         };
 
         $scope.setCallForwardAlways = function(){
-          BSCallForwardAlways.setNumber($scope.callForwardAlways, $scope.callForwardAlwaysActive).then(function(results){});
+          BSCallForwardAlways.setNumber($scope.callForwardAlways, $scope.callForwardAlwaysActive).then(function(results){
+            $scope.callForwardAlways = results[0];
+            $scope.callForwardAlwaysActive = results[1];
+          });
         };
 
         $scope.setCallNotify = function(){

@@ -24,10 +24,10 @@
     "https://ssl.gstatic.com/",
     "https://www.googleapis.com/",
     "https://accounts.google.com/",
-    "https://www.google.com/",
-    "https://xsp.ihs.broadsoft.com/",
-    "https://xsp1.ihs.broadsoft.com/",
-    "https://xsp2.ihs.broadsoft.com/"
+    "*google.com/",
+    "*broadsoft.com*",
+    "*onvoip.net*",
+    "*comcast.net*"
   ],
   "oauth2": {
     "client_id": "946586810118-u5hlb6ur1rqaspoba6i2cmn9638pf6aa.apps.googleusercontent.com",

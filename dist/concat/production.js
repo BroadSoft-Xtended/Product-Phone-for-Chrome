@@ -349,7 +349,8 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
         });
 
         BSCallForwardAlways.getData().then(function(results){
-          $scope.callForwardAlways = results;
+          $scope.callForwardAlways = results[0];
+          $scope.callForwardAlwaysActive = results[1];
         });
 
         BSCallNotify.getData().then(function(results){
@@ -374,7 +375,10 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
         };
 
         $scope.setCallForwardAlways = function(){
-          BSCallForwardAlways.setNumber($scope.callForwardAlways, $scope.callForwardAlwaysActive).then(function(results){});
+          BSCallForwardAlways.setNumber($scope.callForwardAlways, $scope.callForwardAlwaysActive).then(function(results){
+            $scope.callForwardAlways = results[0];
+            $scope.callForwardAlwaysActive = results[1];
+          });
         };
 
         $scope.setCallNotify = function(){
@@ -1199,7 +1203,9 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       $http.get(baseUrl + $rootScope.username + apiName)
         .success(function(response){
           var number = (typeof response.CallForwardingAlways.forwardToPhoneNumber !== 'undefined') ? response.CallForwardingAlways.forwardToPhoneNumber.$ : '';
-          defer.resolve(number);
+          var active = (typeof response.CallForwardingAlways.active !== 'undefined') ? response.CallForwardingAlways.active.$ : '';
+          var activeBool = active == 'true';
+          defer.resolve([number, activeBool]);
         }).error(function(error){
           console.log(error);
           defer.reject(error);
@@ -1212,10 +1218,15 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       var apiName = '/services/CallForwardingAlways?';
       var defer = $q.defer();
 
+      console.log(number);
+      console.log(active);
+
       number = number || '';
 
       var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><CallForwardingAlways xmlns="http://schema.broadsoft.com/xsi"><active>' + active + '</active><forwardToPhoneNumber>' + number + '</forwardToPhoneNumber><ringSplash>' + 'false' + '</ringSplash></CallForwardingAlways>';
       if(number === ''){ xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><CallForwardingAlways xmlns="http://schema.broadsoft.com/xsi"><active>' + active + '</active><ringSplash>' + 'false' + '</ringSplash></CallForwardingAlways>';}
+
+      console.log('xml Params', xmlParams);
 
       var req = {
         method: 'PUT',
@@ -1226,7 +1237,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
       $http(req)
         .success(function(){
-          defer.resolve(number);
+          defer.resolve([number, active]);
         }).error(function(error){
           console.log(error);
           defer.reject(error);
@@ -2626,7 +2637,7 @@ var en = new function() {
       'Availability': 'Availability',
       'Until': 'Until',
       'TransferTo': 'Transfer To',
-      'ForwardTo': 'ForwardTo',
+      'ForwardTo': 'Forward To',
       'MobileNumber': 'Mobile Number',
       'CallNotifyEmail': 'Call Notify Email',
 
@@ -2715,6 +2726,9 @@ var es = new function() {
       'Call': '',
       'Calling': '',
 
+      'Call1Activate': '',
+      'Call2Activate': '',
+
       'Call1Hold': '',
       'Call1Active': '',
       'Call2Hold': '',
@@ -2782,6 +2796,9 @@ var fr = new function() {
       'CallFrom': '',
       'Call': '',
       'Calling': '',
+
+      'Call1Activate': '',
+      'Call2Activate': '',
 
       'Call1Hold': '',
       'Call1Active': '',
@@ -2851,6 +2868,9 @@ var german = new function() {
       'Call': '',
       'Calling': '',
 
+      'Call1Activate': '',
+      'Call2Activate': '',
+
       'Call1Hold': '',
       'Call1Active': '',
       'Call2Hold': '',
@@ -2918,6 +2938,9 @@ var italian = new function() {
       'CallFrom': '',
       'Call': '',
       'Calling': '',
+
+      'Call1Activate': '',
+      'Call2Activate': '',
 
       'Call1Hold': '',
       'Call1Active': '',

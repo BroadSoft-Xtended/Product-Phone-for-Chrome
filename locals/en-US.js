@@ -36,7 +36,7 @@ var en = new function() {
       'Availability': 'Availability',
       'Until': 'Until',
       'TransferTo': 'Transfer To',
-      'ForwardTo': 'ForwardTo',
+      'ForwardTo': 'Forward To',
       'MobileNumber': 'Mobile Number',
       'CallNotifyEmail': 'Call Notify Email',
 
