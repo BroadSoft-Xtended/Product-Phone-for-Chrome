@@ -21,13 +21,15 @@
     "app.window",
     "storage",
     "identity",
-    "https://ssl.gstatic.com/",
-    "https://www.googleapis.com/",
-    "https://accounts.google.com/",
-    "*google.com/",
-    "*broadsoft.com*",
-    "*onvoip.net*",
-    "*comcast.net*"
+    "*://ssl.gstatic.com/",
+    "*://www.googleapis.com/",
+    "*://accounts.google.com/",
+    "*://*.google.com/",
+    "*://*.broadsoft.com/",
+    "*://*.onvoip.net/",
+    "*://*.comcast.net/",
+    "*://webrtc1.onvoip.net/",
+    "*://webrtc1-ch2-01p.system.comcast.net/"
   ],
   "oauth2": {
     "client_id": "946586810118-u5hlb6ur1rqaspoba6i2cmn9638pf6aa.apps.googleusercontent.com",
