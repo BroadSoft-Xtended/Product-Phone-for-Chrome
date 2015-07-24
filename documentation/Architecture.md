@@ -1,4 +1,4 @@
-# Appplication Architecture
+# Application Architecture
 
 [Full list of dependencies](https://github.com/broadsoftxtended/Product-Phone-for-Chrome/blob/master/documentation/Dependencies.md)
 
