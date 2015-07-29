@@ -3,7 +3,7 @@
   "name": "UC-One Phone",
   "short_name": "UC-One Phone",
   "description": "",
-  "version": "0.0.1",
+  "version": "1.7.0",
   "minimum_chrome_version": "38",
 
   "icons": {
@@ -29,7 +29,9 @@
     "*://*.onvoip.net/",
     "*://*.comcast.net/",
     "*://*.onvoip.net/",
-    "*://*.comcast.net/"
+    "*://*.comcast.net/",
+    "*://*.ngtlab.net/",
+    "*://*.broadworks.net/"
   ],
   "oauth2": {
     "client_id": "946586810118-u5hlb6ur1rqaspoba6i2cmn9638pf6aa.apps.googleusercontent.com",
