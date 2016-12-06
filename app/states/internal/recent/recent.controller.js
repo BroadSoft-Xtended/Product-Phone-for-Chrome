@@ -6,7 +6,7 @@
 
       url: '/recent',
 
-      templateUrl: '/app/states/internal/recent/recent.template.html',
+      templateUrl: '/states/internal/recent/recent.template.html',
 
       resolve: {},
 

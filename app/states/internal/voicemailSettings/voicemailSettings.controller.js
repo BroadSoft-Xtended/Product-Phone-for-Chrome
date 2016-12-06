@@ -6,7 +6,7 @@
 
       url: '/voicemailSettings',
 
-      templateUrl: '/app/states/internal/voicemailSettings/voicemailSettings.template.html',
+      templateUrl: '/states/internal/voicemailSettings/voicemailSettings.template.html',
 
       resolve: {},
 

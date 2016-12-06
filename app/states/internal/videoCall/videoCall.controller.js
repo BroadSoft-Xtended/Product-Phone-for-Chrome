@@ -7,7 +7,7 @@
       url: '/videoCall',
       params: {contact: null, makeCall: null, displayVideo: null},
 
-      templateUrl: '/app/states/internal/videoCall/videoCall.template.html',
+      templateUrl: '/states/internal/videoCall/videoCall.template.html',
 
       resolve: {},
 

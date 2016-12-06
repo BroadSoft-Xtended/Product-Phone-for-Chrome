@@ -6,7 +6,7 @@
 
       url: '/favs',
 
-      templateUrl: '/app/states/internal/favs/favs.template.html',
+      templateUrl: '/states/internal/favs/favs.template.html',
 
       resolve: {},
 

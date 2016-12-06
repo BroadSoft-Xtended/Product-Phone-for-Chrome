@@ -6,7 +6,7 @@
 
       url: '/app',
 
-      templateUrl: '/app/states/internal/app.template.html',
+      templateUrl: '/states/internal/app.template.html',
 
       resolve: {},
 
@@ -41,7 +41,7 @@
           }
         });
 
-        chrome.app.window.current().onClosed.addListener(function(){
+        window.addEventListener("onClosed", function(){
           webRTC.hangUp('call1');
           webRTC.hangUp('call2');
           webRTC.stop();
@@ -49,11 +49,11 @@
           $rootScope.authdata = undefined;
         });
 
-        chrome.app.window.current().onMinimized.addListener(function(){
+        window.addEventListener("onMinimized", function(){
           $rootScope.minimized = true;
         });
 
-        chrome.app.window.current().onRestored.addListener(function(){
+        window.addEventListener("onRestored", function(){
           console.log('onResized fired', chrome.app.window.current().isMinimized());
           if(!$rootScope.minimized){
             Utility.setChromeToMinSize();
@@ -103,4 +103,3 @@
     });
   }]);
 })();
-

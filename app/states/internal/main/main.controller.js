@@ -6,7 +6,7 @@
 
       url: '/main',
 
-      templateUrl: '/app/states/internal/main/main.template.html',
+      templateUrl: '/states/internal/main/main.template.html',
 
       resolve: {},
 

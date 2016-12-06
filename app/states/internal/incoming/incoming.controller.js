@@ -6,7 +6,7 @@
 
       url: '/incoming',
 
-      templateUrl: '/app/states/internal/incoming/incoming.template.html',
+      templateUrl: '/states/internal/incoming/incoming.template.html',
 
       resolve: {},
 

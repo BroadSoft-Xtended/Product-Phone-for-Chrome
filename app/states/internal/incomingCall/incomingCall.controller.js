@@ -6,7 +6,7 @@
 
       url: '/incomingCall',
       params: {displayName: null},
-      templateUrl: '/app/states/internal/incomingCall/incomingCall.template.html',
+      templateUrl: '/states/internal/incomingCall/incomingCall.template.html',
       resolve: {},
 
       controller: ['$rootScope', '$scope', '$state', 'webRTC', 'Utility', function ($rootScope, $scope, $state, webRTC, Utility) {

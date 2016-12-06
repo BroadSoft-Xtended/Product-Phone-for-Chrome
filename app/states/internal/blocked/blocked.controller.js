@@ -6,7 +6,7 @@
 
       url: '/blocked',
 
-      templateUrl: '/app/states/internal/blocked/blocked.template.html',
+      templateUrl: '/states/internal/blocked/blocked.template.html',
 
       resolve: {},
 

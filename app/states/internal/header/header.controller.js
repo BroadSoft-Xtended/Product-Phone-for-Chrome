@@ -6,7 +6,7 @@
 
       url: '/header',
 
-      templateUrl: '/app/states/internal/header/header.template.html',
+      templateUrl: '/states/internal/header/header.template.html',
 
       resolve: {},
 

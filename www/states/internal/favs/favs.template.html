@@ -1,0 +1,12 @@
+<div class="favs">
+  <div ng-repeat="contact in contacts track by $index" class="favs-container" ng-mouseenter="showContactActions = true" ng-mouseleave="showContactActions = false">
+    <contact-circle data-contact="contact"></contact-circle>
+    <div class="user-name">{{(contact.name || contact.firstName + ' ' + contact.lastName) | truncate:25:40:show}}</div>
+    <contact-actions class="favs-contact-actions" delete-mode="true" contact="contact" show="showContactActions" index="$index"></contact-actions>
+  </div>
+
+  <div ng-show="contacts.length < 1">
+    <div class="main-text">{{'NoFavsYet' | translator}}</div>
+    <div class="sub-text">{{'AddAFavInstructions' | translator}}</div>
+  </div>
+</div>

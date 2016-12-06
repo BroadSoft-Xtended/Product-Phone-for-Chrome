@@ -1,0 +1,29 @@
+<div class="contacts-search">
+  <i class="fa fa-search search-icon"></i>
+  <input class="search-input" type="text" placeholder="Type a name or number" ng-model="searchText" ng-keyup="searchContacts($event)"/>
+  <button class="direct-call-button" ng-show="showCallButton" ng-click="makeSearchCall()">{{'Call' | translator}}</button>
+  <div ng-show="searchContactsList.length > 0" class="search-results-container">
+    <div ng-repeat="contact in searchContactsList track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
+      <contact-circle data-contact="contact"></contact-circle>
+      <div class="user-name">{{(contact.firstName + ' ' + contact.lastName) | truncate:25:38:showContactActions}}</div>
+      <div class="contact-actions" ng-show="showContactActions">
+        <img src="/assets/images/icons/icon_pickup.svg" />
+        <img src="/assets/images/icons/icon_video.svg"  ng-click="media.startVideoCall(contact);" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="settings-tabs nav-tabs" ng-init="currentTab = 'incoming'">
+  <div class="main-nav-tabs">
+    <a ui-sref="app.header.settings.incoming" class="nav-link" ng-class="{selected: currentTab == 'incoming'}" ng-click="currentTab = 'incoming'">{{'Incoming' | translator}}</a>
+    <a ui-sref="app.header.settings.vip" class="nav-link" ng-class="{selected: currentTab == 'vip'}" ng-click="currentTab = 'vip'">{{'VIP' | translator}}</a>
+    <a ui-sref="app.header.settings.blocked" class="nav-link" ng-class="{selected: currentTab == 'blocked'}" ng-click="currentTab = 'blocked'">{{'Blocked' | translator}}</a>
+  </div>
+  <a ui-sref="app.header.main.favs">
+    <i class="fa fa-arrow-left"></i>
+  </a>
+
+</div>
+
+<div ui-view class="nav-tabs-content"></div>

@@ -1,0 +1,10 @@
+<div class="directory-separator">{{'TelephoneDirectory' | translator}}</div>
+
+<div ng-repeat="contact in telephoneContacts track by $index" class="favs-container" ng-mouseenter="showContactActions = true; loadMoreContacts(telephoneContacts, $index)" ng-mouseleave="showContactActions = false">
+  <contact-circle data-contact="contact"></contact-circle>
+  <div class="user-name">{{(contact.firstName + ' ' + contact.lastName) | truncate:25:40:showContactActions}}</div>
+  <contact-actions contact="contact" show="showContactActions" delete-mode="false" class="recent-contact-actions" index="$index"></contact-actions>
+</div>
+
+<img src="/assets/images/spinner.gif" class="more-contacts-loader"/>
+

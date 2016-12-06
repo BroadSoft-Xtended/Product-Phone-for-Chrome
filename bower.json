@@ -12,6 +12,7 @@
     "less": "~2.5.0",
     "angular-base64": "~2.0.5",
     "underscore": "~1.8.3",
-    "angular-mocks": "~1.4.0"
+    "angular-mocks": "~1.4.0",
+    "angular-cookies": "^1.5.9"
   }
 }

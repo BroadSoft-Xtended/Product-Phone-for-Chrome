@@ -1,4 +1,4 @@
-var ucone = angular.module('ucone', ["ui.router", "base64"], function($provide) {
+var ucone = angular.module('ucone', ["ui.router", "base64, ngCookies"], function($provide) {
   // Prevent Angular from sniffing for the history API
   // since it's not supported in packaged apps.
   $provide.decorator('$window', function($delegate) {
@@ -18,6 +18,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
 });
+
 (function(){
   'use strict';
 
@@ -61,7 +62,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
           }
         });
 
-        chrome.app.window.current().onClosed.addListener(function(){
+        window.addEventListener("onClosed", function(){
           webRTC.hangUp('call1');
           webRTC.hangUp('call2');
           webRTC.stop();
@@ -69,11 +70,11 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
           $rootScope.authdata = undefined;
         });
 
-        chrome.app.window.current().onMinimized.addListener(function(){
+        window.addEventListener("onMinimized", function(){
           $rootScope.minimized = true;
         });
 
-        chrome.app.window.current().onRestored.addListener(function(){
+        window.addEventListener("onRestored", function(){
           console.log('onResized fired', chrome.app.window.current().isMinimized());
           if(!$rootScope.minimized){
             Utility.setChromeToMinSize();
@@ -123,7 +124,6 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     });
   }]);
 })();
-
 
 (function(){
   'use strict';
@@ -827,6 +827,9 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
         console.log('in the login controller');
         $scope.spinner = false;
 
+        $scope.xsp = 'https://xsp.ihs.broadsoft.com';
+        $scope.email = 'jodonnell@broadsoft.com';
+
         Utility.setChromeToMinSize();
 
         chrome.storage.local.get(function(storage){
@@ -851,6 +854,8 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
         };
 
         $scope.broadsoftLogin = function(login){
+          $state.go('app.header.main.favs');
+
           $scope.rememberLoginUrlAndEmail();
           console.log('bsft login');
           login.$pristine = false;
@@ -1001,7 +1006,7 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 (function(){
   'use strict';
 
-  ucone.factory('Auth', ['$base64', '$rootScope', '$http', 'Storage', '$q', function($base64, $rootScope, $http, Storage, $q){
+  ucone.factory('Auth', ['$base64', '$rootScope', '$http', 'Storage', '$q', '$cookies', function($base64, $rootScope, $http, Storage, $q, $cookies){
     var service = {};
 
     service.clearCredentials = function () {
@@ -1030,35 +1035,32 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
       var defer = $q.defer();
       var configuration;
 
-      chrome.storage.local.get(function(storage){
-        configuration = {
-          'ws_servers' : [ {
-            'ws_uri' : type == 'attemptTwo' ? storage.sipConfig.secondaryWrsAddress : storage.sipConfig.primaryWrsAddress,
-            'weight' : 0
-          } ],
-          'uri' : storage.sipConfig.sipLineport,
-          'auth_user': storage.sipConfig.sipUsername,
-          'authorization_user': storage.sipConfig.sipUsername,
-          'password': storage.sipConfig.sipPassword,
-          'stun_servers': type == 'attemptTwo' ? storage.sipConfig.secondaryStunServer : storage.sipConfig.primaryStunServer,
-          'trace_sip' : true,
-          'displayName': (_.unescape(storage.sipConfig.userFirstName + ' ' + storage.sipConfig.userLastName)).replace("&apos;", "'")
-        };
+      configuration = {
+        'ws_servers' : [ {
+          'ws_uri' : type == 'attemptTwo' ? $cookies.get('storage.sipConfig.secondaryWrsAddress') : $cookies.get('storage.sipConfig.primaryWrsAddress'),
+          'weight' : 0
+        } ],
+        'uri' : $cookies.get('storage.sipConfig.sipLineport'),
+        'auth_user': $cookies.get('storage.sipConfig.sipUsername'),
+        'authorization_user': $cookies.get('storage.sipConfig.sipUsername'),
+        'password': $cookies.get('storage.sipConfig.sipPassword'),
+        'stun_servers': type == 'attemptTwo' ? $cookies.get('storage.sipConfig.secondaryStunServer') : $cookies.get('storage.sipConfig.primaryStunServer'),
+        'trace_sip' : true,
+        'displayName': (_.unescape($cookies.get('storage.sipConfig.userFirstName') + ' ' + $cookies.get('storage.sipConfig.userLastName'))).replace("&apos;", "'")
+      };
 
-        console.log("the user's config: ", configuration);
+      console.log("the user's config: ", configuration);
 
-        $rootScope.userFirstName = storage.sipConfig.userFirstName;
+      $rootScope.userFirstName = $cookies.get('storage.sipConfig.userFirstName');
 
-        defer.resolve(configuration);
-      });
-
+      defer.resolve(configuration);
+    
       return defer.promise;
     };
 
     return service;
   }]);
 })();
-
 
 (function(){
   'use strict';
@@ -1495,7 +1497,6 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
   }]);
 })();
 
-
 (function(){
   'use strict';
 
@@ -1824,42 +1825,41 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
 
 
-(function(){
+(function() {
   'use strict';
 
-  ucone.factory('BSSip', ['$rootScope', '$http', '$q', '$base64', function($rootScope, $http, $q, $base64){
+  ucone.factory('BSSip', ['$rootScope', '$http', '$q', '$base64', function($rootScope, $http, $q, $base64) {
     var service = {};
     var chromePhoneDeviceType = 'Chrome-Phone';
     var configUrl = $rootScope.xsp + '/dms/chrome-phone/config.json';
 
-    service.getChromeDevice = function(){
+    service.getChromeDevice = function() {
       var defer = $q.defer();
       var apiName = '/profile/device';
 
-      chrome.storage.local.get(function(storage){
-        $http.get($rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/' + $rootScope.username + apiName)
-          .success(function(response){
-            _.each(response.AccessDevices.accessDevice, function(device){
-              var deviceType = (typeof device.deviceType !== 'undefined') ? device.deviceType.$ : '';
+      $http.get($rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/' + $rootScope.username + apiName)
+        .success(function(response) {
+          _.each(response.AccessDevices.accessDevice, function(device) {
+            var deviceType = (typeof device.deviceType !== 'undefined') ? device.deviceType.$ : '';
 
-              if(deviceType === chromePhoneDeviceType){
-                defer.resolve(device);
-              }
-            });
-          }).error(function(error){
-            console.log(error);
-            defer.reject(error);
+            if (deviceType === chromePhoneDeviceType) {
+              defer.resolve(device);
+            }
           });
-      });
+        }).error(function(error) {
+          console.log(error);
+          defer.reject(error);
+        });
+
 
       return defer.promise;
     };
 
-    service.getSIPConfig = function(){
+    service.getSIPConfig = function() {
       var defer = $q.defer();
 
-      service.getChromeDevice().then(function(device){
-        if(typeof device.deviceUserNamePassword === 'undefined'){
+      service.getChromeDevice().then(function(device) {
+        if (typeof device.deviceUserNamePassword === 'undefined') {
           defer.reject('This device does not have a user name or password in the broadworks settings');
         }
 
@@ -1877,9 +1877,9 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
         };
 
         $http(req)
-          .success(function(response){
+          .success(function(response) {
             defer.resolve(response);
-          }).error(function(error){
+          }).error(function(error) {
             console.log(error);
             defer.reject(error);
           });
@@ -1900,14 +1900,14 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     service.get = function(){
       var defer = $q.defer();
 
-      chrome.storage.local.get(function(storage){
-        if(storage.favs){
-          defer.resolve(storage.favs);
-        }
-        else{
-          defer.resolve([]);
-        }
-      });
+
+      if($cookies.get('storage.favs')){
+        defer.resolve($cookies.get('storage.favs'));
+      }
+      else{
+        defer.resolve([]);
+      }
+
 
       return defer.promise;
     };
@@ -1915,40 +1915,40 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     service.add = function(contact){
       var defer = $q.defer();
 
-      chrome.storage.local.get(function(storage){
-        var favs = [];
-        if(storage.favs){
-          favs = storage.favs;
-        }
 
-        console.log('favs', favs);
+      var favs = [];
+      if($cookies.getObject('storage.favs')){
+        favs = $cookies.getObject('storage.favs');
+      }
 
-        var contactAlreadyExists = _.find(favs, function(obj) {
-          console.log(obj.name, contact.name);
-          if(contact.name){
-            return obj.name == contact.name
-          }
-          else{
-            return obj.firstName + ' ' + obj.lastName == contact.firstName + ' ' + contact.lastName;
-          }
-        });
+      console.log('favs', favs);
 
-        console.log('favs', contactAlreadyExists);
-
-
-        if(contact.name == 'Unknown' || contact.firstName == 'Unknown'){
-          favs.push(contact);
+      var contactAlreadyExists = _.find(favs, function(obj) {
+        console.log(obj.name, contact.name);
+        if(contact.name){
+          return obj.name == contact.name
         }
         else{
-          if(!contactAlreadyExists){
-            favs.push(contact);
-          }
+          return obj.firstName + ' ' + obj.lastName == contact.firstName + ' ' + contact.lastName;
         }
-
-        chrome.storage.local.set({favs: favs});
-
-        defer.resolve(storage.favs);
       });
+
+      console.log('favs', contactAlreadyExists);
+
+
+      if(contact.name == 'Unknown' || contact.firstName == 'Unknown'){
+        favs.push(contact);
+      }
+      else{
+        if(!contactAlreadyExists){
+          favs.push(contact);
+        }
+      }
+
+      $cookies.putObject('storage.favs', favs);
+
+      defer.resolve(storage.favs);
+
 
       return defer.promise;
     };
@@ -1956,15 +1956,14 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     service.delete = function(index){
       var defer = $q.defer();
 
-      chrome.storage.local.get(function(storage){
-        var favs = storage.favs;
 
-        favs.splice(index, 1);
+      var favs = $cookies.getObject('storage.favs');
 
-        chrome.storage.local.set({favs: favs});
+      favs.splice(index, 1);
 
-        defer.resolve(favs);
-      });
+      $cookies.putObject('storage.favs', favs);
+
+      defer.resolve(favs);
 
       return defer.promise;
     };
@@ -2026,46 +2025,46 @@ ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
     var service = {};
 
     service.setChromeToMinSize = function(){
-      console.log('set the window to min size');
-      console.log(chrome.app.window.current().isFullscreen());
-
-      if(chrome.app.window.current().isFullscreen()){
-        chrome.app.window.current().restore();
-        chrome.app.window.current().fullscreen();
-      }
-
-      var monitorWidth = window.screen.availWidth;
-      var monitorHeight = window.screen.availHeight;
-      var top = Math.round((monitorHeight / 2) - (568 / 2));
-      var left = Math.round((monitorWidth / 2) - (400 / 2));
-
-      chrome.app.window.current().innerBounds.maxWidth = 400;
-      chrome.app.window.current().innerBounds.maxHeight = 568;
-      chrome.app.window.current().innerBounds.minWidth = 400;
-      chrome.app.window.current().innerBounds.minHeight = 568;
-      //chrome.app.window.current().innerBounds.top = top;
-      //chrome.app.window.current().innerBounds.left = left;
-      chrome.app.window.current().innerBounds.width = 400;
-      chrome.app.window.current().innerBounds.height = 568;
+      // console.log('set the window to min size');
+      // console.log(chrome.app.window.current().isFullscreen());
+      //
+      // if(chrome.app.window.current().isFullscreen()){
+      //   chrome.app.window.current().restore();
+      //   chrome.app.window.current().fullscreen();
+      // }
+      //
+      // var monitorWidth = window.screen.availWidth;
+      // var monitorHeight = window.screen.availHeight;
+      // var top = Math.round((monitorHeight / 2) - (568 / 2));
+      // var left = Math.round((monitorWidth / 2) - (400 / 2));
+      //
+      // chrome.app.window.current().innerBounds.maxWidth = 400;
+      // chrome.app.window.current().innerBounds.maxHeight = 568;
+      // chrome.app.window.current().innerBounds.minWidth = 400;
+      // chrome.app.window.current().innerBounds.minHeight = 568;
+      // //chrome.app.window.current().innerBounds.top = top;
+      // //chrome.app.window.current().innerBounds.left = left;
+      // chrome.app.window.current().innerBounds.width = 400;
+      // chrome.app.window.current().innerBounds.height = 568;
     };
 
     service.setChromeToVideoSize = function(){
-      console.log('set the window to video size');
-      var monitorWidth = window.screen.availWidth;
-      var monitorHeight = window.screen.availHeight;
-      var videoWidth = Math.round(monitorWidth/2);
-      var videoHeight = Math.round(videoWidth * 9 / 16);
-      var top = Math.round((monitorHeight / 2) - (videoHeight / 2));
-      var left = Math.round((monitorWidth / 2) - (videoWidth / 2));
-
-      chrome.app.window.current().innerBounds.maxWidth = null;
-      chrome.app.window.current().innerBounds.maxHeight = null;
-      chrome.app.window.current().innerBounds.minWidth = videoWidth;
-      chrome.app.window.current().innerBounds.minHeight = videoHeight;
-      //chrome.app.window.current().innerBounds.top = top;
-      //chrome.app.window.current().innerBounds.left = left;
-      chrome.app.window.current().innerBounds.width = videoWidth;
-      chrome.app.window.current().innerBounds.height = videoHeight;
+      // console.log('set the window to video size');
+      // var monitorWidth = window.screen.availWidth;
+      // var monitorHeight = window.screen.availHeight;
+      // var videoWidth = Math.round(monitorWidth/2);
+      // var videoHeight = Math.round(videoWidth * 9 / 16);
+      // var top = Math.round((monitorHeight / 2) - (videoHeight / 2));
+      // var left = Math.round((monitorWidth / 2) - (videoWidth / 2));
+      //
+      // chrome.app.window.current().innerBounds.maxWidth = null;
+      // chrome.app.window.current().innerBounds.maxHeight = null;
+      // chrome.app.window.current().innerBounds.minWidth = videoWidth;
+      // chrome.app.window.current().innerBounds.minHeight = videoHeight;
+      // //chrome.app.window.current().innerBounds.top = top;
+      // //chrome.app.window.current().innerBounds.left = left;
+      // chrome.app.window.current().innerBounds.width = videoWidth;
+      // chrome.app.window.current().innerBounds.height = videoHeight;
     };
 
     service.getFirstLetter = function (input) {

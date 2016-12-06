@@ -1,0 +1,15 @@
+<div class="menu-full user-status-container header">
+  <div class="profile-pic profile-pic-me"><contact-circle data-contact="{name: $root.userFirstName}"></contact-circle></div>
+  <div class="status-circle" ng-class="{'red': !$root.registeredWRS}"></div>
+  <div class="status-name">{{$root.userFirstName}}</div>
+  <div class="status-select-container">
+    <select class="{{selectedStatus}} update-status pseudo-button" data-ng-model="selectedStatus" ng-change="statusChange()">
+      <option ng-repeat="option in stateList" ng-value="option.value" ng-selected="option.value == selectedStatus">{{option.text | translator}}</option>
+    </select>
+  </div>
+
+  <a ui-sref="app.header.main.favs" ng-show="$root.settings"><i class="fa fa-cog ic-cog pseudo-button hyperlink-override" ng-class="{'cog-green': $root.settings}"></i></a>
+  <a ui-sref="app.header.settings.incoming" ng-show="!$root.settings"><i class="fa fa-cog ic-cog pseudo-button hyperlink-override" ng-class="{'cog-green': $root.settings}"></i></a>
+</div>
+
+<div ui-view></div>

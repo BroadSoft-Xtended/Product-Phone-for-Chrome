@@ -4,13 +4,16 @@
 
       url: '/login',
 
-      templateUrl: '/app/states/login/login.template.html',
+      templateUrl: '/states/login/login.template.html',
       params: {message: null},
       resolve: {},
 
       controller: ['$rootScope', '$scope', '$state', '$http', 'Auth', 'Utility', 'Storage', function ($rootScope, $scope, $state, $http, Auth, Utility, Storage) {
         console.log('in the login controller');
         $scope.spinner = false;
+
+        $scope.xsp = 'https://xsp.ihs.broadsoft.com';
+        $scope.email = 'jodonnell@broadsoft.com';
 
         Utility.setChromeToMinSize();
 
@@ -36,6 +39,8 @@
         };
 
         $scope.broadsoftLogin = function(login){
+          $state.go('app.header.main.favs');
+
           $scope.rememberLoginUrlAndEmail();
           console.log('bsft login');
           login.$pristine = false;

@@ -1,0 +1,23 @@
+<div class="login centered-content main-container">
+  <img class="bs-logo-large" src="/assets/images/broadsoft-logo-lrg.png" />
+
+  <form name="login">
+    <div class="text-medium welcome-message">{{'Login-PleasEnter' | translator}}</div>
+    <input ng-model="xsp" name="xsp" class="form-input" ng-class="{'textbox-error': login.email.$invalid && !login.$pristine}" ng-keyup="$event.keyCode == 13 && broadsoftLogin(login)" type="text" placeholder="{{'Login-XSPPlaceholder' | translator}}" required/>
+    <input ng-model="email" name="email" class="form-input" ng-class="{'textbox-error': login.email.$invalid && !login.$pristine}" ng-keyup="$event.keyCode == 13 && broadsoftLogin(login)" type="text" placeholder="{{'Login-EmailSample' | translator}}" required/>
+    <input ng-model="password" name="password" class="form-input" ng-class="{'textbox-error': login.password.$invalid && !login.$pristine}" ng-keyup="$event.keyCode == 13 && broadsoftLogin(login)" type="password" placeholder="{{'Login-PasswordSample' | translator}}" required/>
+
+    <div ng-show="!!errorMessage" class="error-text">
+      {{errorMessage | translator}}
+    </div>
+
+    <div class="sign-in-container">
+      <a class="button-pill login-button" ng-click="spinner = true; broadsoftLogin(login);">{{'Login-SignIn' | translator}}</a>
+      <img src="/assets/images/spinner.gif" class="more-contacts-loader" ng-show="spinner"/>
+      <!--<hr/><div class="or">or</div><hr/>-->
+      <!--<a class="button-pill button-google" id="authorize-button" ng-click="googleAuth()">-->
+        <!--<i class="fa fa-google-plus button-icon-left"></i>Sign In With Google-->
+      <!--</a>-->
+    </div>
+  </form>
+</div>

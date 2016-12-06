@@ -6,7 +6,7 @@
 
       url: '/',
 
-      templateUrl: '/app/states/splash/splash.template.html',
+      templateUrl: '/states/splash/splash.template.html',
 
       resolve: {
         avoidSplash: ['$state', function($state){

@@ -6,7 +6,7 @@
 
       url: '/contacts',
 
-      templateUrl: '/app/states/internal/contacts/contacts.template.html',
+      templateUrl: '/states/internal/contacts/contacts.template.html',
 
       resolve: {},
 

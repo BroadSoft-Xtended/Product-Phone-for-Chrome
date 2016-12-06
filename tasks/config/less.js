@@ -1,3 +1,15 @@
+/**
+ * Compiles LESS files into CSS.
+ *
+ * ---------------------------------------------------------------
+ *
+ * Only the `app/styles/importer.less` is compiled.
+ * This allows you to control the ordering yourself, i.e. import your
+ * dependencies, mixins, variables, resets, etc. before other stylesheets)
+ *
+ * For usage docs see:
+ * 		https://github.com/gruntjs/grunt-contrib-less
+ */
 module.exports = function(grunt) {
 
 	grunt.config.set('less', {
@@ -6,7 +18,7 @@ module.exports = function(grunt) {
 				expand: true,
 				cwd: 'app/styles/',
 				src: ['importer.less'],
-				dest: 'dist/less/',
+				dest: '.tmp/public/styles/',
 				ext: '.css'
 			}]
 		}

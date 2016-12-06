@@ -6,7 +6,7 @@
 
       url: '/vip',
 
-      templateUrl: '/app/states/internal/vip/vip.template.html',
+      templateUrl: '/states/internal/vip/vip.template.html',
 
       resolve: {},
 

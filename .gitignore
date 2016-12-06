@@ -1,4 +1,6 @@
+.idea/*
 .idea
+.tmp
 *.psd
 bower_components
 myPassword.js

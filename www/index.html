@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="ucone" data-ng-csp>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chrome Phone</title>
+
+  <!--STYLES-->
+  <link rel="stylesheet" href="assets/dependencies/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/dependencies/font-awesome/fonts/FontAwesome.otf">
+  <link rel="stylesheet" href="styles/importer.css">
+  <!--STYLES END-->
+
+</head>
+
+<body id="mainBody">
+  <div ui-view></div>
+
+  <!--SCRIPTS-->
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="bower_components/angular-base64/angular-base64.min.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+  <script src="bower_components/underscore/underscore-min.js"></script>
+  <script src="assets/webrtcLibraries/exsip-devel.js"></script>
+  <script src="states/internal/app.controller.js"></script>
+  <script src="states/internal/blocked/blocked.controller.js"></script>
+  <script src="states/internal/contacts/contacts.controller.js"></script>
+  <script src="states/internal/favs/favs.controller.js"></script>
+  <script src="states/internal/header/header.controller.js"></script>
+  <script src="states/internal/incoming/incoming.controller.js"></script>
+  <script src="states/internal/incomingCall/incomingCall.controller.js"></script>
+  <script src="states/internal/main/main.controller.js"></script>
+  <script src="states/internal/myVoicemail/myVoicemail.controller.js"></script>
+  <script src="states/internal/recent/recent.controller.js"></script>
+  <script src="states/internal/settings/settings.controller.js"></script>
+  <script src="states/internal/videoCall/videoCall.controller.js"></script>
+  <script src="states/internal/vip/vip.controller.js"></script>
+  <script src="states/internal/voicemail/voicemail.controller.js"></script>
+  <script src="states/internal/voicemailSettings/voicemailSettings.controller.js"></script>
+  <script src="states/login/login.controller.js"></script>
+  <script src="states/splash/splash.controller.js"></script>
+  <!--SCRIPTS END-->
+</body>
+</html>
