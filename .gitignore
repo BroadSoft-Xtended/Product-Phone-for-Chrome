@@ -3,5 +3,6 @@
 .tmp
 *.psd
 bower_components
+node_modules
 myPassword.js
 .DS_Store
