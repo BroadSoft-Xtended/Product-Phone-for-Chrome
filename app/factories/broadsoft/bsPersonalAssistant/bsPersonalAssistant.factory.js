@@ -8,11 +8,11 @@
 
     service.formatPAData = function(data){
       var presence = (typeof data.presence !== 'undefined') ? data.presence.$ : 'Available';
-      var attendantNumber = (typeof data.attendantNumber !== 'undefined') ? data.attendantNumber.$ : '';
-      var expirationDate = (typeof data.expirationTime !== 'undefined') ? data.expirationTime.$.split('T')[0] : '';
-      var expirationTime = (typeof data.expirationTime !== 'undefined') ? data.expirationTime.$.split('T')[1].substr(0, 5) : '';
-      var enableExpirationTime = (typeof data.enableExpirationTime !== 'undefined') ? data.enableExpirationTime.$ === "true" : '';
-      var enableTransferToAttendant = (typeof data.enableTransferToAttendant !== 'undefined') ? data.enableTransferToAttendant.$ === "true" : '';
+      var attendantNumber = (typeof data.attendantNumber !== 'undefined') ? data.attendantNumber : '';
+      var expirationDate = (typeof data.expirationTime !== 'undefined') ? data.expirationTime.split('T')[0] : '';
+      var expirationTime = (typeof data.expirationTime !== 'undefined') ? data.expirationTime.split('T')[1].substr(0, 5) : '';
+      var enableExpirationTime = (typeof data.enableExpirationTime !== 'undefined') ? data.enableExpirationTime === "true" : '';
+      var enableTransferToAttendant = (typeof data.enableTransferToAttendant !== 'undefined') ? data.enableTransferToAttendant === "true" : '';
 
       return {
         presence: presence,

@@ -6,14 +6,12 @@
     service.get = function(){
       var defer = $q.defer();
 
-
       if($cookies.get('storage.favs')){
         defer.resolve($cookies.get('storage.favs'));
       }
       else{
         defer.resolve([]);
       }
-
 
       return defer.promise;
     };
@@ -60,7 +58,6 @@
 
     service.delete = function(index){
       var defer = $q.defer();
-
 
       var favs = $cookies.getObject('storage.favs');
 

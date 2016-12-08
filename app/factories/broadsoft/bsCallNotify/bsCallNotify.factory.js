@@ -12,7 +12,7 @@
 
       $http.post('/proxy', Proxy.options(apiName))
         .success(function(response){
-          var email = (typeof response.CallNotify.callNotifyEmailAddress !== 'undefined') ? response.CallNotify.callNotifyEmailAddress.$ : '';
+          var email = (typeof response.CallNotify.callNotifyEmailAddress !== 'undefined') ? response.CallNotify.callNotifyEmailAddress : '';
           defer.resolve(email);
         }).error(function(error){
           console.log(error);

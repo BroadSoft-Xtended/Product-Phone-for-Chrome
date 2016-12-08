@@ -17,11 +17,11 @@
 
       var contacts = [];
       _.each(allContacts, function(contact){
-        var firstName = contact.firstName ? contact.firstName.$ : '';
-        var lastName = contact.lastName ? contact.lastName.$ : '';
-        var number = contact.number ? contact.number.$ : '';
-        var id = contact.userId ? contact.userId.$ : '';
-        var mobileNumber = contact.additionalDetails ? contact.additionalDetails.mobile ? contact.additionalDetails.mobile.$ : '' : '';
+        var firstName = contact.firstName ? contact.firstName : '';
+        var lastName = contact.lastName ? contact.lastName : '';
+        var number = contact.number ? contact.number : '';
+        var id = contact.userId ? contact.userId : '';
+        var mobileNumber = contact.additionalDetails ? contact.additionalDetails.mobile ? contact.additionalDetails.mobile : '' : '';
 
         contacts.push({firstName: firstName, lastName: lastName, number: number, id: id, mobileNumber: mobileNumber});
       });
@@ -69,7 +69,7 @@
       apiName = apiName + 'searchCriteriaModeOr=' + searchWithOr + '&firstName=*' + firstName + '*/i&lastName=*' + lastName + '*/i&start=' + pageStart +'&results=' + pageSize;
 
       $http.post('/proxy', Proxy.options(apiName)).then(function(response){
-        defer.resolve(service.initBroadsoftContacts(response.Enterprise.enterpriseDirectory.directoryDetails));
+        defer.resolve(service.initBroadsoftContacts(response.data.Enterprise.enterpriseDirectory.directoryDetails));
       }).catch(function(error){
         console.log(error);
         defer.reject(error);

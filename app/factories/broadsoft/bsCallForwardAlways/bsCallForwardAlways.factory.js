@@ -12,8 +12,8 @@
 
       $http.post('/proxy', Proxy.options(apiName))
         .success(function(response){
-          var number = (typeof response.CallForwardingAlways.forwardToPhoneNumber !== 'undefined') ? response.CallForwardingAlways.forwardToPhoneNumber.$ : '';
-          var active = (typeof response.CallForwardingAlways.active !== 'undefined') ? response.CallForwardingAlways.active.$ : '';
+          var number = (typeof response.CallForwardingAlways.forwardToPhoneNumber !== 'undefined') ? response.CallForwardingAlways.forwardToPhoneNumber : '';
+          var active = (typeof response.CallForwardingAlways.active !== 'undefined') ? response.CallForwardingAlways.active : '';
           var activeBool = active == 'true';
           defer.resolve([number, activeBool]);
         }).error(function(error){

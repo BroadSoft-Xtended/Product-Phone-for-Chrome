@@ -5,11 +5,11 @@
     var service = {};
 
     service.formatCall = function(call, type){
-      var callLogId = call.callLogId ? call.callLogId.$ : '';
-      var countryCode = call.countryCode ? call.countryCode.$ : '';
-      var name = call.name ? call.name.$ : '';
-      var number = call.phoneNumber ? call.phoneNumber.$ : '';
-      var time = call.time ? call.time.$ : '';
+      var callLogId = call.callLogId;
+      var countryCode = call.countryCode;
+      var name = call.name;
+      var number = call.phoneNumber;
+      var time = call.time;
 
       var formattedTime = time.split('T')[0] + ' ' + time.split('T')[1].substring(0, 8);
 
