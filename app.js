@@ -40,9 +40,17 @@ router.post('/proxy', function(req, res) {
     }
   };
 
+  console.log(options.url);
+
   rp(options)
-    .then(function (htmlString) {
-      res.send(parser.toJson(htmlString));
+    .then(function (response) {
+      // console.log('***RESPONSE***', response);
+      if(response.match('</')){
+        res.send(parser.toJson(response));
+      }
+      else{
+        res.send(response);
+      }
     })
     .catch(function (err) {
       console.log('*********ERROR******** ');
@@ -51,7 +59,6 @@ router.post('/proxy', function(req, res) {
       console.log('message: ', err.body);
       res.json(500, err);
     });
-
 });
 
 

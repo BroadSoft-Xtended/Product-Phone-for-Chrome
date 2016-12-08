@@ -385,10 +385,14 @@
       userAgent.on('connected', function(event){service.connected(event);});
       userAgent.on('disconnected', function(event){service.disconnected(event);});
       userAgent.on('registered', function(event){
+        console.log('register event');
         service.registered(event);
         defer.resolve(userAgent);
       });
-      userAgent.on('registrationFailed', function(event){service.registrationFailed(event);});
+      userAgent.on('registrationFailed', function(event){
+        console.log('registration failed');
+        service.registrationFailed(event);
+      });
       userAgent.on('onReInvite', function(event){service.onReInvite(event);});
       userAgent.on('newRTCSession', function(e){
         var session = e.data.session;

@@ -6,8 +6,9 @@
 
     service.options = function (apiRoute) {
       var xsp = $rootScope.xsp || $cookies.get('storage.xsp');
+      console.log('proxy xsp:', xsp);
       return {
-        url: $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/' + $rootScope.username + apiRoute,
+        url: xsp + '/com.broadsoft.xsi-actions/v2.0/user/' + $rootScope.username + apiRoute,
         username: $rootScope.username,
         password: $rootScope.password
       }

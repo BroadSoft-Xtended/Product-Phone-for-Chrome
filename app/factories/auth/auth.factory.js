@@ -14,24 +14,25 @@
       console.log('type', type);
       var defer = $q.defer();
       var configuration;
+      var cookiesConfig = $cookies.getObject('sipConfig');
 
       configuration = {
         'ws_servers' : [ {
-          'ws_uri' : type == 'attemptTwo' ? $cookies.get('storage.sipConfig.secondaryWrsAddress') : $cookies.get('storage.sipConfig.primaryWrsAddress'),
+          'ws_uri' : type == 'attemptTwo' ? cookiesConfig.secondaryWrsAddress : cookiesConfig.primaryWrsAddress,
           'weight' : 0
         } ],
-        'uri' : $cookies.get('storage.sipConfig.sipLineport'),
-        'auth_user': $cookies.get('storage.sipConfig.sipUsername'),
-        'authorization_user': $cookies.get('storage.sipConfig.sipUsername'),
-        'password': $cookies.get('storage.sipConfig.sipPassword'),
-        'stun_servers': type == 'attemptTwo' ? $cookies.get('storage.sipConfig.secondaryStunServer') : $cookies.get('storage.sipConfig.primaryStunServer'),
+        'uri' : cookiesConfig.sipLineport,
+        'auth_user': cookiesConfig.sipUsername,
+        'authorization_user': cookiesConfig.sipUsername,
+        'password': cookiesConfig.sipPassword,
+        'stun_servers': type == 'attemptTwo' ? cookiesConfig.secondaryStunServer : cookiesConfig.primaryStunServer,
         'trace_sip' : true,
-        'displayName': (_.unescape($cookies.get('storage.sipConfig.userFirstName') + ' ' + $cookies.get('storage.sipConfig.userLastName'))).replace("&apos;", "'")
+        'displayName': (_.unescape(cookiesConfig.userFirstName + ' ' + cookiesConfig.userLastName)).replace("&apos;", "'")
       };
 
       console.log("the user's config: ", configuration);
 
-      $rootScope.userFirstName = $cookies.get('storage.sipConfig.userFirstName');
+      $rootScope.userFirstName = cookiesConfig.userFirstName;
 
       defer.resolve(configuration);
     

@@ -69,14 +69,18 @@
           }
 
           //Initialize the webRtc connection for incoming calls
+          console.log('init webrtc');
           BSSip.getSIPConfig().then(function(sipConfig){
-            Storage.setValue('sipConfig', sipConfig);
+            console.log('getting the webrtc config', sipConfig);
+            $cookies.putObject('sipConfig', sipConfig);
 
             Auth.setConfig().then(function(config){
               console.log('the config for the user', config);
               webRTC.init(config).then(function(userAgent){
               });
             });
+          }).catch(function(error){
+            console.error(error);
           });
 
           $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
