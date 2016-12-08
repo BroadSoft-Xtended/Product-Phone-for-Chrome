@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  ucone.factory('BSSip', ['$rootScope', '$http', '$q', '$base64', function($rootScope, $http, $q, $base64) {
+  ucone.factory('BSSip', ['$rootScope', '$http', '$q', '$base64', 'Proxy', function($rootScope, $http, $q, $base64, Proxy) {
     var service = {};
     var chromePhoneDeviceType = 'Chrome-Phone';
     var configUrl = $rootScope.xsp + '/dms/chrome-phone/config.json';
@@ -10,19 +10,19 @@
       var defer = $q.defer();
       var apiName = '/profile/device';
 
-      $http.get($rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/' + $rootScope.username + apiName)
-        .success(function(response) {
-          _.each(response.AccessDevices.accessDevice, function(device) {
+      $http.post('/proxy', Proxy.options(apiName))
+        .then(function(response) {
+          _.each(response.data.AccessDevices.accessDevice, function(device) {
             var deviceType = (typeof device.deviceType !== 'undefined') ? device.deviceType.$ : '';
 
             if (deviceType === chromePhoneDeviceType) {
               defer.resolve(device);
             }
           });
-        }).error(function(error) {
-          console.log(error);
-          defer.reject(error);
-        });
+        }).catch(function(error) {
+        console.log(error);
+        defer.reject(error);
+      });
 
 
       return defer.promise;
@@ -49,13 +49,12 @@
           }
         };
 
-        $http(req)
-          .success(function(response) {
-            defer.resolve(response);
-          }).error(function(error) {
-            console.log(error);
-            defer.reject(error);
-          });
+        $http(req).success(function(response) {
+          defer.resolve(response);
+        }).error(function(error) {
+          console.log(error);
+          defer.reject(error);
+        });
       });
 
       return defer.promise;

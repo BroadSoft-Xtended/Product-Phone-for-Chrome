@@ -4,25 +4,10 @@
   ucone.factory('Auth', ['$base64', '$rootScope', '$http', 'Storage', '$q', '$cookies', function($base64, $rootScope, $http, Storage, $q, $cookies){
     var service = {};
 
-    service.clearCredentials = function () {
-      $http.defaults.headers.common.Authorization = 'Basic ';
-      $rootScope.username = '';
-      $rootScope.authdata = '';
-    };
-
     service.setCredentials = function (username, password, xsp) {
-      service.clearCredentials();
-
-      var authdata = $base64.encode(username + ':' + password);
-
       $rootScope.xsp = xsp;
       $rootScope.username = username;
-      $rootScope.authdata = authdata;
-
-      console.log(username);
-      console.log($rootScope.username);
-
-      $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+      $rootScope.password = password;
     };
 
     service.setConfig = function(type){

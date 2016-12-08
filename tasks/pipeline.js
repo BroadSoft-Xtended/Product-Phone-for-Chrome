@@ -23,6 +23,7 @@ var jsFilesToInject = [
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
   'app.js',
+  'locals/*.js',
   '**/*.directive.js',
   '**/*.filter.js',
   '**/*.factory.js',

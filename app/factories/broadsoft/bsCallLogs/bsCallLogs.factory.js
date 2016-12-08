@@ -1,10 +1,8 @@
 (function(){
   'use strict';
 
-  ucone.factory('BSCallLogs', ['$rootScope', '$http', '$q', function($rootScope, $http, $q){
+  ucone.factory('BSCallLogs', ['$rootScope', '$http', '$q', 'Proxy', function($rootScope, $http, $q, Proxy){
     var service = {};
-
-    var baseUrl = $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
 
     service.formatCall = function(call, type){
       var callLogId = call.callLogId ? call.callLogId.$ : '';
@@ -40,7 +38,7 @@
       var apiName = '/directories/CallLogs';
       var defer = $q.defer();
 
-      $http.get(baseUrl + $rootScope.username + apiName)
+      $http.post('/proxy', Proxy.options(apiName))
         .success(function(response){
           console.log(service.formatCallLogs(response.CallLogs));
           defer.resolve(service.formatCallLogs(response.CallLogs));

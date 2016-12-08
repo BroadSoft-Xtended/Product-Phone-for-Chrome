@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  ucone.factory('BSSelectiveCallRejection', ['$rootScope', '$http', '$q', '$base64', function($rootScope, $http, $q, $base64){
+  ucone.factory('BSSelectiveCallRejection', ['$rootScope', '$http', '$q', '$base64', 'Proxy', function($rootScope, $http, $q, $base64, Proxy){
     var service = {};
 
     var baseUrl = $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
@@ -16,9 +16,9 @@
         .success(function(response){
           defer.resolve('Deleted, ', name);
         }).error(function(error){
-          console.log(error);
-          defer.reject(error);
-        });
+        console.log(error);
+        defer.reject(error);
+      });
 
       return defer.promise;
     };
@@ -48,13 +48,12 @@
           data: xmlParams
         };
 
-        $http(req)
-          .success(function(response){
-            defer.resolve('', contact.number);
-          }).error(function(error){
-            console.log(error);
-            defer.reject(error);
-          });
+        $http(req).success(function(response){
+          defer.resolve('', contact.number);
+        }).error(function(error){
+          console.log(error);
+          defer.reject(error);
+        });
       });
       return defer.promise;
     };
@@ -63,7 +62,7 @@
       var apiName = '/services/SelectiveCallRejection';
       var defer = $q.defer();
 
-      $http.get(baseUrl + $rootScope.username + apiName)
+      $http.post('/proxy', Proxy.options(apiName))
         .success(function(response){
 
           var newList;
@@ -87,9 +86,9 @@
             defer.resolve(urls);
           }
         }).error(function(error){
-          console.log(error);
-          defer.reject(error);
-        });
+        console.log(error);
+        defer.reject(error);
+      });
 
       return defer.promise;
     };
@@ -108,10 +107,10 @@
           _.each(results, function(response){
             var base = response.data.SelectiveCallRejectionCriteria.criteria;
             //if(name !== 'PrivateCalls' && name !== 'AnonymousCalls'){
-              contacts.push({name: base.criteriaName.$, number: base.criteriaFromDn.phoneNumberList.phoneNumber.$, privateCalls: base.criteriaFromDn.includeUnavailableCallers.$, anonymousCalls: base.criteriaFromDn.includeAnonymousCallers.$});
-           // }
+            contacts.push({name: base.criteriaName.$, number: base.criteriaFromDn.phoneNumberList.phoneNumber.$, privateCalls: base.criteriaFromDn.includeUnavailableCallers.$, anonymousCalls: base.criteriaFromDn.includeAnonymousCallers.$});
+            // }
           });
-          
+
           defer.resolve(contacts);
         });
       });

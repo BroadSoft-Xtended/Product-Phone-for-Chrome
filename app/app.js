@@ -7,8 +7,7 @@ var ucone = angular.module('ucone', ["ui.router", "base64", "ngCookies"], functi
   });
 });
 
-ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider){
-
+ucone.config(function($stateProvider, $urlRouterProvider, $compileProvider, $httpProvider){
   // For any unmatched url, send to /route1
   //$urlRouterProvider.otherwise("/app/header/main/favs");
   //$urlRouterProvider.otherwise("/app/header/settings/incoming");

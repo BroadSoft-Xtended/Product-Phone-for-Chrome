@@ -1,10 +1,10 @@
 (function(){
   'use strict';
 
-  ucone.factory('BSPersonalAssistant', ['$rootScope', '$http', '$q', function($rootScope, $http, $q){
+  ucone.factory('BSPersonalAssistant', ['$rootScope', '$http', '$q', 'Proxy', '$cookies', function($rootScope, $http, $q, Proxy, $cookies){
     var service = {};
 
-    var baseUrl = $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
+    var baseUrl = $cookies.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
 
     service.formatPAData = function(data){
       var presence = (typeof data.presence !== 'undefined') ? data.presence.$ : 'Available';
@@ -28,44 +28,37 @@
       var apiName = '/services/personalassistant';
       var defer = $q.defer();
 
-      $http.get(baseUrl + $rootScope.username + apiName)
-        .success(function(response){
-          defer.resolve(service.formatPAData(response.PersonalAssistant));
-        }).error(function(error){
-          console.log(error);
-          defer.reject(error);
-        });
+      $http.post('/proxy', Proxy.options(apiName)).then(function(response){
+        console.log('res', response);
+        defer.resolve(service.formatPAData(response.data.PersonalAssistant));
+      }).catch(function(error){
+        console.log(error);
+        defer.reject(error);
+      });
 
       return defer.promise;
     };
 
     service.setPersonalAssistantData = function(params){
-        var apiName = '/services/personalassistant';
-        var defer = $q.defer();
+      var apiName = '/services/personalassistant';
+      var defer = $q.defer();
 
-        console.log('ETTA', params.enableTransferToAttendant);
+      console.log('ETTA', params.enableTransferToAttendant);
 
-        params.enableExpirationTime = params.enableExpirationTime ? 'true': 'false';
-        params.enableTransferToAttendant = params.enableTransferToAttendant ? 'true': 'false';
+      params.enableExpirationTime = params.enableExpirationTime ? 'true': 'false';
+      params.enableTransferToAttendant = params.enableTransferToAttendant ? 'true': 'false';
 
-        var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
+      var xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
 
-        console.log('params', params.attendantNumber);
-        console.log('params', typeof params.attendantNumber);
+      if(params.enableExpirationTime === 'false'){
+        xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
+      }
 
+      if(params.attendantNumber == '' && params.enableExpirationTime === 'false'){
 
-
-        console.log('foo', params.expirationTime);
-
-        if(params.enableExpirationTime === 'false'){
-          xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><attendantNumber>'+ params.attendantNumber +'</attendantNumber><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
-        }
-
-        if(params.attendantNumber == '' && params.enableExpirationTime === 'false'){
-
-          console.log('we made it');
-          xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
-        }
+        console.log('we made it');
+        xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
+      }
 
       if(params.attendantNumber == '' && params.enableExpirationTime !== 'false'){
 
@@ -73,42 +66,46 @@
         xmlParams = '<?xml version="1.0" encoding="ISO-8859-1"?><PersonalAssistant xmlns="http://schema.broadsoft.com/xsi"><presence>'+ params.presence +'</presence><enableExpirationTime>'+ params.enableExpirationTime +'</enableExpirationTime><expirationTime>'+ params.expirationTime +'</expirationTime><enableTransferToAttendant>'+ params.enableTransferToAttendant +'</enableTransferToAttendant><ringSplash>'+ 'false' +'</ringSplash></PersonalAssistant>';
       }
 
-        console.log(xmlParams);
+      console.log(xmlParams);
 
-        var req = {
-          method: 'PUT',
-          url: baseUrl + $rootScope.username + apiName,
-          headers: {
-            'Accept': 'text/xml',
-            'Content-Type': 'text/xml'
-          },
-          data: xmlParams
-        };
+      var baseUrl = $cookies.get('storage.xsp') + '/com.broadsoft.xsi-actions/v2.0/user/';
 
-        $http(req)
-          .success(function(response){
-            service.getPersonalAssistantData().then(function(response){
-              defer.resolve(response);
-            });
-          }).error(function(error){
-            console.log(error);
-            defer.reject(error);
+      var req = {
+        method: 'PUT',
+        url: baseUrl + $rootScope.username + apiName,
+        headers: {
+          'Accept': 'text/xml',
+          'Content-Type': 'text/xml'
+        },
+        data: xmlParams
+      };
+
+      console.log(req);
+
+      $http(req)
+        .success(function(response){
+          service.getPersonalAssistantData().then(function(response){
+            defer.resolve(response);
           });
+        }).error(function(error){
+        console.log(error);
+        defer.reject(error);
+      });
 
-        return defer.promise;
+      return defer.promise;
     };
 
     service.getUserStates = function(){
       return [{value: 'None', text: 'Available'},
-      {value: 'Business Trip', text: 'BusinessTrip'},
-      {value: 'Gone for the Day', text: 'GoneForTheDay'},
-      {value: 'Lunch', text: 'Lunch'},
-      {value: 'Meeting', text: 'Meeting'},
-      {value: 'Out Of Office', text: 'OutOfOffice'},
-      {value: 'Temporarily Out', text: 'TemporarilyOut'},
-      {value: 'Training', text: 'Training'},
-      {value: 'Unavailable', text: 'Unavailable'},
-      {value: 'Vacation', text: 'Vacation'}];
+        {value: 'Business Trip', text: 'BusinessTrip'},
+        {value: 'Gone for the Day', text: 'GoneForTheDay'},
+        {value: 'Lunch', text: 'Lunch'},
+        {value: 'Meeting', text: 'Meeting'},
+        {value: 'Out Of Office', text: 'OutOfOffice'},
+        {value: 'Temporarily Out', text: 'TemporarilyOut'},
+        {value: 'Training', text: 'Training'},
+        {value: 'Unavailable', text: 'Unavailable'},
+        {value: 'Vacation', text: 'Vacation'}];
     };
 
     service.formatExclusionNumberList = function(list){
@@ -119,10 +116,10 @@
       }
 
       if(list.constructor === Array){
-         newList = list
+        newList = list
       }
       else{
-         newList = [list];
+        newList = [list];
       }
 
       var results = [];
@@ -138,13 +135,12 @@
       var apiName = '/services/personalassistant/exclusionnumberlist';
       var defer = $q.defer();
 
-      $http.get(baseUrl + $rootScope.username + apiName)
-        .success(function(response){
-          defer.resolve(service.formatExclusionNumberList(response.PersonalAssistantExclusionNumberList.exclusionNumber));
-        }).error(function(error){
-          console.log(error);
-          defer.reject(error);
-        });
+      $http.post('/proxy', Proxy.options(apiName)).success(function(response){
+        defer.resolve(service.formatExclusionNumberList(response.PersonalAssistantExclusionNumberList.exclusionNumber));
+      }).error(function(error){
+        console.log(error);
+        defer.reject(error);
+      });
 
       return defer.promise;
     };
@@ -157,9 +153,9 @@
         .success(function(response){
           defer.resolve(contact.number + ' deleted');
         }).error(function(error){
-          console.log(error);
-          defer.reject(error);
-        });
+        console.log(error);
+        defer.reject(error);
+      });
 
       return defer.promise;
     };
@@ -180,13 +176,12 @@
         data: xmlParams
       };
 
-      $http(req)
-        .success(function(response){
-          defer.resolve('VIP added ', contact.number);
-        }).error(function(error){
-          console.log(error);
-          defer.reject(error);
-        });
+      $http(req).success(function(response){
+        defer.resolve('VIP added ', contact.number);
+      }).error(function(error){
+        console.log(error);
+        defer.reject(error);
+      });
 
       return defer.promise;
     };

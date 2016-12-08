@@ -6,7 +6,7 @@
       scope: {
         contact: '='
       },
-      templateUrl: '/app/directives/contactCircle/contactCircle.template.html',
+      templateUrl: '/directives/contactCircle/contactCircle.template.html',
       link: function(scope, element, attrs){
         scope.getContactLetter = function(contact){
           return Utility.getFirstLetter(contact.firstName || contact.name || contact.description);

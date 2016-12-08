@@ -8,7 +8,8 @@
       params: {message: null},
       resolve: {},
 
-      controller: ['$rootScope', '$scope', '$state', '$http', 'Auth', 'Utility', 'Storage', function ($rootScope, $scope, $state, $http, Auth, Utility, Storage) {
+      controller: ['$rootScope', '$scope', '$state', '$http', 'Auth', 'Utility', 'Storage', '$cookies', '$base64', 'BSDirectory', function ($rootScope, $scope, $state, $http, Auth, Utility, Storage, $cookies, $base64, BSDirectory) {
+
         console.log('in the login controller');
         $scope.spinner = false;
 
@@ -17,15 +18,12 @@
 
         Utility.setChromeToMinSize();
 
-        chrome.storage.local.get(function(storage){
-          if(storage.LoginUrl){
-            $scope.xsp = storage.LoginUrl
-          }
-          if(storage.LoginEmail){
-            $scope.email = storage.LoginEmail
-          }
-          $scope.$apply();
-        });
+        if($cookies.get('storage.xsp')) {
+          $scope.xsp = $cookies.get('storage.xsp');
+        }
+        if($cookies.get('storage.email')){
+          $scope.email = $cookies.get('storage.email');
+        }
 
         $rootScope.language = Utility.getBrowserLanguage();
 
@@ -34,8 +32,8 @@
         }
 
         $scope.rememberLoginUrlAndEmail = function(){
-          Storage.setValue('LoginUrl', $scope.xsp);
-          Storage.setValue('LoginEmail', $scope.email);
+          $cookies.put('storage.xsp', $scope.xsp);
+          Storage.setValue('storage.email', $scope.email);
         };
 
         $scope.broadsoftLogin = function(login){
@@ -47,9 +45,9 @@
           if(login.$valid){
             Auth.setCredentials($scope.email, $scope.password, $scope.xsp);
 
-            $http.get($rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/' + $scope.email + '/directories/Enterprise').success(function(response){
+            BSDirectory.getDirectoryContacts(1,50).then(function(response){
               $state.go('app.header.main.favs');
-            }).error(function(error){
+            }).catch(function(error){
               $scope.spinner = false;
               console.log('Login Error', error);
               $scope.errorMessage = 'InvalidUserNamePassword';

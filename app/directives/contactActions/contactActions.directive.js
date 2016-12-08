@@ -8,7 +8,7 @@
         deleteMode: '=',
         show: '='
       },
-      templateUrl: '/app/directives/contactActions/contactActions.template.html',
+      templateUrl: '/directives/contactActions/contactActions.template.html',
       link: function(scope, element, attrs){
         scope.media = Media;
 

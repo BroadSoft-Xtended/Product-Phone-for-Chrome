@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  ucone.factory('BSCallNotify', ['$rootScope', '$http', '$q', function($rootScope, $http, $q){
+  ucone.factory('BSCallNotify', ['$rootScope', '$http', '$q', 'Proxy', function($rootScope, $http, $q, Proxy){
     var service = {};
 
     var baseUrl = $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
@@ -10,7 +10,7 @@
       var apiName = '/services/callnotify/?';
       var defer = $q.defer();
 
-      $http.get(baseUrl + $rootScope.username + apiName)
+      $http.post('/proxy', Proxy.options(apiName))
         .success(function(response){
           var email = (typeof response.CallNotify.callNotifyEmailAddress !== 'undefined') ? response.CallNotify.callNotifyEmailAddress.$ : '';
           defer.resolve(email);

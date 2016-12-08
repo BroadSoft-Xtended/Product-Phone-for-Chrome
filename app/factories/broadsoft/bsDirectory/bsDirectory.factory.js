@@ -1,12 +1,12 @@
 (function(){
   'use strict';
 
-  ucone.factory('BSDirectory', ['$rootScope', '$http', '$q', function($rootScope, $http, $q){
+  ucone.factory('BSDirectory', ['$rootScope', '$http', '$q', 'Proxy', function($rootScope, $http, $q, Proxy){
     var service = {};
 
-    var baseUrl = $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
 
     service.initBroadsoftContacts = function (BSFTContacts) {
+
       var allContacts = [];
       if(BSFTContacts.constructor === Array){
         allContacts = BSFTContacts;
@@ -30,16 +30,17 @@
     };
 
     service.getDirectoryContacts = function (pageStart, pageSize) {
-      var apiName = '/directories/Enterprise?';
+      var apiName = '/directories/Enterprise?start=' + pageStart + '&results=' + pageSize
       var defer = $q.defer();
 
-      $http.get(baseUrl + $rootScope.username + apiName + 'start=' + pageStart + '&results=' + pageSize)
+      $http.post('/proxy', Proxy.options(apiName))
         .success(function(response){
+          console.log('respone', response);
           defer.resolve(service.initBroadsoftContacts(response.Enterprise.enterpriseDirectory.directoryDetails));
         }).error(function(error){
-          console.log(error);
-          defer.reject(error);
-        });
+        console.log(error);
+        defer.reject(error);
+      });
 
       return defer.promise;
     };
@@ -65,18 +66,17 @@
         searchWithOr = true;
       }
 
-      $http.get(baseUrl + $rootScope.username + apiName + 'searchCriteriaModeOr=' + searchWithOr + '&firstName=*' + firstName + '*/i&lastName=*' + lastName + '*/i&start=' + pageStart +'&results=' + pageSize)
-        .success(function(response){
-          defer.resolve(service.initBroadsoftContacts(response.Enterprise.enterpriseDirectory.directoryDetails));
-        }).error(function(error){
-          console.log(error);
-          defer.reject(error);
-        });
+      apiName = apiName + 'searchCriteriaModeOr=' + searchWithOr + '&firstName=*' + firstName + '*/i&lastName=*' + lastName + '*/i&start=' + pageStart +'&results=' + pageSize;
+
+      $http.post('/proxy', Proxy.options(apiName)).then(function(response){
+        defer.resolve(service.initBroadsoftContacts(response.Enterprise.enterpriseDirectory.directoryDetails));
+      }).catch(function(error){
+        console.log(error);
+        defer.reject(error);
+      });
 
       return defer.promise;
     };
-
-
 
     return service;
   }]);

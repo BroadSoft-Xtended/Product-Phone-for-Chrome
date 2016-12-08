@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  ucone.factory('BSBroadworksAnywhere', ['$rootScope', '$http', '$q', function($rootScope, $http, $q){
+  ucone.factory('BSBroadworksAnywhere', ['$rootScope', '$http', '$q', 'Proxy', function($rootScope, $http, $q, Proxy){
     var service = {};
 
     var baseUrl = $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
@@ -51,7 +51,7 @@
       var apiName = '/services/BroadworksAnywhere';
       var defer = $q.defer();
 
-      $http.get(baseUrl + $rootScope.username + apiName)
+      $http.post('/proxy', Proxy.options(apiName))
         .success(function(response){
           console.log('BSBroadworksAnywhere Get: ', response);
           if(!response.BroadWorksAnywhere.locations){

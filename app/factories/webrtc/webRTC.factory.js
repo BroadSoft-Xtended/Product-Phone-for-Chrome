@@ -84,6 +84,7 @@
     };
 
     service.registrationFailed = function(event){
+      console.error('registration failed');
       $rootScope.registeredWRS = false;
 
       Auth.setConfig('attemptTwo').then(function(config){

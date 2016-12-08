@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  ucone.factory('LocalContacts', ['$q', function($q){
+  ucone.factory('LocalContacts', ['$q', '$cookies', function($q, $cookies){
     var service = this;
 
     service.get = function(){
@@ -20,7 +20,6 @@
 
     service.add = function(contact){
       var defer = $q.defer();
-
 
       var favs = [];
       if($cookies.getObject('storage.favs')){

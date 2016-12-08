@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  ucone.factory('BSAnonymousCallRejection', ['$rootScope', '$http', '$q', function($rootScope, $http, $q){
+  ucone.factory('BSAnonymousCallRejection', ['$rootScope', '$http', '$q', 'Proxy', function($rootScope, $http, $q, Proxy){
     var service = {};
 
     var baseUrl = $rootScope.xsp + '/com.broadsoft.xsi-actions/v2.0/user/';
@@ -37,7 +37,7 @@
       var apiName = '/services/AnonymousCallRejection';
       var defer = $q.defer();
 
-      $http.get(baseUrl + $rootScope.username + apiName)
+      $http.post('/proxy', Proxy.options(apiName))
         .success(function(response){
           defer.resolve(response.AnonymousCallRejection.active.$ == 'true');
         }).error(function(error){
